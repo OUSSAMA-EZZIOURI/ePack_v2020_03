@@ -1,7 +1,7 @@
 # ePack
 Warehouse / Packaging management system for LEONI Wiring System Berrechid Morocco.
 
-v2020.03 changes
+v2020.03 changes 
 -------------------------
 1- Nouveau status 'BLOQUED' pour les palette.
 2- Nouveau boutton + interface pour bloquer une palette.
