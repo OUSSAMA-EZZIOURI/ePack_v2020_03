@@ -1,0 +1,90 @@
+######## LAST TIME TO DO
+
+Faire une check box (print destination in production label) dans config_ucs, ça va servir pour les références commun pour ne pas créer une ambiguité chez les magasiniers vers quelle destination on doit livrer.
+[OK] Tester le nouveau bouton waiting dans PACKAGING_UI0001_MAIN
+[OK]  Les colonnes des tableaux statistiques de production + stock emballage + stock F.G doivent être adaptées à leur contenu  et la largeur des tableaux doivent être réduitent.
+[OK] Ajouter le checkbox pour afficher/masquer la colonne « pack type » + filtre textbox pack_type, combobox « speciale order » et dans le UI Stock F.G ;
+[OK] Filtre « commande spéciale », « pack type » dans listes des palettes ;
+
+- Nouveau status du design pattern state après le choix de la config "ChoosePackType" :
+        - Charger la liste des code à barre équivalent à la référence
+        - Si l'index de la config contient des sachet code à barre, 
+            - passer au status Plastic Bag Scan
+            - scanne de la palette nouvellement créée.
+            - création de la palette puis ajouter la pièce
+        - Sinon 
+            - Passer directement au scanne du code palette 2000....    
+
+- Continuer l'integration de JTabbedPane parent et GlobalMethods.addNewTabToParent
+dans la totalité des UI
+[OK]- Ajouter un filtre projet dans la UI config_ucs 
+[OK]- Ajouter un filter "packaging item" dans l'UI Stock Emballage
+[OK]- Ajouter un filter "pack item", "packaging item" dans l'UI Mouvement Stock Emballage
+[OK]- Enlever les UIs obsolètes
+
+·         Lié le nombre de sachet à charger à l’indice de la référence (il se peut que la même référence sera active mais avec des indices différents, chaque indice avec un nombre de sachets différent)
+·         Faire la possibilité de retourner la palette à l’état closed par le magasinier avec obligation de saisir un motif.
+
+- Centraliser les méthodes dans leurs classes :
+[OK]    initProjectJBox() 
+[OK]    initPackMasterJBox()
+[OK]    initFamilyByProject()
+[OK]    setWorkplaceBySegment
+[OK]    setPacakgingWarehouseByProject
+[OK]    setWarehouseByProject
+[OK]    setSegmentByProject
+[OK]    setDestinationByProject
+################################## New features ###############################
+- Ajouter un champs , priority int (closing pallet sheet copies int, open pallet sheet copies int, ) dans base_container, Config_ucs, drop_base_container pour determiner le nombre de copies à imprimer.
+- POKA-YOKE (Kaizen) Impression de la destination finale dans la fiche 
+ferméture palette pour faciliter le stockage vers la bonne destination magasin 
+produit fini.
+- La génération du menu des modules se base dynamiquement sur les accès du profil 
+de l'utilisateur connecté (9000/2000/1000/0000).
+- Nouveau utilisateur dummy 0000 pour consulter en droit de lecture seul.
+Dispatch module ;
+- Changement de l'UI dans le formulaire nouveau plan ou màj plan
+- POKA-YOKE (Kaizen) Ajouter un 4 scanne de le quantité fiche dispatch 
+pour vérouiller le mélange entre deux étiquettes dispatch, de la même référence, 
+mais avec des quantités différentes.
+- POKA-YOKE : Vérifier si la palette à controller appartient au plan de chargement
+actuel ? Si oui procéder au contrôl, sinon afficher un message d'erreur.
+- Add a new access right level 0000, login 0000 as a reader for reports menus only. 
+- Add filter per pack type, supplier part number in pallet list.
+################################## Fixes ####################################
+- Correction du bug au niveau total quantité de l'UI liste des palettes, la valeur total qté
+fait la somme du total UCS pas le total scannée !! 
+- Correction du bug suppression des palettes déjà assignées à un plan
+- Correction du bug formulaire détails palette
+    - Impossible de supprimer une palette déjà reservée/dispatchée
+    - Désactivation du chargement automatique de la liste des faisceaux
+    - Chargement de la liste des faisceaux via un bouton
+    - Changement de l'UI
+- Nouvelle condition de test sur le nombre de copie dans la classe printer helper au niveau des methodes printOpenSheet, printClosingSheet.
+    L'action de choix PACKAGING_UI9000_ChoosePackType_Mode3 et PACKAGING_UI9000_ChoosePackType_Mode2
+- Add priority in method PACKAGING_UI9000_ChoosePackType_Mode3::reload_result_table_data
+- Add priority in method PACKAGING_UI9000_ChoosePackType_Mode2::reload_result_table_data
+
+################################## To do list #################################
+    Kaizen 1  POKA-YOKE : Check if the pallet to be reseved belongs to the project setup in the plan or not.
+
+    - Add the possiblity to create dummy container.   
+
+    Sweeden / France / Cummun. (Ongoing)    
+    
+    Kaizen 2 POKA-YOKE : in order to avoid the risk of mixing of pallets for same pn and same destination and with different qty, we need to add the scan of CPN + QTY + Serial in the internal system (Ongoing).
+
+    Kaizen 3 POKA-YOKE : Nouvelle condition sur la destination pendant la préparation des palettes dans un plan de chargement. Ce vérrouillage permet au magasinier de ne pas mélanger les référence en commun entre 2 ou plusieurs destinations. (Required changes, Priority field in config ucs , dev of a planning module, review of all config_ucs in order to separate configurations per destination) and can't be done until solution A is developped
+
+    A ; Problem : for commun parts, there's a risk to print production label with wrong LPN, Solution : that's why we needs to put a planning module by LPN and priority to avoid this issue... When the operator select to pack a part number the system will choose the correct packing configuration according to Planning/Priority. In the end, the label is printed with correct LPN and the correct FDP. To make the life easy, think about an upload solution with csv or xlsx or xls file to load the production planning.... Toughts to be developped.
+
+    Kaizen 4 : Integrate a picking list in the dispatch module, this list is updated in parallel according to the qty that has been , so the warehouse man has a clear update to what's needs to be reserved by priority...
+
+        - avoid printing wastes
+        - avoid waiting for info waste
+        - avoid excess processing to unload not necessery part number
+        - avoid excess processing to delete not necessary pn lines from the system.
+
+    Kaizen 5 : The packaging coverage file.
+
+    Kaizen 6 : Coverage file for critical components with procurement team.

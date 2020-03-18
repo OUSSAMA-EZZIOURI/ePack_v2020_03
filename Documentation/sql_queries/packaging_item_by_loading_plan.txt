@@ -1,0 +1,13 @@
+(SELECT destination, pack_item, sum(quantity) AS quantity FROM \n"
+            + "(\n"
+            + "(SELECT destination, pack_item, sum(quantity) AS quantity \n"
+            + "FROM (\n"
+            + "            SELECT destination_wh AS destination, pc.pack_item, count(pack_type) * pc.coefficient AS quantity \n"
+            + "            FROM load_plan_line lpl join packaging_config pc ON lpl.pack_type = pc.pack_master\n"
+            + "            WHERE load_plan_id = '%s' group by destination_wh, pc.pack_item,  pc.coefficient\n"
+            + "            ORDER BY destination_wh ASC) AS T\n"
+            + "           group by T.destination, T.pack_item)\n"
+            + "UNION		   \n"
+            + "(SELECT destination, pack_item, sum(qty) AS quantity FROM load_plan_line_packaging\n"
+            + "WHERE load_plan_id = '%s' group by destination, pack_item)\n"
+            + "	) AS T1 GROUP BY T1.destination, T1.pack_item ORDER BY T1.destination);
