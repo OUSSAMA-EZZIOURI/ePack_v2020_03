@@ -1,14 +1,16 @@
 package gui.cra;
 
 import __main__.GlobalMethods;
+import __main__.GlobalVars;
+import entity.ConfigUcs;
 import entity.ProductionPlan;
 import gui.warehouse_dispatch.WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL;
 import helper.HQLHelper;
 import helper.Helper;
 import helper.JDialogExcelFileChooser;
 import helper.UIHelper;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -28,11 +31,16 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
-import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Query;
 import ui.UILog;
 
@@ -46,6 +54,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     Vector<String> planning_table_header = new Vector<String>();
 
     List<String> header_columns = Arrays.asList(
+            "ID",
             "Customer PN",
             "Internal PN",
             "Quantité",
@@ -53,6 +62,8 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             "Modifié par."
     );
     Vector planning_table_data = new Vector();
+    ProductionPlan aux;
+    boolean err = false;
 
     /**
      * Creates new form CRA_UI0001_PRODUCTION_PLAN
@@ -70,6 +81,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     private void initGui() {
         GlobalMethods.refreshJTable(planning_jtable, planning_table_data, header_columns);
         UIHelper.disableEditingJtable(planning_jtable);
+        this.initContainerTableDoubleClick();
     }
 
     /**
@@ -86,13 +98,29 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         jMenu2 = new javax.swing.JMenu();
         jScrollPane1 = new javax.swing.JScrollPane();
         planning_jtable = new javax.swing.JTable();
-        btn_refresh = new javax.swing.JButton();
-        btn_csv_example = new javax.swing.JButton();
-        btn_import_csv = new javax.swing.JButton();
         btn_delete_planning = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        btn_import_csv = new javax.swing.JButton();
+        btn_csv_example = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txt_harness_part = new javax.swing.JTextField();
+        txt_internal_part = new javax.swing.JTextField();
+        txt_qty_planned = new javax.swing.JTextField();
+        btn_delete = new javax.swing.JButton();
+        msg_lbl = new javax.swing.JLabel();
+        txt_id = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        btn_save = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        txt_harness_part_filter = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txt_internal_part_filter = new javax.swing.JTextField();
+        btn_export_excel = new javax.swing.JButton();
+        btn_refresh = new javax.swing.JButton();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -117,29 +145,9 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(planning_jtable);
 
-        btn_refresh.setText("Actualiser");
-        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_refreshActionPerformed(evt);
-            }
-        });
-
-        btn_csv_example.setText("Exemple fichier .csv ...");
-        btn_csv_example.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_csv_exampleActionPerformed(evt);
-            }
-        });
-
-        btn_import_csv.setText("Charger le planning .csv ...");
-        btn_import_csv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_import_csvActionPerformed(evt);
-            }
-        });
-
+        btn_delete_planning.setBackground(javax.swing.UIManager.getDefaults().getColor("Focus.color"));
         btn_delete_planning.setForeground(javax.swing.UIManager.getDefaults().getColor("nb.output.warning.foreground"));
-        btn_delete_planning.setText("Effacer la table");
+        btn_delete_planning.setText("Supprimer le planning");
         btn_delete_planning.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_delete_planningActionPerformed(evt);
@@ -150,12 +158,173 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Planning d'assemblage");
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.setBackground(new java.awt.Color(36, 65, 86));
+
+        btn_import_csv.setText("Importer le planning .csv ...");
+        btn_import_csv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_import_csvActionPerformed(evt);
             }
         });
+
+        btn_csv_example.setText("Exemple fichier .csv ...");
+        btn_csv_example.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_csv_exampleActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Harness Part");
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Internal Part");
+
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Quantité planifiée");
+
+        txt_qty_planned.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_qty_plannedFocusLost(evt);
+            }
+        });
+
+        btn_delete.setText("Supprimer");
+        btn_delete.setEnabled(false);
+
+        msg_lbl.setForeground(new java.awt.Color(255, 255, 255));
+
+        txt_id.setEditable(false);
+
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("ID");
+
+        btn_save.setText("Enregistrer");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(txt_id, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txt_harness_part, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(40, 40, 40)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(btn_csv_example)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(btn_import_csv))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel4)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(txt_qty_planned, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btn_delete)
+                                        .addComponent(txt_internal_part, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(btn_save)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(msg_lbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(btn_csv_example)
+                    .addComponent(btn_import_csv))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txt_harness_part, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_qty_planned, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txt_internal_part, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btn_delete)
+                    .addComponent(btn_save))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Harness Part");
+
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setText("Internal Part");
+
+        btn_export_excel.setText("Exporter en Excel");
+        btn_export_excel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_export_excelActionPerformed(evt);
+            }
+        });
+
+        btn_refresh.setText("Actualiser");
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addComponent(txt_harness_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txt_internal_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
+                .addComponent(btn_refresh)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_export_excel)
+                .addContainerGap(120, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txt_harness_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(txt_internal_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_export_excel)
+                    .addComponent(btn_refresh))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -163,46 +332,31 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_delete_planning, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(btn_csv_example)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_import_csv)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_refresh))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(120, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(180, 180, 180))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btn_delete_planning, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(497, 497, 497)))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_csv_example)
-                    .addComponent(btn_import_csv)
-                    .addComponent(btn_refresh))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_delete_planning, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_delete_planning, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -269,7 +423,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             Helper.startSession();
             Query query = Helper.sess.createQuery(HQLHelper.DEL_PRODUCTION_PLAN);
             int result = query.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Table supprimée !\n");
+            JOptionPane.showMessageDialog(null, "Planning supprimé !\n");
             planning_table_data = new Vector();
             refreshPlanningTable();
             return true;
@@ -278,11 +432,34 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         return false;
     }
 
+    private void initContainerTableDoubleClick() {
+        this.planning_jtable.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    //Cleat the message field
+                    msg_lbl.setText("");
+
+                    Helper.startSession();
+                    Query query = Helper.sess.createQuery(HQLHelper.GET_PLANNING_LINE_BY_ID);
+                    query.setParameter("id", planning_jtable.getValueAt(planning_jtable.getSelectedRow(), 0));
+
+                    Helper.sess.getTransaction().commit();
+                    aux = (ProductionPlan) query.list().get(0);
+                    txt_id.setText(aux.getId() + "");
+                    txt_harness_part.setText(aux.getHarnessPart());
+                    txt_internal_part.setText(aux.getInternalPart());
+                    txt_qty_planned.setText(aux.getPlannedQty().toString());
+                    btn_delete.setEnabled(true);
+                }
+            }
+        }
+        );
+    }
     private void btn_import_csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_import_csvActionPerformed
 
         try {
             JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop/"));
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV", "csv");
             fileChooser.setFileFilter(filter);
@@ -317,6 +494,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                         }
                         i++;
                     }
+                    UILog.info("Importation terminée !");
 
                     // In the end of the import, refresh the list
                     refreshPlanningTable();
@@ -334,7 +512,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_import_csvActionPerformed
 
     private void btn_delete_planningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete_planningActionPerformed
-        
+
         deletePlanning();
         //GlobalMethods.refreshJTable(planning_jtable, new Vector(), header_columns);
         refreshPlanningTable();
@@ -344,39 +522,114 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         refreshPlanningTable();
     }//GEN-LAST:event_btn_refreshActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        final Timer t = new Timer(50, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                jProgressBar1.setValue(jProgressBar1.getValue() + 1);
-                if (jProgressBar1.getValue() == 100) {
-                    ((Timer) e.getSource()).stop();
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+
+        if (txt_harness_part.getText().equals("")
+                || txt_internal_part.getText().equals("")
+                || txt_qty_planned.getText().equals("")) {
+            err = true;
+            String[] msg = {"Merci de saisir toutes les valeurs"};
+            msg_lbl.setText(msg[0]);
+        } else {
+            if (txt_id.getText().equals("#")) {//New item
+                //@to do ajouter les controls du formulaire
+                try {
+                    ProductionPlan p = new ProductionPlan(
+                            txt_harness_part.getText(), txt_internal_part.getText(), Integer.valueOf(txt_qty_planned.getText()));
+                    p.create(p);
+                    clearFields();
+                    String[] msg = {"Nouveau élement créé"};
+                    msg_lbl.setText(msg[0]);
+                    refreshPlanningTable();
+                } catch (Exception e) {
+                    String[] msg = {"Valeur numérique incorrecte! Saisir un entier."};
+                    msg_lbl.setText(msg[0]);
+                    txt_qty_planned.requestFocus();
+                    txt_qty_planned.selectAll();
+                }
+
+            } else { // it's a modification
+                //@to do ajouter les controls du formulaire
+                try {
+                    aux.setHarnessPart(txt_harness_part.getText());
+                    aux.setInternalPart(txt_internal_part.getText());
+
+                    aux.setPlannedQty(Integer.valueOf(txt_qty_planned.getText()));
+
+                    aux.setWriteId(GlobalVars.CONNECTED_USER.getId());
+                    aux.setWriteUser(GlobalVars.CONNECTED_USER.getFirstName() + " " + GlobalVars.CONNECTED_USER.getLastName());
+                    aux.setWriteTime(new Date());
+                    aux.update(aux);
+                    clearFields();
+                    String[] msg = {"Changements enregistrés"};
+                    msg_lbl.setText(msg[0]);
+                    refreshPlanningTable();
+                } catch (Exception e) {
+                    String[] msg = {"Valeur numérique incorrecte! Saisir un entier."};
+                    msg_lbl.setText(msg[0]);
+                    txt_qty_planned.requestFocus();
+                    txt_qty_planned.selectAll();
                 }
             }
-        });
-        t.start();
-    }//GEN-LAST:event_jButton1ActionPerformed
+
+        }
+    }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void txt_qty_plannedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_qty_plannedFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_qty_plannedFocusLost
+
+    private void btn_export_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export_excelActionPerformed
+        Workbook wb = new XSSFWorkbook(); // new HSSFWorkbook();
+        Sheet sheet = wb.createSheet("Production Plan");
+        CreationHelper createHelper = wb.getCreationHelper();
+
+        // Create a row and put some cells in it. Rows are 0 based.
+        Row row = sheet.createRow((short) 0);
+
+        row.createCell(0).setCellValue("harness_part");
+        row.createCell(1).setCellValue("internal_part");
+        row.createCell(2).setCellValue("planned_qty");
+//        row.createCell(3).setCellValue("modifié le");
+//        row.createCell(4).setCellValue("modifié par");
+
+        short sheetPointer = 1;
+        for (int i=0; i<this.planning_jtable.getRowCount(); i++) {
+            
+            row = sheet.createRow(sheetPointer);
+            
+            row.createCell(0).setCellValue(planning_jtable.getValueAt(i, 1).toString());
+            row.createCell(1).setCellValue(planning_jtable.getValueAt(i, 2).toString());
+            row.createCell(2).setCellValue(Integer.valueOf(planning_jtable.getValueAt(i, 3).toString()));
+//            row.createCell(3).setCellValue(planning_jtable.getValueAt(i, 4).toString());
+//            row.createCell(4).setCellValue(planning_jtable.getValueAt(i, 5).toString());
+            
+            sheetPointer++;
+        }
+
+        //Past the workbook to the file chooser
+        new JDialogExcelFileChooser(null, true, wb).setVisible(true);
+    }//GEN-LAST:event_btn_export_excelActionPerformed
 
     private Vector getPlanningLines() {
+        planning_table_data = new Vector();
         Helper.startSession();
 
-        //SQLQuery query = Helper.sess.createSQLQuery(HQLHelper.GET_ALL_PRODUCTION_PLAN_LINES);
-        Query query = Helper.sess.createQuery(HQLHelper.GET_ALL_PRODUCTION_PLAN_LINES);
-//        query
-//                .addScalar("harness_part", StandardBasicTypes.STRING)
-//                .addScalar("internal_part", StandardBasicTypes.STRING)
-//                .addScalar("planned_qty", StandardBasicTypes.DOUBLE)
-//                .addScalar("create_user", StandardBasicTypes.STRING);
-        List<Object[]> result = query.list();
+        Query query = Helper.sess.createQuery(HQLHelper.GET_PLANNING_LINE_BY_CPN_AND_LPN);
+        query.setParameter("harnessPart", "%" + txt_harness_part_filter.getText() + "%");
+        query.setParameter("internalPart", "%" + txt_internal_part_filter.getText() + "%");
+        List<ProductionPlan> result = query.list();
         Helper.sess.getTransaction().commit();
 
         //Populate the jTable with lines
-        for (Object[] obj : result) {
+        for (ProductionPlan obj : result) {
             Vector<Object> oneRow = new Vector<Object>();
-            oneRow.add((String) obj[0]);
-            oneRow.add((String) obj[1]);
-            oneRow.add(String.format("%1$,.2f", obj[2]));
-            oneRow.add((Timestamp) obj[3]);
-            oneRow.add((String) obj[4]);
+            oneRow.add(obj.getId());
+            oneRow.add(obj.getHarnessPart());
+            oneRow.add(obj.getInternalPart());
+            oneRow.add(obj.getPlannedQty());
+            oneRow.add(obj.getWriteTime());
+            oneRow.add(obj.getWriteUser());
 
             planning_table_data.add(oneRow);
         }
@@ -384,30 +637,51 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     }
 
     private void refreshPlanningTable() {
+        planning_jtable.setModel(new DefaultTableModel(new Vector(), planning_table_header));
         GlobalMethods.refreshJTable(planning_jtable, getPlanningLines(), header_columns);
     }
 
     private void createNewPlanningLine(CSVRecord record) {
-        ProductionPlan pp = new ProductionPlan(record.get("harness_part"), record.get("internal_part"), Double.valueOf(record.get("planned_qty")));
+        ProductionPlan pp = new ProductionPlan(record.get("harness_part"), record.get("internal_part"), Integer.valueOf(record.get("planned_qty")));
         pp.create(pp);
     }
-    
-        
-        
 
+    private void clearFields() {
+        txt_harness_part.setText("");
+        txt_internal_part.setText("");
+        txt_qty_planned.setText("");
+        txt_id.setText("#");
+        btn_delete.setEnabled(false);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_csv_example;
+    private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_delete_planning;
+    private javax.swing.JButton btn_export_excel;
     private javax.swing.JButton btn_import_csv;
     private javax.swing.JButton btn_refresh;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_save;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel msg_lbl;
     private javax.swing.JTable planning_jtable;
+    private javax.swing.JTextField txt_harness_part;
+    private javax.swing.JTextField txt_harness_part_filter;
+    private javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_internal_part;
+    private javax.swing.JTextField txt_internal_part_filter;
+    private javax.swing.JTextField txt_qty_planned;
     // End of variables declaration//GEN-END:variables
 
 }
