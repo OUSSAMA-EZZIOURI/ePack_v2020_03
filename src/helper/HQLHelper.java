@@ -280,11 +280,16 @@ public class HQLHelper {
     
     //ProductionPlan
     public final static String DEL_PRODUCTION_PLAN = "DELETE FROM ProductionPlan pp";
+    public final static String DEL_PRODUCTION_PLAN_BY_ID = "DELETE FROM ProductionPlan pp WHERE pp.id = :id";
     public final static String GET_ALL_PRODUCTION_PLAN_LINES = 
             "SELECT pp.id, pp.harnessPart, pp.internalPart, pp.plannedQty, "
             + "pp.createTime, pp.createUser FROM ProductionPlan pp";
     public final static String GET_PLANNING_LINE_BY_ID = "FROM ProductionPlan pp "
             + "WHERE pp.id = :id";
-    public final static String GET_PLANNING_LINE_BY_CPN_AND_LPN = "FROM ProductionPlan pp "
+    public final static String GET_PLANNING_LINE_LIKE_CPN_AND_LPN = "FROM ProductionPlan pp "
             + "WHERE pp.harnessPart LIKE :harnessPart AND pp.internalPart LIKE :internalPart";
+    public final static String GET_PLANNING_LINE_BY_CPN_OR_LPN_WITH_DIFF_ID = "FROM ProductionPlan pp "
+            + "WHERE (pp.harnessPart = :harnessPart OR pp.internalPart = :internalPart) AND pp.id != :id";
+    public final static String GET_PLANNING_LINE_LPN_WITH_DIFFERENT_ID = "FROM ProductionPlan pp "
+            + "WHERE pp.internalPart = :internalPart AND pp.id != :id";
 }

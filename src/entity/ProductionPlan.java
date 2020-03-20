@@ -57,23 +57,15 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
     }
 
     public ProductionPlan(String harnessPart, String internalPart, Integer plannedQty) {
-        this.harnessPart = harnessPart;
+        this.harnessPart = harnessPart.toUpperCase();
         this.plannedQty = plannedQty;
-        this.internalPart = internalPart;
+        this.internalPart = internalPart.toUpperCase();
         this.createId = PackagingVars.context.getUser().getId();
         this.writeId = PackagingVars.context.getUser().getId();
-        this.writeUser = this.createUser = PackagingVars.context.getUser().getFirstName() + " " + PackagingVars.context.getUser().getLastName();
+        this.writeUser = this.createUser = (PackagingVars.context.getUser().getFirstName() + " " + PackagingVars.context.getUser().getLastName()).toUpperCase();
         this.createTime = this.writeTime = new Date();
     }
 
-    //######################################################################   
-    /**
-     * public List select() { Helper.startSession(); Query query =
-     * Helper.sess.createQuery(HQLHelper.);
-     * UILog.info(query.getQueryString());
-     * Helper.sess.getTransaction().commit(); return query.list(); }
-    * *
-     */
     //####################### Getters & Setters ############################
     public Integer getId() {
         return id;
@@ -88,7 +80,7 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
     }
 
     public void setHarnessPart(String harnessPart) {
-        this.harnessPart = harnessPart;
+        this.harnessPart = harnessPart.toUpperCase();
     }
 
     public String getInternalPart() {
@@ -96,7 +88,7 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
     }
 
     public void setInternalPart(String internalPart) {
-        this.internalPart = internalPart;
+        this.internalPart = internalPart.toUpperCase();
     }
 
     public Integer getCreateId() {
@@ -136,7 +128,7 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
     }
 
     public void setCreateUser(String createUser) {
-        this.createUser = createUser;
+        this.createUser = createUser.toUpperCase();
     }
 
     public String getWriteUser() {
@@ -144,7 +136,7 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
     }
 
     public void setWriteUser(String writeUser) {
-        this.writeUser = writeUser;
+        this.writeUser = writeUser.toUpperCase();
     }
 
     public Integer getPlannedQty() {

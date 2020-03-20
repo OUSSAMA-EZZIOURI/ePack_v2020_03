@@ -55,21 +55,13 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     private JTabbedPane parent;
     Vector<String> planning_table_header = new Vector<String>(Arrays.asList(
             "ID",
-            "Customer PN",
-            "Internal PN",
-            "Quantité",
+            "Article",
+            "Module Intern.",
+            "Quantité plannif.",
             "Dernière modif.",
             "Modifié par."
     ));
 
-//    List<String> header_titles_list = Arrays.asList(
-//            "ID",
-//            "Customer PN",
-//            "Internal PN",
-//            "Quantité",
-//            "Dernière modif.",
-//            "Modifié par."
-//    );
     Vector planning_table_data = new Vector();
     ProductionPlan aux;
     boolean err = false;
@@ -168,6 +160,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         jLabel11.setText("Planning d'assemblage");
 
         jPanel1.setBackground(new java.awt.Color(36, 65, 86));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btn_import_csv.setText("Importer le planning .csv ...");
         btn_import_csv.addActionListener(new java.awt.event.ActionListener() {
@@ -184,10 +177,10 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         });
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Harness Part");
+        jLabel2.setText("Article faisceau");
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Internal Part");
+        jLabel3.setText("Code interne");
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Quantité planifiée");
@@ -200,6 +193,11 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
         btn_delete.setText("Supprimer");
         btn_delete.setEnabled(false);
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
 
         msg_lbl.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -220,41 +218,34 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(msg_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(6, 6, 6))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_harness_part, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                            .addComponent(txt_internal_part)
+                            .addComponent(txt_qty_planned))
+                        .addGap(103, 103, 103)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btn_save)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(txt_id, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txt_harness_part, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(40, 40, 40)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(btn_csv_example)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btn_import_csv))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel4)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txt_qty_planned, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btn_delete)
-                                        .addComponent(txt_internal_part, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(btn_save)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(msg_lbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                                .addComponent(btn_delete))
+                            .addComponent(btn_csv_example, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_import_csv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,32 +254,31 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_harness_part, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_qty_planned, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_csv_example))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txt_internal_part, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btn_delete)
+                    .addComponent(txt_internal_part, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_import_csv))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_qty_planned, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_save)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_csv_example)
-                        .addComponent(btn_import_csv)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btn_delete))
+                .addGap(20, 20, 20)
                 .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Harness Part");
+        jLabel6.setText("Article faisceau");
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("Internal Part");
+        jLabel7.setText("Code interne");
 
         btn_export_excel.setText("Exporter en Excel");
         btn_export_excel.addActionListener(new java.awt.event.ActionListener() {
@@ -321,7 +311,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                 .addComponent(btn_refresh)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_export_excel)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,16 +334,12 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btn_delete_planning, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(497, 497, 497)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_delete_planning, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -459,6 +445,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                     txt_id.setText(aux.getId() + "");
                     txt_harness_part.setText(aux.getHarnessPart());
                     txt_internal_part.setText(aux.getInternalPart());
+
                     txt_qty_planned.setText(aux.getPlannedQty().toString());
                     btn_delete.setEnabled(true);
                 }
@@ -534,13 +521,40 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_refreshActionPerformed
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-
+        int lineId = 0;
+        //If it's a modification, we look for an existing line with a different id != 0
+        //and not this one that we want to edit.
+        if (!txt_id.getText().equals("#")) {
+            lineId = Integer.valueOf(txt_id.getText());
+        }
+        //Is all required field are set
         if (txt_harness_part.getText().equals("")
                 || txt_internal_part.getText().equals("")
                 || txt_qty_planned.getText().equals("")) {
             err = true;
             String[] msg = {"Merci de saisir toutes les valeurs"};
             msg_lbl.setText(msg[0]);
+        } // Is planned qty null
+        else if (!GlobalMethods.isNumeric(txt_qty_planned.getText()) || Integer.valueOf(txt_qty_planned.getText()) == 0) {
+            String[] msg = {"Valeur numérique incorrecte! Saisir un entier supérieur à 0."};
+            UILog.errorDialog(msg[0]);
+            txt_qty_planned.requestFocus();
+            txt_qty_planned.selectAll();
+        } // Is the combinaison of the harness part and internal harness part
+        else if (is_CPN_OR_LPN_Planned(txt_harness_part.getText(), txt_internal_part.getText(), lineId)) {
+            String[] msg = {"Article ou/et Module interne déjà planifiés!"};
+            UILog.errorDialog(msg[0]);
+            txt_harness_part.requestFocus();
+            txt_harness_part.selectAll();
+            txt_internal_part.requestFocus();
+            txt_internal_part.selectAll();
+
+        } //Is the internal part exist in production plan
+        else if (isInternalPartPlanned(txt_internal_part.getText(), lineId)) {
+            String[] msg = {"Le module " + txt_internal_part.getText() + " déjà planifié!"};
+            UILog.errorDialog(msg[0]);
+            txt_internal_part.requestFocus();
+            txt_internal_part.selectAll();
         } else {
             if (txt_id.getText().equals("#")) {//New item
                 //@to do ajouter les controls du formulaire
@@ -553,14 +567,19 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                     msg_lbl.setText(msg[0]);
                     refreshPlanningTable();
                 } catch (Exception e) {
-                    String[] msg = {"Valeur numérique incorrecte! Saisir un entier."};
+                    String[] msg = {"Valeur numérique incorrecte! Saisir un entier supérieur à 0."};
                     msg_lbl.setText(msg[0]);
                     txt_qty_planned.requestFocus();
                     txt_qty_planned.selectAll();
                 }
 
             } else { // it's a modification
-                //@to do ajouter les controls du formulaire
+                if (isInternalPartPlanned(txt_internal_part.getText(), Integer.valueOf(txt_id.getText()))) {
+                    String[] msg = {"Harness part et Internal part existe déjà dans la base!"};
+                    UILog.errorDialog(msg[0]);
+                    txt_internal_part.requestFocus();
+                    txt_internal_part.selectAll();
+                }
                 try {
                     aux.setHarnessPart(txt_harness_part.getText());
                     aux.setInternalPart(txt_internal_part.getText());
@@ -576,7 +595,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                     msg_lbl.setText(msg[0]);
                     refreshPlanningTable();
                 } catch (Exception e) {
-                    String[] msg = {"Valeur numérique incorrecte! Saisir un entier."};
+                    String[] msg = {"Valeur numérique incorrecte! Saisir un entier supérieur à 0."};
                     msg_lbl.setText(msg[0]);
                     txt_qty_planned.requestFocus();
                     txt_qty_planned.selectAll();
@@ -603,14 +622,14 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         row.createCell(2).setCellValue("planned_qty");
 
         short sheetPointer = 1;
-        for (int i=0; i<this.planning_jtable.getRowCount(); i++) {
-            
+        for (int i = 0; i < this.planning_jtable.getRowCount(); i++) {
+
             row = sheet.createRow(sheetPointer);
-            
-            row.createCell(0).setCellValue(planning_jtable.getValueAt(i, 1).toString());            
+
+            row.createCell(0).setCellValue(planning_jtable.getValueAt(i, 1).toString());
             row.createCell(1).setCellValue(planning_jtable.getValueAt(i, 2).toString());
             row.createCell(2).setCellValue(Integer.valueOf(planning_jtable.getValueAt(i, 3).toString()));
-            
+
             sheetPointer++;
         }
 
@@ -618,11 +637,30 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         new JDialogExcelFileChooser(null, true, wb).setVisible(true);
     }//GEN-LAST:event_btn_export_excelActionPerformed
 
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+//        Helper.startSession();
+//
+//        Query query = Helper.sess.createQuery(HQLHelper.DEL_PRODUCTION_PLAN_BY_ID);
+//        query.setParameter("id", txt_id.getText());
+        int confirmed = JOptionPane.showConfirmDialog(this,
+                String.format("Confirmez-vous la suppression de cet élément [%s] ?",
+                        this.aux.getId()),
+                "Suppression",
+                JOptionPane.WARNING_MESSAGE);
+
+        if (confirmed == 0) {
+            aux.delete(aux);
+            clearFields();
+            msg_lbl.setText("Elément supprimé !");
+            refreshPlanningTable();
+        }
+    }//GEN-LAST:event_btn_deleteActionPerformed
+
     private Vector getPlanningLines() {
         planning_table_data = new Vector();
         Helper.startSession();
 
-        Query query = Helper.sess.createQuery(HQLHelper.GET_PLANNING_LINE_BY_CPN_AND_LPN);
+        Query query = Helper.sess.createQuery(HQLHelper.GET_PLANNING_LINE_LIKE_CPN_AND_LPN);
         query.setParameter("harnessPart", "%" + txt_harness_part_filter.getText() + "%");
         query.setParameter("internalPart", "%" + txt_internal_part_filter.getText() + "%");
         List<ProductionPlan> result = query.list();
@@ -641,6 +679,29 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             planning_table_data.add(oneRow);
         }
         return planning_table_data;
+    }
+
+    private boolean is_CPN_OR_LPN_Planned(String harnessPart, String internalPart, int id) {
+        Query query = Helper.sess.createQuery(HQLHelper.GET_PLANNING_LINE_BY_CPN_OR_LPN_WITH_DIFF_ID);
+        query.setParameter("harnessPart", harnessPart);
+        query.setParameter("internalPart", internalPart);
+        query.setParameter("id", id);
+        List<ProductionPlan> result = query.list();
+        if (result.size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isInternalPartPlanned(String internalPart, int id) {
+        Query query = Helper.sess.createQuery(HQLHelper.GET_PLANNING_LINE_LPN_WITH_DIFFERENT_ID);
+        query.setParameter("internalPart", internalPart);
+        query.setParameter("id", id);
+        List<ProductionPlan> result = query.list();
+        if (result.size() > 0) {
+            return true;
+        }
+        return false;
     }
 
     private void refreshPlanningTable() {

@@ -51,10 +51,10 @@ public class GlobalMethods {
      * Disconnect the current session and display the main frame
      */
     public static void logout() {
-        try{
+        try {
             PackagingVars.Packaging_Gui_Mode3.dispose();
             GlobalVars.OPENED_SCAN_WINDOW = 0;
-        }catch(Exception e){
+        } catch (Exception e) {
             //do nothing
         }
         try {
@@ -438,6 +438,18 @@ public class GlobalMethods {
                 ((JComboBox) c).setSelectedIndex(0);
             }
         }
+    }
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
 }
