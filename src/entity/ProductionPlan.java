@@ -50,13 +50,13 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
     @Column(name = "write_user")
     private String writeUser;
 
-    @Column(name = "planned_qty", nullable = false, columnDefinition = "float default 0.00")
-    private Double plannedQty;
+    @Column(name = "planned_qty", nullable = false)
+    private Integer plannedQty;
 
     public ProductionPlan() {
     }
 
-    public ProductionPlan(String harnessPart, String internalPart, Double plannedQty) {
+    public ProductionPlan(String harnessPart, String internalPart, Integer plannedQty) {
         this.harnessPart = harnessPart;
         this.plannedQty = plannedQty;
         this.internalPart = internalPart;
@@ -147,23 +147,26 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
         this.writeUser = writeUser;
     }
 
-    public Double getPlannedQty() {
+    public Integer getPlannedQty() {
         return plannedQty;
     }
 
-    public void setPlannedQty(Double plannedQty) {
+    public void setPlannedQty(Integer plannedQty) {
         this.plannedQty = plannedQty;
     }
+
+   
     
     public void setPlannedQty(int plannedQty) {
-        this.plannedQty = (double) plannedQty;
-    }
-    
-    @Override
-    public String toString() {
-        return "ProductionPlan{" + "id=" + id + ",\n harnessPart=" + harnessPart + ",\n internalPart=" + internalPart + ",\n createId=" + createId + ",\n writeId=" + writeId + ",\n writeTime=" + writeTime + ",\n createTime=" + createTime + ",\n createUser=" + createUser + ",\n writeUser=" + writeUser + ",\n plannedQty=" + plannedQty + '}';
+        this.plannedQty =  plannedQty;
     }
 
+    @Override
+    public String toString() {
+        return "ProductionPlan{" + "id=" + id + "\n, harnessPart=" + harnessPart + "\n, internalPart=" + internalPart + "\n, createId=" + createId + "\n, writeId=" + writeId + "\n, writeTime=" + writeTime + "\n, createTime=" + createTime + "\n, createUser=" + createUser + "\n, writeUser=" + writeUser + "\n, plannedQty=" + plannedQty + '}';
+    }
+    
+    
     
     
     
