@@ -22,6 +22,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +37,7 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -51,16 +53,23 @@ import ui.UILog;
 public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
     private JTabbedPane parent;
-    Vector<String> planning_table_header = new Vector<String>();
-
-    List<String> header_columns = Arrays.asList(
+    Vector<String> planning_table_header = new Vector<String>(Arrays.asList(
             "ID",
             "Customer PN",
             "Internal PN",
             "Quantité",
             "Dernière modif.",
             "Modifié par."
-    );
+    ));
+
+//    List<String> header_titles_list = Arrays.asList(
+//            "ID",
+//            "Customer PN",
+//            "Internal PN",
+//            "Quantité",
+//            "Dernière modif.",
+//            "Modifié par."
+//    );
     Vector planning_table_data = new Vector();
     ProductionPlan aux;
     boolean err = false;
@@ -79,7 +88,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     }
 
     private void initGui() {
-        GlobalMethods.refreshJTable(planning_jtable, planning_table_data, header_columns);
+        planning_jtable.setModel(new DefaultTableModel(new Vector(), planning_table_header));
         UIHelper.disableEditingJtable(planning_jtable);
         this.initContainerTableDoubleClick();
     }
@@ -145,8 +154,8 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(planning_jtable);
 
-        btn_delete_planning.setBackground(javax.swing.UIManager.getDefaults().getColor("Focus.color"));
-        btn_delete_planning.setForeground(javax.swing.UIManager.getDefaults().getColor("nb.output.warning.foreground"));
+        btn_delete_planning.setBackground(new java.awt.Color(255, 0, 51));
+        btn_delete_planning.setForeground(new java.awt.Color(255, 255, 255));
         btn_delete_planning.setText("Supprimer le planning");
         btn_delete_planning.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,6 +204,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         msg_lbl.setForeground(new java.awt.Color(255, 255, 255));
 
         txt_id.setEditable(false);
+        txt_id.setText("#");
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("ID");
@@ -252,10 +262,8 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(btn_csv_example)
-                    .addComponent(btn_import_csv))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_harness_part, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -268,7 +276,10 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(btn_delete)
-                    .addComponent(btn_save))
+                    .addComponent(btn_save)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_csv_example)
+                        .addComponent(btn_import_csv)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -514,7 +525,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     private void btn_delete_planningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete_planningActionPerformed
 
         deletePlanning();
-        //GlobalMethods.refreshJTable(planning_jtable, new Vector(), header_columns);
+        //GlobalMethods.refreshJTable(planning_jtable, new Vector(), header_titles_list);
         refreshPlanningTable();
     }//GEN-LAST:event_btn_delete_planningActionPerformed
 
@@ -590,19 +601,15 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         row.createCell(0).setCellValue("harness_part");
         row.createCell(1).setCellValue("internal_part");
         row.createCell(2).setCellValue("planned_qty");
-//        row.createCell(3).setCellValue("modifié le");
-//        row.createCell(4).setCellValue("modifié par");
 
         short sheetPointer = 1;
         for (int i=0; i<this.planning_jtable.getRowCount(); i++) {
             
             row = sheet.createRow(sheetPointer);
             
-            row.createCell(0).setCellValue(planning_jtable.getValueAt(i, 1).toString());
+            row.createCell(0).setCellValue(planning_jtable.getValueAt(i, 1).toString());            
             row.createCell(1).setCellValue(planning_jtable.getValueAt(i, 2).toString());
             row.createCell(2).setCellValue(Integer.valueOf(planning_jtable.getValueAt(i, 3).toString()));
-//            row.createCell(3).setCellValue(planning_jtable.getValueAt(i, 4).toString());
-//            row.createCell(4).setCellValue(planning_jtable.getValueAt(i, 5).toString());
             
             sheetPointer++;
         }
@@ -628,7 +635,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             oneRow.add(obj.getHarnessPart());
             oneRow.add(obj.getInternalPart());
             oneRow.add(obj.getPlannedQty());
-            oneRow.add(obj.getWriteTime());
+            oneRow.add(new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").format(obj.getWriteTime()));
             oneRow.add(obj.getWriteUser());
 
             planning_table_data.add(oneRow);
@@ -638,7 +645,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
     private void refreshPlanningTable() {
         planning_jtable.setModel(new DefaultTableModel(new Vector(), planning_table_header));
-        GlobalMethods.refreshJTable(planning_jtable, getPlanningLines(), header_columns);
+        planning_jtable.setModel(new DefaultTableModel(getPlanningLines(), planning_table_header));
     }
 
     private void createNewPlanningLine(CSVRecord record) {

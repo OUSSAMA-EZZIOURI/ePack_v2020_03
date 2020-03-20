@@ -156,6 +156,7 @@ public class StartFrame extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel3.setText("Authentification");
 
+        pwd_textfield.setText("9");
         pwd_textfield.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pwd_textfieldMouseClicked(evt);
@@ -170,6 +171,7 @@ public class StartFrame extends javax.swing.JFrame {
             }
         });
 
+        login_textfield.setText("9");
         login_textfield.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 login_textfieldFocusGained(evt);
@@ -381,7 +383,7 @@ public class StartFrame extends javax.swing.JFrame {
             user.setLoginTime(new Date());
             PackagingVars.context.setUser(user);
             PackagingVars.context.getUser().update(PackagingVars.context.getUser());
-
+            GlobalVars.CONNECTED_USER = PackagingVars.context.getUser();
             try {
                 GlobalVars.APP_HOSTNAME = InetAddress.getLocalHost().getHostName();
             } catch (UnknownHostException ex) {

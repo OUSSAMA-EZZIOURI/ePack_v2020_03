@@ -194,6 +194,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JPasswordField" name="pwd_textfield">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="9"/>
+              </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pwd_textfieldMouseClicked"/>
                 <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="pwd_textfieldKeyPressed"/>
@@ -201,6 +204,9 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="login_textfield">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="9"/>
+              </Properties>
               <Events>
                 <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="login_textfieldFocusGained"/>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="login_textfieldMouseClicked"/>

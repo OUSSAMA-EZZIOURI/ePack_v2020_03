@@ -104,10 +104,10 @@
     <Component class="javax.swing.JButton" name="btn_delete_planning">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" id="Focus.color" palette="3" red="ff" type="palette"/>
+          <Color blue="33" green="0" red="ff" type="rgb"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="cd" id="nb.output.warning.foreground" palette="3" red="cd" type="palette"/>
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Supprimer le planning"/>
       </Properties>
@@ -194,10 +194,8 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txt_id" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btn_csv_example" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btn_import_csv" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="33" max="32767" attributes="0"/>
+                  <EmptySpace pref="37" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txt_harness_part" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -213,6 +211,10 @@
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="btn_delete" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_save" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="2" groupAlignment="3" attributes="0">
+                          <Component id="btn_csv_example" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btn_import_csv" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="msg_lbl" min="-2" pref="22" max="-2" attributes="0"/>
@@ -286,6 +288,7 @@
         <Component class="javax.swing.JTextField" name="txt_id">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="text" type="java.lang.String" value="#"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
