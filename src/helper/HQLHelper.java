@@ -278,4 +278,13 @@ public class HQLHelper {
      */
     public final static String DEL_DISPATCH_LABELS_BY_PLAN_ID =  "DELETE FROM LoadPlanDispatchLabel lpl WHERE lpl.loadPlanId = :load_plan_id";
     
+    //ProductionPlan
+    public final static String DEL_PRODUCTION_PLAN = "DELETE FROM ProductionPlan pp";
+    public final static String GET_ALL_PRODUCTION_PLAN_LINES = 
+            "SELECT pp.id, pp.harnessPart, pp.internalPart, pp.plannedQty, "
+            + "pp.createTime, pp.createUser FROM ProductionPlan pp";
+    public final static String GET_PLANNING_LINE_BY_ID = "FROM ProductionPlan pp "
+            + "WHERE pp.id = :id";
+    public final static String GET_PLANNING_LINE_BY_CPN_AND_LPN = "FROM ProductionPlan pp "
+            + "WHERE pp.harnessPart LIKE :harnessPart AND pp.internalPart LIKE :internalPart";
 }
