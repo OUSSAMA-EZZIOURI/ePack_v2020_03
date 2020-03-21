@@ -8,6 +8,7 @@ package helper;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +34,24 @@ public class JDialogExcelFileChooser extends javax.swing.JDialog {
         Helper.centerJDialog(this);
     }
     
+    public JDialogExcelFileChooser(java.awt.Frame parent, boolean modal, File selectedFile, Workbook wb) {
+        super(parent, modal);
+        initComponents();
+        this.chooser.setSelectedFile(selectedFile);
+        this.chooser.repaint();
+        this.wb = wb;
+        //Center the this dialog in the screen
+        Helper.centerJDialog(this);
+    }
+    
     public JDialogExcelFileChooser(java.awt.Frame parent, boolean modal, File file) {
+        super(parent, modal);
+        initComponents();        
+        //Center the this dialog in the screen
+        Helper.centerJDialog(this);
+    }
+
+    public JDialogExcelFileChooser(java.awt.Frame parent, boolean modal, FileWriter fileWriter) {
         super(parent, modal);
         initComponents();        
         //Center the this dialog in the screen
@@ -77,17 +95,15 @@ public class JDialogExcelFileChooser extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 22, Short.MAX_VALUE)
-                .addComponent(chooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addComponent(chooser, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void chooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooserActionPerformed
-
-        System.out.println("getSelectedFile() : "
-                + chooser.getSelectedFile());
 
         if (chooser.getSelectedFile() != null) {
             FileOutputStream fileOut = null;

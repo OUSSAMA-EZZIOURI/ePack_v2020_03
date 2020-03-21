@@ -14,6 +14,7 @@ import helper.JDialogExcelFileChooser;
 import helper.UIHelper;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -1056,7 +1057,7 @@ public class PACKAGING_UI0011_ProdStatistics_JPANEL extends javax.swing.JPanel {
         row.createCell(1).setCellValue(String.valueOf(endDateStr));
 
         //Past the workbook to the file chooser
-        new JDialogExcelFileChooser(null, true, wb).setVisible(true);
+        new JDialogExcelFileChooser(null, true, new File("Production"), wb).setVisible(true);
     }//GEN-LAST:event_export_btnActionPerformed
 
     private void workplace_filterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_workplace_filterItemStateChanged
