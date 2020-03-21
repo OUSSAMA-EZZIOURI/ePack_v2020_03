@@ -275,6 +275,8 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                 .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Article faisceau");
 
@@ -479,15 +481,9 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
                 try {
                     int i = 1;
-                    for (CSVRecord record : csvParser) {
-
-                        //@Todo : Control sur la destination du plan
-                        String harness_part = record.get("harness_part");
-                        String internal_part = record.get("internal_part");
-                        String planed_qty = record.get("planned_qty");
+                    for (CSVRecord record : csvParser) {                       
                         try {
                             createNewPlanningLine(record);
-                            System.out.println(harness_part + "\t" + internal_part + "\t" + planed_qty);
                         } catch (Exception e) {
                             System.out.println("Erreur dans la ligne " + i);
                         }
@@ -622,7 +618,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
         try (FileWriter fw = new FileWriter(str)) {
             try (CSVPrinter printer = new CSVPrinter(fw, CSVFormat.DEFAULT
-                    .withHeader("harness_part", "internal_part", "planned_qty"))) {
+                    .withHeader("harness_part", "internal_part", "planned_qty").withDelimiter(';'))) {
                 for (int i = 0; i < this.planning_jtable.getRowCount(); i++) {
                     printer.printRecord(
                             planning_jtable.getValueAt(i, 1).toString(), //harness_part

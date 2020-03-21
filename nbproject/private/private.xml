@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="6">
+        <file>
+            <url>src/gui/warehouse_dispatch/WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL.java</url>
+            <bookmark id="6">
+                <name/>
+                <line>2955</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/gui/packaging/reports/PACKAGING_UI0020_PALLET_LIST_JPANEL.java</url>
+            <bookmark id="4">
+                <name/>
+                <line>209</line>
+                <key/>
+            </bookmark>
+            <bookmark id="5">
+                <name/>
+                <line>211</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/print/PrintClosingPallet_A5.java</url>
+            <bookmark id="2">
+                <name/>
+                <line>138</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/gui/packaging/reports/PACKAGING_UI0011_ProdStatistics.java</url>
+            <bookmark id="3">
+                <name/>
+                <line>878</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/gui/packaging/mode2/gui/PACKAGING_UI9000_ChoosePackType_Mode2.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>314</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/java_workspace/ePack_v2020_03/src/gui/cra/CRA_UI0001_PRODUCTION_PLAN.java</file>
+            <file>file:/D:/java_workspace/ePack_v2020_03/src/entity/WireConfig.java</file>
+            <file>file:/D:/java_workspace/ePack_v2020_03/src/helper/HQLHelper.java</file>
+            <file>file:/D:/java_workspace/ePack_v2020_03/src/gui/cra/CRA_UI0002_WIRE_MASTER_DATA.java</file>
+            <file>file:/D:/java_workspace/ePack_v2020_03/src/entity/ProductionPlan.java</file>
+            <file>file:/D:/java_workspace/ePack_v2020_03/src/__main__/MainFrame.java</file>
+        </group>
+    </open-files>
+</project-private>

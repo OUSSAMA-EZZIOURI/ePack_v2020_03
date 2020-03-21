@@ -206,6 +206,7 @@ public class MainFrame extends javax.swing.JFrame {
         packaging_stock_menu = new javax.swing.JMenuItem();
         MENU_06_CRA = new javax.swing.JMenu();
         MENU_06_PRODUCTION_PLAN = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         MENU_06_MODULE_HELP = new javax.swing.JMenu();
         logoutMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -429,6 +430,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         MENU_06_CRA.add(MENU_06_PRODUCTION_PLAN);
+
+        jMenuItem2.setText("Master data fil");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        MENU_06_CRA.add(jMenuItem2);
 
         menuBar.add(MENU_06_CRA);
 
@@ -785,6 +794,10 @@ public class MainFrame extends javax.swing.JFrame {
         addNewTab(new CRA_UI0001_PRODUCTION_PLAN(rootTabbedPane), evt);
     }//GEN-LAST:event_MENU_06_PRODUCTION_PLANActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MENU_00_01_FG_RECEPTION;
@@ -806,6 +819,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem MENU_06_PRODUCTION_PLAN;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem logoutMenuItem;
     private javax.swing.JMenuItem menu010_pallet_details;

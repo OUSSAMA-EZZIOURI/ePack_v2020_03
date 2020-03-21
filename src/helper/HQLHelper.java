@@ -292,4 +292,5 @@ public class HQLHelper {
             + "WHERE (pp.harnessPart = :harnessPart OR pp.internalPart = :internalPart) AND pp.id != :id";
     public final static String GET_PLANNING_LINE_LPN_WITH_DIFFERENT_ID = "FROM ProductionPlan pp "
             + "WHERE pp.internalPart = :internalPart AND pp.id != :id";
+    public final static String GET_WIRE_CONFIG_LINE_BY_ID = "FROM WireConfig wc WHERE wc.id = :id";
 }

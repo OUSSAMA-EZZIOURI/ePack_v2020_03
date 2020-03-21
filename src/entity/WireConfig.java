@@ -1,5 +1,6 @@
 package entity;
 
+import __main__.GlobalVars;
 import gui.packaging.PackagingVars;
 import hibernate.DAO;
 import java.util.Date;
@@ -44,54 +45,55 @@ public class WireConfig extends DAO implements java.io.Serializable {
     @Column(name = "write_user")
     private String writeUser;
 
-    @Column(name = "project")
+    @Column(name = "project", nullable = true)
     private String project;
-    @Column(name = "product_wire_no")
+    @Column(name = "product_wire_no", nullable = true)
     private String productWireNo;
-    @Column(name = "harness_pn")
+    @Column(name = "harness_pn", nullable = true)
     private String harnessPn;
-    @Column(name = "internal_part")
+    @Column(name = "internal_part", nullable = true)
     private String internalPn;
-    @Column(name = "wire_no")
+    @Column(name = "wire_no", nullable = true)
     private String wireNo;
-    @Column(name = "operation_no")
+    @Column(name = "operation_no", nullable = true)
     private String operationNo;
-    @Column(name = "wire_type")
+    @Column(name = "wire_type", nullable = true)
     private String wireType;
-    @Column(name = "spool_pn")
+    @Column(name = "spool_pn", nullable = true)
     private String spoolPn;
-    @Column(name = "multicore_name")
+    @Column(name = "multicore_name", nullable = true)
     private String multicoreName;
-    @Column(name = "color")
+    @Column(name = "color", nullable = true)
     private String color;
-    @Column(name = "type_")
+    @Column(name = "type_", nullable = true)
     private String type;
-    @Column(name = "length_")
+    @Column(name = "length_", nullable = true)
     private Double length;
-    @Column(name = "int_term1")
+    @Column(name = "int_term1", nullable = true)
     private String intTerm1;
-    @Column(name = "strip_length1")
+    @Column(name = "strip_length1", nullable = true)
     private Double stripLength1;
-    @Column(name = "int_seal1")
+    @Column(name = "int_seal1", nullable = true)
     private String intSeal1;
-    @Column(name = "int_term2")
+    @Column(name = "int_term2", nullable = true)
     private String intTerm2;
-    @Column(name = "strip_length2")
+    @Column(name = "strip_length2", nullable = true)
     private Double stripLength2;
-    @Column(name = "int_seal2")
+    @Column(name = "int_seal2", nullable = true)
     private String intSeal2;
-    @Column(name = "description")
+    @Column(name = "description", nullable = true)
     private String description;
-    @Column(name = "warehouse")
-    private String warehouse;
-    @Column(name = "wh_location")
-    private String whLocation;
-    @Column(name = "destination_wh")
-    private String destination_wh;
-    @Column(name = "card_number")
+    @Column(name = "source_wh", nullable = true)
+    private String sourceWh; //Source warehouse
+    @Column(name = "source_location", nullable = true)
+    private String sourceLocation;
+    @Column(name = "destination_wh", nullable = true)
+    private String destWarehouse;
+    @Column(name = "card_number", nullable = true)
     private Integer cardNumber;
-    @Column(name = "kanban_qty")
+    @Column(name = "kanban_qty", nullable = true)
     private Integer kanbanQty;
+    
     @Column(name = "bundle_qty")
     private Integer bundleQty;
 
@@ -101,7 +103,26 @@ public class WireConfig extends DAO implements java.io.Serializable {
     public WireConfig() {
     }
 
-    public WireConfig(String project, String productWireNo, String harnessPn, String internalPn, String wireNo, String operationNo, String wireType, String spoolPn, String multicoreName, String color, String type, Double length, String intTerm1, Double stripLength1, String intSeal1, String intTerm2, Double stripLength2, String intSeal2, String description, String warehouse, String whLocation, String destination_wh, Integer cardNumber, Integer kanbanQty, Integer bundleQty, Integer stock) {
+    public WireConfig(String project, String harnessPn, String internalPn, String wireNo, String operationNo, String sourceWh, String sourceLocation, String destWarehouse, Integer cardNumber, Integer kanbanQty, Integer bundleQty, Integer stock) {
+        this.project = project;
+        this.wireNo = wireNo;
+        this.harnessPn = harnessPn;
+        this.internalPn = internalPn;
+        this.stock = stock;
+        this.cardNumber = cardNumber;
+        this.kanbanQty = kanbanQty;
+        this.bundleQty = bundleQty;
+        this.operationNo = operationNo;
+        this.sourceWh = sourceWh;
+        this.sourceLocation = sourceLocation;
+        this.destWarehouse = destWarehouse;
+        this.writeUser = this.createUser = (GlobalVars.CONNECTED_USER.getFirstName() + " " + GlobalVars.CONNECTED_USER.getLastName()).toUpperCase();
+        this.createTime = this.writeTime = new Date();
+    }
+
+    
+    
+    public WireConfig(String project, String productWireNo, String harnessPn, String internalPn, String wireNo, String operationNo, String wireType, String spoolPn, String multicoreName, String color, String type, Double length, String intTerm1, Double stripLength1, String intSeal1, String intTerm2, Double stripLength2, String intSeal2, String description, String sourceWh, String whLocation, String destination_wh, Integer cardNumber, Integer kanbanQty, Integer bundleQty, Integer stock) {
         this.createId = PackagingVars.context.getUser().getId();
         this.writeId = PackagingVars.context.getUser().getId();
         this.writeUser = this.createUser = PackagingVars.context.getUser().getFirstName() + " " + PackagingVars.context.getUser().getLastName();
@@ -125,9 +146,9 @@ public class WireConfig extends DAO implements java.io.Serializable {
         this.stripLength2 = stripLength2;
         this.intSeal2 = intSeal2;
         this.description = description;
-        this.warehouse = warehouse;
-        this.whLocation = whLocation;
-        this.destination_wh = destination_wh;
+        this.sourceWh = sourceWh;
+        this.sourceLocation = whLocation;
+        this.destWarehouse = destination_wh;
         this.cardNumber = cardNumber;
         this.kanbanQty = kanbanQty;
         this.bundleQty = bundleQty;
@@ -342,28 +363,28 @@ public class WireConfig extends DAO implements java.io.Serializable {
         this.description = description;
     }
 
-    public String getWarehouse() {
-        return warehouse;
+    public String getSourceWarehouse() {
+        return sourceWh;
     }
 
-    public void setWarehouse(String warehouse) {
-        this.warehouse = warehouse;
+    public void setSourceWarehouse(String sourceWarehouse) {
+        this.sourceWh = sourceWarehouse;
     }
 
-    public String getWhLocation() {
-        return whLocation;
+    public String getSourceLocation() {
+        return sourceLocation;
     }
 
-    public void setWhLocation(String whLocation) {
-        this.whLocation = whLocation;
+    public void setSourceLocation(String sourceLocation) {
+        this.sourceLocation = sourceLocation;
     }
 
-    public String getDestination_wh() {
-        return destination_wh;
+    public String getDestWarehouse() {
+        return destWarehouse;
     }
 
-    public void setDestination_wh(String destination_wh) {
-        this.destination_wh = destination_wh;
+    public void setDestWarehouse(String destWarehouse) {
+        this.destWarehouse = destWarehouse;
     }
 
     public Integer getCardNumber() {
@@ -400,17 +421,13 @@ public class WireConfig extends DAO implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "WireConfig{" + "id=" + id + ", createId=" + createId + ", writeId=" + writeId + ", writeTime=" + writeTime + ", createTime=" + createTime + ", createUser=" + createUser + ", writeUser=" + writeUser + ", project=" + project + ", productWireNo=" + productWireNo + ", harnessPn=" + harnessPn + ", internalPn=" + internalPn + ", wireNo=" + wireNo + ", operationNo=" + operationNo + ", wireType=" + wireType + ", spoolPn=" + spoolPn + ", multicoreName=" + multicoreName + ", color=" + color + ", type=" + type + ", length=" + length + ", intTerm1=" + intTerm1 + ", stripLength1=" + stripLength1 + ", intSeal1=" + intSeal1 + ", intTerm2=" + intTerm2 + ", stripLength2=" + stripLength2 + ", intSeal2=" + intSeal2 + ", description=" + description + ", warehouse=" + warehouse + ", whLocation=" + whLocation + ", destination_wh=" + destination_wh + ", cardNumber=" + cardNumber + ", kanbanQty=" + kanbanQty + ", bundleQty=" + bundleQty + ", stock=" + stock + "}\n";
+        return "WireConfig{" + "id=" + id + ", createId=" + createId + ", writeId=" + writeId + ", writeTime=" + writeTime + ", createTime=" + createTime + ", createUser=" + createUser + ", writeUser=" + writeUser + ", project=" + project + ", productWireNo=" + productWireNo + ", harnessPn=" + harnessPn + ", internalPn=" + internalPn + ", wireNo=" + wireNo + ", operationNo=" + operationNo + ", wireType=" + wireType + ", spoolPn=" + spoolPn + ", multicoreName=" + multicoreName + ", color=" + color + ", type=" + type + ", length=" + length + ", intTerm1=" + intTerm1 + ", stripLength1=" + stripLength1 + ", intSeal1=" + intSeal1 + ", intTerm2=" + intTerm2 + ", stripLength2=" + stripLength2 + ", intSeal2=" + intSeal2 + ", description=" + description + ", warehouse=" + sourceWh + ", whLocation=" + sourceLocation + ", destination_wh=" + destWarehouse + ", cardNumber=" + cardNumber + ", kanbanQty=" + kanbanQty + ", bundleQty=" + bundleQty + ", stock=" + stock + "}\n";
     }
-    
-    
-    
 
     //######################################################################   
     /**
      * public List select() { Helper.startSession(); Query query =
-     * Helper.sess.createQuery(HQLHelper.);
-     * UILog.info(query.getQueryString());
+     * Helper.sess.createQuery(HQLHelper.); UILog.info(query.getQueryString());
      * Helper.sess.getTransaction().commit(); return query.list(); } *
      */
 }

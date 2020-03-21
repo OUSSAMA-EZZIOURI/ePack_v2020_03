@@ -1,5 +1,6 @@
 package entity;
 
+import __main__.GlobalVars;
 import gui.packaging.PackagingVars;
 import hibernate.DAO;
 import java.util.Date;
@@ -62,7 +63,8 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
         this.internalPart = internalPart.toUpperCase();
         this.createId = PackagingVars.context.getUser().getId();
         this.writeId = PackagingVars.context.getUser().getId();
-        this.writeUser = this.createUser = (PackagingVars.context.getUser().getFirstName() + " " + PackagingVars.context.getUser().getLastName()).toUpperCase();
+        this.writeUser = this.createUser = (GlobalVars.CONNECTED_USER.getFirstName() 
+                + " " + GlobalVars.CONNECTED_USER.getLastName()).toUpperCase();
         this.createTime = this.writeTime = new Date();
     }
 

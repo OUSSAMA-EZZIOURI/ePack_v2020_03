@@ -1,0 +1,208 @@
+mars 20, 2020 10:05:57 PM ui.UILog log
+INFOS: File 2020_03_20.log is created!
+
+mars 20, 2020 10:05:57 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] created !
+open_sheet sub directory [.\print\2020_03_20\open_sheet] created !
+Print sub directory [.\print\2020_03_20\closing_sheet] created !
+Print sub directory [.\print\2020_03_20\picking_label] created !
+Print sub directory [.\print\2020_03_20\dispatch_label] created !
+
+mars 20, 2020 10:05:58 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 22:05:58 Module : Configuration : .
+mars 20, 2020 10:10:32 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 10:10:32 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 10:10:33 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 22:10:33 Module : Configuration : .
+mars 20, 2020 10:11:13 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 10:11:13 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 10:11:14 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 22:11:14 Module : Configuration : .
+mars 20, 2020 10:11:37 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 10:11:37 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 10:11:39 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 22:11:39 Module : Configuration : .
+mars 20, 2020 10:13:05 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 10:13:05 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 10:13:07 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 22:13:07 Module : Configuration : .
+mars 20, 2020 10:15:20 PM ui.UILog log
+INFOS: SELECT DISTINCT (cp.project) FROM ConfigProject cp ORDER BY project ASC
+mars 20, 2020 10:27:44 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 10:27:44 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 10:27:57 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 22:27:57 Module : Configuration : .
+mars 20, 2020 10:39:48 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 10:39:48 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 10:40:24 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 22:40:24 Module : Configuration : .
+mars 20, 2020 10:44:41 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 10:44:41 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 10:44:42 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 22:44:42 Module : Configuration : .
+mars 20, 2020 10:51:03 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 10:51:03 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 10:51:32 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 22:51:32 Module : Configuration : .
+mars 20, 2020 10:52:59 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 10:52:59 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 10:59:27 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 22:59:27 Module : Configuration : .
+mars 20, 2020 11:03:17 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 11:03:17 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 11:03:19 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 23:03:19 Module : Configuration : .
+mars 20, 2020 11:07:21 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 11:07:21 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 11:07:24 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 23:07:24 Module : Configuration : .
+mars 20, 2020 11:08:36 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 11:08:36 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 11:08:43 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 23:08:43 Module : Configuration : .
+mars 20, 2020 11:12:11 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 11:12:11 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 11:12:12 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 23:12:12 Module : Configuration : .
+mars 20, 2020 11:17:01 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 11:17:01 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 11:36:52 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 23:36:52 Module : Configuration : .
+mars 20, 2020 11:44:13 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 11:44:13 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 11:44:14 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 23:44:14 Module : Configuration : .
+mars 20, 2020 11:44:59 PM ui.UILog log
+INFOS: File 2020_03_20.log already exists.
+
+mars 20, 2020 11:44:59 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_20] already exist!
+open_sheet sub directory [.\print\2020_03_20\open_sheet] already exist!
+Print sub directory [.\print\2020_03_20\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_20\picking_label] already exist!
+Print sub directory [.\print\2020_03_20\dispatch_label] already exist!
+
+mars 20, 2020 11:45:01 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-20 23:45:01 Module : Configuration : .
+mars 20, 2020 11:46:31 PM ui.UILog log
+INFOS: Importation terminée !
