@@ -35,6 +35,20 @@ public class UIHelper {
      *
      * @param args
      */
+    public static void clearJTextFields(Component[] args) {
+        for (Component component : args) {
+
+            if (component instanceof JTextField) {
+                ((JTextField) component).setText("");
+            }
+        }
+    }
+
+    /**
+     * Delete the text content of given components
+     *
+     * @param args
+     */
     public static void clearTextFields(Component... args) {
         for (Component component : args) {
             switch (component.getClass().getName()) {
@@ -158,7 +172,7 @@ public class UIHelper {
         }
         return checkedTexts;
     }
-    
+
     public static List<String> manageCheckedRadioButtons(final Container c) {
         Component[] comps = c.getComponents();
         List<String> checkedTexts = new ArrayList<String>();
@@ -176,21 +190,37 @@ public class UIHelper {
         }
         return checkedTexts;
     }
-    
+
     /**
      * Check if a list contains a sting
+     *
      * @param list
      * @param string
-     * @return 
+     * @return
      */
-    public static boolean listContains(List<String> list, String string){
+    public static boolean listContains(List<String> list, String string) {
         for (int i = 0; i < list.size(); i++) {
-            if(list.contains(string)){
+            if (list.contains(string)) {
                 System.out.println(string + " exist !");
                 return true;
-            }            
+            }
         }
         return false;
+    }
+
+    /**
+     *
+     * @param c
+     * @param value
+     */
+    public static JComboBox selectValueInJComboBox(JComboBox c, String value) {
+        for (int i = 0; i < c.getItemCount(); i++) {
+            if (c.getItemAt(i).toString().equals(value)) {
+                c.setSelectedIndex(i);
+                break;
+            }
+        }
+        return c;
     }
 
 }

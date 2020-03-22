@@ -298,8 +298,8 @@ public class HQLHelper {
     public final static String GET_WIRE_CONFIG_BY_ID = "FROM WireConfig wc WHERE wc.id = :id";
     
     public final static String GET_WIRE_CONFIG_CPN_AND_LPN_AND_CARDNUM_AND_PROJECT = "FROM WireConfig wc "
-            + "WHERE wc.harnessPn LIKE :harnessPn "
-            + "AND wc.internalPart LIKE :internalPart"
-            + "AND wc.cardNum LIKE :cardNum"
-            + "AND wc.project LIKE :project";
+            + "WHERE wc.harnessPart LIKE :harnessPart "
+            + "AND wc.internalPart LIKE :internalPart "
+            //+ "AND wc.cardNumber = :cardNumber "
+            + "AND wc.project LIKE :project ";
 }

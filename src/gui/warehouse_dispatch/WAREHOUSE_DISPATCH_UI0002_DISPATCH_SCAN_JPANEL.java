@@ -939,11 +939,9 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
             query.setString("truckNo", "%" + lp_filter_val.getText() + "%");
             query.setString("user", "%" + lp_filter_val.getText() + "%");
             query.setString("state", plan_state_filter.getSelectedItem().toString().trim());
-            System.out.println("plan_state_filter.getSelectedItem().toString().trim() " + plan_state_filter.getSelectedItem().toString().trim());
         } else {
             query = Helper.sess.createQuery(HQLHelper.GET_LOAD_ALL_PLANS);
             query.setString("state", plan_state_filter.getSelectedItem().toString().trim());
-            System.out.println("plan_state_filter.getSelectedItem().toString().trim() " + plan_state_filter.getSelectedItem().toString().trim());
         }
         Helper.sess.getTransaction().commit();
         List result = query.list();

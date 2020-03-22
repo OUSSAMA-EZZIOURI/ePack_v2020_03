@@ -227,7 +227,7 @@ public class WireConfig extends DAO implements java.io.Serializable {
         this.productWireNo = productWireNo;
     }
 
-    public String getHarnessPn() {
+    public String getHarnessPart() {
         return harnessPart;
     }
 
@@ -235,7 +235,7 @@ public class WireConfig extends DAO implements java.io.Serializable {
         this.harnessPart = harnessPart;
     }
 
-    public String getInternalPn() {
+    public String getInternalPart() {
         return internalPart;
     }
 
