@@ -1,0 +1,52 @@
+mars 22, 2020 7:50:28 PM ui.UILog log
+INFOS: File 2020_03_22.log is created!
+
+mars 22, 2020 7:50:28 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_22] created !
+open_sheet sub directory [.\print\2020_03_22\open_sheet] created !
+Print sub directory [.\print\2020_03_22\closing_sheet] created !
+Print sub directory [.\print\2020_03_22\picking_label] created !
+Print sub directory [.\print\2020_03_22\dispatch_label] created !
+
+mars 22, 2020 7:50:30 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-22 19:50:30 Module : Configuration : .
+mars 22, 2020 7:51:52 PM ui.UILog log
+INFOS: File 2020_03_22.log already exists.
+
+mars 22, 2020 7:51:52 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_22] already exist!
+open_sheet sub directory [.\print\2020_03_22\open_sheet] already exist!
+Print sub directory [.\print\2020_03_22\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_22\picking_label] already exist!
+Print sub directory [.\print\2020_03_22\dispatch_label] already exist!
+
+mars 22, 2020 7:51:54 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-22 19:51:54 Module : Configuration : .
+mars 22, 2020 7:52:09 PM ui.UILog log
+INFOS: SELECT DISTINCT (cp.project) FROM ConfigProject cp ORDER BY project ASC
+mars 22, 2020 7:52:17 PM ui.UILog log
+INFOS: SELECT DISTINCT (cp.project) FROM ConfigProject cp ORDER BY project ASC
+mars 22, 2020 8:05:19 PM ui.UILog log
+INFOS: File 2020_03_22.log already exists.
+
+mars 22, 2020 8:05:19 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_22] already exist!
+open_sheet sub directory [.\print\2020_03_22\open_sheet] already exist!
+Print sub directory [.\print\2020_03_22\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_22\picking_label] already exist!
+Print sub directory [.\print\2020_03_22\dispatch_label] already exist!
+
+mars 22, 2020 8:05:22 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-22 20:05:22 Module : Configuration : .
+mars 22, 2020 8:08:52 PM ui.UILog log
+INFOS: File 2020_03_22.log already exists.
+
+mars 22, 2020 8:08:52 PM ui.UILog log
+INFOS: Daily output print directory [.\print\2020_03_22] already exist!
+open_sheet sub directory [.\print\2020_03_22\open_sheet] already exist!
+Print sub directory [.\print\2020_03_22\closing_sheet] already exist!
+Print sub directory [.\print\2020_03_22\picking_label] already exist!
+Print sub directory [.\print\2020_03_22\dispatch_label] already exist!
+
+mars 22, 2020 8:08:54 PM ui.UILog log
+INFOS: APP_INFO0003 : User EZZIOURI OUSSAMA / 9 connected to host Oussama-PC at 2020-03-22 20:08:54 Module : Configuration : .

@@ -12,6 +12,7 @@ import gui.config.CONFIG_UI0002_CONFIG_PACK_MASTERDATA_JPANEL;
 import gui.config.CONFIG_UI0003_CONFIG_USERS_JPANEL;
 import gui.config.CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL;
 import gui.cra.CRA_UI0001_PRODUCTION_PLAN;
+import gui.cra.CRA_UI0002_WIRE_MASTER_DATA;
 import gui.packaging.PackagingVars;
 //import gui.packaging.mode1.gui.PACKAGING_UI0001_Main_Mode1;
 import gui.packaging.mode3.gui.PACKAGING_UI0001_Main_Mode3;
@@ -795,7 +796,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_MENU_06_PRODUCTION_PLANActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+        addNewTab(new CRA_UI0002_WIRE_MASTER_DATA(rootTabbedPane), evt);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 

@@ -49,10 +49,10 @@ public class WireConfig extends DAO implements java.io.Serializable {
     private String project;
     @Column(name = "product_wire_no", nullable = true)
     private String productWireNo;
-    @Column(name = "harness_pn", nullable = true)
-    private String harnessPn;
+    @Column(name = "harness_part", nullable = true)
+    private String harnessPart;
     @Column(name = "internal_part", nullable = true)
-    private String internalPn;
+    private String internalPart;
     @Column(name = "wire_no", nullable = true)
     private String wireNo;
     @Column(name = "operation_no", nullable = true)
@@ -103,11 +103,11 @@ public class WireConfig extends DAO implements java.io.Serializable {
     public WireConfig() {
     }
 
-    public WireConfig(String project, String harnessPn, String internalPn, String wireNo, String operationNo, String sourceWh, String sourceLocation, String destWarehouse, Integer cardNumber, Integer kanbanQty, Integer bundleQty, Integer stock) {
+    public WireConfig(String project, String harnessPart, String internalPart, String wireNo, String operationNo, String sourceWh, String sourceLocation, String destWarehouse, Integer cardNumber, Integer kanbanQty, Integer bundleQty, Integer stock) {
         this.project = project;
         this.wireNo = wireNo;
-        this.harnessPn = harnessPn;
-        this.internalPn = internalPn;
+        this.harnessPart = harnessPart;
+        this.internalPart = internalPart;
         this.stock = stock;
         this.cardNumber = cardNumber;
         this.kanbanQty = kanbanQty;
@@ -122,15 +122,15 @@ public class WireConfig extends DAO implements java.io.Serializable {
 
     
     
-    public WireConfig(String project, String productWireNo, String harnessPn, String internalPn, String wireNo, String operationNo, String wireType, String spoolPn, String multicoreName, String color, String type, Double length, String intTerm1, Double stripLength1, String intSeal1, String intTerm2, Double stripLength2, String intSeal2, String description, String sourceWh, String whLocation, String destination_wh, Integer cardNumber, Integer kanbanQty, Integer bundleQty, Integer stock) {
+    public WireConfig(String project, String productWireNo, String harnessPart, String internalPart, String wireNo, String operationNo, String wireType, String spoolPn, String multicoreName, String color, String type, Double length, String intTerm1, Double stripLength1, String intSeal1, String intTerm2, Double stripLength2, String intSeal2, String description, String sourceWh, String whLocation, String destination_wh, Integer cardNumber, Integer kanbanQty, Integer bundleQty, Integer stock) {
         this.createId = PackagingVars.context.getUser().getId();
         this.writeId = PackagingVars.context.getUser().getId();
         this.writeUser = this.createUser = PackagingVars.context.getUser().getFirstName() + " " + PackagingVars.context.getUser().getLastName();
         this.createTime = this.writeTime = new Date();
         this.project = project;
         this.productWireNo = productWireNo;
-        this.harnessPn = harnessPn;
-        this.internalPn = internalPn;
+        this.harnessPart = harnessPart;
+        this.internalPart = internalPart;
         this.wireNo = wireNo;
         this.operationNo = operationNo;
         this.wireType = wireType;
@@ -228,19 +228,19 @@ public class WireConfig extends DAO implements java.io.Serializable {
     }
 
     public String getHarnessPn() {
-        return harnessPn;
+        return harnessPart;
     }
 
-    public void setHarnessPn(String harnessPn) {
-        this.harnessPn = harnessPn;
+    public void setHarnessPn(String harnessPart) {
+        this.harnessPart = harnessPart;
     }
 
     public String getInternalPn() {
-        return internalPn;
+        return internalPart;
     }
 
-    public void setInternalPn(String internalPn) {
-        this.internalPn = internalPn;
+    public void setInternalPn(String internalPart) {
+        this.internalPart = internalPart;
     }
 
     public String getWireNo() {
@@ -421,7 +421,7 @@ public class WireConfig extends DAO implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "WireConfig{" + "id=" + id + ", createId=" + createId + ", writeId=" + writeId + ", writeTime=" + writeTime + ", createTime=" + createTime + ", createUser=" + createUser + ", writeUser=" + writeUser + ", project=" + project + ", productWireNo=" + productWireNo + ", harnessPn=" + harnessPn + ", internalPn=" + internalPn + ", wireNo=" + wireNo + ", operationNo=" + operationNo + ", wireType=" + wireType + ", spoolPn=" + spoolPn + ", multicoreName=" + multicoreName + ", color=" + color + ", type=" + type + ", length=" + length + ", intTerm1=" + intTerm1 + ", stripLength1=" + stripLength1 + ", intSeal1=" + intSeal1 + ", intTerm2=" + intTerm2 + ", stripLength2=" + stripLength2 + ", intSeal2=" + intSeal2 + ", description=" + description + ", warehouse=" + sourceWh + ", whLocation=" + sourceLocation + ", destination_wh=" + destWarehouse + ", cardNumber=" + cardNumber + ", kanbanQty=" + kanbanQty + ", bundleQty=" + bundleQty + ", stock=" + stock + "}\n";
+        return "WireConfig{" + "id=" + id + ", createId=" + createId + ", writeId=" + writeId + ", writeTime=" + writeTime + ", createTime=" + createTime + ", createUser=" + createUser + ", writeUser=" + writeUser + ", project=" + project + ", productWireNo=" + productWireNo + ", harnessPart=" + harnessPart + ", internalPart=" + internalPart + ", wireNo=" + wireNo + ", operationNo=" + operationNo + ", wireType=" + wireType + ", spoolPn=" + spoolPn + ", multicoreName=" + multicoreName + ", color=" + color + ", type=" + type + ", length=" + length + ", intTerm1=" + intTerm1 + ", stripLength1=" + stripLength1 + ", intSeal1=" + intSeal1 + ", intTerm2=" + intTerm2 + ", stripLength2=" + stripLength2 + ", intSeal2=" + intSeal2 + ", description=" + description + ", warehouse=" + sourceWh + ", whLocation=" + sourceLocation + ", destination_wh=" + destWarehouse + ", cardNumber=" + cardNumber + ", kanbanQty=" + kanbanQty + ", bundleQty=" + bundleQty + ", stock=" + stock + "}\n";
     }
 
     //######################################################################   
