@@ -208,9 +208,6 @@ public class MainFrame extends javax.swing.JFrame {
         MENU_06_CRA = new javax.swing.JMenu();
         MENU_06_PRODUCTION_PLAN = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        MENU_06_MODULE_HELP = new javax.swing.JMenu();
-        logoutMenuItem = new javax.swing.JMenuItem();
-        exitMenuItem = new javax.swing.JMenuItem();
         MENU_05_MODULE_CONFIG = new javax.swing.JMenu();
         MENU_01_00_CONFIG_UCS = new javax.swing.JMenuItem();
         MENU_01_01_CONFIG_BARCODE = new javax.swing.JMenuItem();
@@ -218,6 +215,9 @@ public class MainFrame extends javax.swing.JFrame {
         MENU_01_03_AVANCE = new javax.swing.JMenu();
         MENU_01_03_00_CONFIG_USERS = new javax.swing.JMenuItem();
         MENU_01_03_01_CONFIG_COMPANY = new javax.swing.JMenuItem();
+        MENU_06_MODULE_HELP = new javax.swing.JMenu();
+        logoutMenuItem = new javax.swing.JMenuItem();
+        exitMenuItem = new javax.swing.JMenuItem();
 
         jMenuItem3.setText("jMenuItem3");
 
@@ -442,30 +442,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         menuBar.add(MENU_06_CRA);
 
-        MENU_06_MODULE_HELP.setText("Session");
-
-        logoutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
-        logoutMenuItem.setMnemonic('x');
-        logoutMenuItem.setText("Se déconnecter");
-        logoutMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutMenuItemActionPerformed(evt);
-            }
-        });
-        MENU_06_MODULE_HELP.add(logoutMenuItem);
-
-        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        exitMenuItem.setMnemonic('x');
-        exitMenuItem.setText("Quitter");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
-            }
-        });
-        MENU_06_MODULE_HELP.add(exitMenuItem);
-
-        menuBar.add(MENU_06_MODULE_HELP);
-
         MENU_05_MODULE_CONFIG.setText("Configuration");
 
         MENU_01_00_CONFIG_UCS.setText("Configuration Standard Pack");
@@ -513,6 +489,30 @@ public class MainFrame extends javax.swing.JFrame {
         MENU_05_MODULE_CONFIG.add(MENU_01_03_AVANCE);
 
         menuBar.add(MENU_05_MODULE_CONFIG);
+
+        MENU_06_MODULE_HELP.setText("Session");
+
+        logoutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        logoutMenuItem.setMnemonic('x');
+        logoutMenuItem.setText("Se déconnecter");
+        logoutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutMenuItemActionPerformed(evt);
+            }
+        });
+        MENU_06_MODULE_HELP.add(logoutMenuItem);
+
+        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        exitMenuItem.setMnemonic('x');
+        exitMenuItem.setText("Quitter");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
+        MENU_06_MODULE_HELP.add(exitMenuItem);
+
+        menuBar.add(MENU_06_MODULE_HELP);
 
         setJMenuBar(menuBar);
 
