@@ -3,6 +3,7 @@ package entity;
 import __main__.GlobalVars;
 import gui.packaging.PackagingVars;
 import hibernate.DAO;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -93,7 +94,7 @@ public class WireConfig extends DAO implements java.io.Serializable {
     private Integer cardNumber;
     @Column(name = "kanban_qty", nullable = true)
     private Integer kanbanQty;
-    
+
     @Column(name = "bundle_qty")
     private Integer bundleQty;
 
@@ -104,24 +105,22 @@ public class WireConfig extends DAO implements java.io.Serializable {
     }
 
     public WireConfig(String project, String harnessPart, String internalPart, String wireNo, String operationNo, String sourceWh, String sourceLocation, String destWarehouse, Integer cardNumber, Integer kanbanQty, Integer bundleQty, Integer stock) {
-        this.project = project;
-        this.wireNo = wireNo;
-        this.harnessPart = harnessPart;
-        this.internalPart = internalPart;
+        this.project = project.toUpperCase();
+        this.wireNo = wireNo.toUpperCase();
+        this.harnessPart = harnessPart.toUpperCase();
+        this.internalPart = internalPart.toUpperCase();
         this.stock = stock;
         this.cardNumber = cardNumber;
         this.kanbanQty = kanbanQty;
         this.bundleQty = bundleQty;
-        this.operationNo = operationNo;
-        this.sourceWh = sourceWh;
-        this.sourceLocation = sourceLocation;
-        this.destWarehouse = destWarehouse;
+        this.operationNo = operationNo.toUpperCase();
+        this.sourceWh = sourceWh.toUpperCase();
+        this.sourceLocation = sourceLocation.toUpperCase();
+        this.destWarehouse = destWarehouse.toUpperCase();
         this.writeUser = this.createUser = (GlobalVars.CONNECTED_USER.getFirstName() + " " + GlobalVars.CONNECTED_USER.getLastName()).toUpperCase();
         this.createTime = this.writeTime = new Date();
     }
 
-    
-    
     public WireConfig(String project, String productWireNo, String harnessPart, String internalPart, String wireNo, String operationNo, String wireType, String spoolPn, String multicoreName, String color, String type, Double length, String intTerm1, Double stripLength1, String intSeal1, String intTerm2, Double stripLength2, String intSeal2, String description, String sourceWh, String whLocation, String destination_wh, Integer cardNumber, Integer kanbanQty, Integer bundleQty, Integer stock) {
         this.createId = PackagingVars.context.getUser().getId();
         this.writeId = PackagingVars.context.getUser().getId();
@@ -179,16 +178,16 @@ public class WireConfig extends DAO implements java.io.Serializable {
         this.writeId = writeId;
     }
 
-    public Date getWriteTime() {
-        return writeTime;
+    public String getWriteTime() {
+        return new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").format(writeTime);
     }
 
     public void setWriteTime(Date writeTime) {
         this.writeTime = writeTime;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getCreateTime() {
+        return new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").format(createTime);
     }
 
     public void setCreateTime(Date createTime) {
