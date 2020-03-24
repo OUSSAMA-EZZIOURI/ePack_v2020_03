@@ -301,5 +301,5 @@ public class HQLHelper {
             + "WHERE wc.harnessPart LIKE :harnessPart "
             + "AND wc.internalPart LIKE :internalPart "
             //+ "AND wc.cardNumber = :cardNumber "
-            + "AND wc.project LIKE :project ";
+            + "AND wc.project IN (:project) ";
 }

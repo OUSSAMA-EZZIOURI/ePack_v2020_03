@@ -131,6 +131,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         setToolTipText("Planning d'assemblage");
         setName("Planning d'assemblage"); // NOI18N
 
+        planning_jtable.setAutoCreateRowSorter(true);
         planning_jtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -142,6 +143,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
             }
         ));
+        planning_jtable.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(planning_jtable);
 
         btn_delete_planning.setBackground(new java.awt.Color(255, 0, 51));

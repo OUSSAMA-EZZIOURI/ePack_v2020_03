@@ -1,5 +1,8 @@
 package gui.cra;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.ConfigProject;
 import entity.WireConfig;
 import helper.HQLHelper;
@@ -9,26 +12,26 @@ import helper.UIHelper;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.lang.reflect.Field;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Modifier;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.csv.CSVFormat;
@@ -57,13 +60,13 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             "Qté Kanban",
             "Qté Bundle",
             "Num. Operation",
+            "Mag. Source",
+            "Mag. Location",
+            "Mag. Dest",
             "Créé le.",
             "Créé par.",
             "Dernière modif.",
-            "Modifié par.",
-            "Mag. Source",
-            "Mag. Location",
-            "Mag. Dest"
+            "Modifié par."
     ));
 
     public static void main(String[] args) {
@@ -94,6 +97,8 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         if (combo_project.getItemCount() == 0) {
             ConfigProject.initProjectsJBox(this, combo_project, false);
         }
+        
+        ConfigProject.initProjectsJBox(this, combo_project_filter, true);
     }
 
     private void initContainerTableDoubleClick() {
@@ -109,21 +114,15 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
 
                     Helper.sess.getTransaction().commit();
                     aux = (WireConfig) query.list().get(0);
-                    txt_id.setText(aux.getId() + "");
-                    UIHelper.selectValueInJComboBox(combo_project, aux.getProject());
-                    txt_wire_num.setText(aux.getWireNo());
-                    txt_kanban_qty.setText(aux.getKanbanQty() + "");
+                    
+                    //#######################
+                    mapValuesInPanelFields(form_panel, aux, true);
 
-//                    for (int i = 0; i < combo_project.getItemCount(); i++) {
-//                        if(combo_project.getItemAt(i).toString().equals(aux.getProject())){
-//                            combo_project.setSelectedIndex(i);
-//                            break;
-//                        }
-//                    }
                     //########################
                     btn_delete.setEnabled(true);
                 }
             }
+
         }
         );
     }
@@ -156,19 +155,43 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         combo_project = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        txt_wire_num = new javax.swing.JTextField();
+        txt_wireNo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txt_kanban_qty = new javax.swing.JFormattedTextField();
+        txt_kanbanQty = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
-        txt_article_fx = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txt_internalPart = new javax.swing.JTextField();
+        txt_operationNo = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txt_stock = new javax.swing.JTextField();
+        txt_cardNumber = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        txt_harnessPart = new javax.swing.JTextField();
+        txt_bundleQty = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        txt_sourceWarehouse = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        txt_destWarehouse = new javax.swing.JTextField();
+        txt_createTime = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        txt_createUser = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        txt_writeTime = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        txt_writeUser = new javax.swing.JTextField();
+        msg_lbl = new javax.swing.JLabel();
+        btn_hide_creation_form = new javax.swing.JToggleButton();
+        btn_import_csv = new javax.swing.JButton();
         btn_new = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
         btn_delete = new javax.swing.JButton();
         btn_csv_example = new javax.swing.JButton();
-        btn_import_csv = new javax.swing.JButton();
-        msg_lbl = new javax.swing.JLabel();
-        btn_hide_creation_form = new javax.swing.JToggleButton();
+        btn_import_csv1 = new javax.swing.JButton();
+        btn_duplicate = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(36, 65, 86));
 
@@ -207,6 +230,21 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             }
         });
 
+        config_jtable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        config_jtable.setCellSelectionEnabled(true);
+        config_jtable.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jScrollPane1.setViewportView(config_jtable);
+
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -214,32 +252,36 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel6)
-                    .add(jLabel7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(18, 18, 18)
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_internal_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_harness_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(35, 35, 35)
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel9, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(txt_card_number_filter, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                    .add(combo_project_filter, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(692, Short.MAX_VALUE))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
-                .add(btn_refresh)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(btn_export_excel)
-                .add(938, 938, 938))
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1225, Short.MAX_VALUE)
+                    .add(jPanel2Layout.createSequentialGroup()
+                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jPanel2Layout.createSequentialGroup()
+                                .add(btn_refresh)
+                                .add(18, 18, 18)
+                                .add(btn_export_excel))
+                            .add(jPanel2Layout.createSequentialGroup()
+                                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLabel6)
+                                    .add(jLabel7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(18, 18, 18)
+                                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_internal_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_harness_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(35, 35, 35)
+                                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                                    .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel9, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                    .add(txt_card_number_filter)
+                                    .add(combo_project_filter, 0, 132, Short.MAX_VALUE))))
+                        .add(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+            .add(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel6)
                     .add(txt_harness_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -255,34 +297,25 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(btn_export_excel)
                     .add(btn_refresh))
-                .add(12, 12, 12))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         txt_card_number_filter.getAccessibleContext().setAccessibleName("card_number");
-
-        config_jtable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(config_jtable);
 
         form_panel.setBackground(new java.awt.Color(36, 65, 86));
         form_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         txt_id.setEditable(false);
         txt_id.setText("#");
+        txt_id.setNextFocusableComponent(combo_project);
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("ID");
 
         combo_project.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " ", " " }));
+        combo_project.setNextFocusableComponent(txt_wireNo);
         combo_project.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 combo_projectFocusGained(evt);
@@ -297,16 +330,230 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Projet");
 
+        txt_wireNo.setNextFocusableComponent(txt_kanbanQty);
+
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Fil num.");
 
-        txt_kanban_qty.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        txt_kanbanQty.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        txt_kanbanQty.setNextFocusableComponent(txt_harnessPart);
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Kanban qté");
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Article faisceau");
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Module Interne");
+
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Operation num.");
+
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Stock");
+
+        txt_stock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_stockActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Num. Carte");
+
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Bundle qté");
+
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Mag. Source");
+
+        txt_sourceWarehouse.setToolTipText("Magasin source");
+
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Mag. Destination");
+
+        txt_destWarehouse.setToolTipText("Magasin destination");
+
+        txt_createTime.setEditable(false);
+        txt_createTime.setToolTipText("");
+
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Créé le.");
+
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Créé par.");
+
+        txt_createUser.setEditable(false);
+        txt_createUser.setToolTipText("");
+
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("Modifié le.");
+
+        txt_writeTime.setEditable(false);
+        txt_writeTime.setToolTipText("");
+
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Modifié par.");
+
+        txt_writeUser.setEditable(false);
+        txt_writeUser.setToolTipText("");
+
+        msg_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        msg_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        org.jdesktop.layout.GroupLayout form_panelLayout = new org.jdesktop.layout.GroupLayout(form_panel);
+        form_panel.setLayout(form_panelLayout);
+        form_panelLayout.setHorizontalGroup(
+            form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(form_panelLayout.createSequentialGroup()
+                .add(7, 7, 7)
+                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel13)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel10)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel3)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel2)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .add(18, 18, 18)
+                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(txt_stock, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                        .add(txt_harnessPart)
+                        .add(combo_project, 0, 132, Short.MAX_VALUE)
+                        .add(txt_wireNo)
+                        .add(txt_internalPart)
+                        .add(txt_id)))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, form_panelLayout.createSequentialGroup()
+                        .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel15)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel12)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel16)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(jLabel14)
+                                .add(jLabel4)))
+                        .add(18, 18, 18)
+                        .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(txt_kanbanQty, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(txt_cardNumber, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(txt_bundleQty, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(txt_operationNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(txt_sourceWarehouse, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, form_panelLayout.createSequentialGroup()
+                        .add(jLabel17)
+                        .add(18, 18, 18)
+                        .add(txt_destWarehouse, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .add(50, 50, 50)
+                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jLabel21)
+                    .add(jLabel20)
+                    .add(jLabel19)
+                    .add(jLabel18))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(txt_createTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(txt_createUser, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_writeTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_writeUser, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(57, 57, 57))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, form_panelLayout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(msg_lbl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 803, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        form_panelLayout.setVerticalGroup(
+            form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(form_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(txt_id, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel5)
+                    .add(jLabel14)
+                    .add(txt_cardNumber, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(txt_createTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel18))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(combo_project, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel1)
+                    .add(txt_kanbanQty, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 26, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel4)
+                    .add(txt_createUser, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel19))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(form_panelLayout.createSequentialGroup()
+                        .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(txt_wireNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jLabel2)
+                            .add(jLabel15)
+                            .add(txt_bundleQty, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(txt_harnessPart, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jLabel3)
+                            .add(txt_operationNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jLabel12)))
+                    .add(form_panelLayout.createSequentialGroup()
+                        .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(txt_writeTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jLabel20))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(txt_writeUser, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jLabel21))))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel10)
+                    .add(txt_internalPart, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(txt_sourceWarehouse, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel16))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel13)
+                    .add(txt_stock, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(txt_destWarehouse, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel17))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(msg_lbl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        txt_id.getAccessibleContext().setAccessibleName("id");
+        txt_id.getAccessibleContext().setAccessibleDescription("");
+        combo_project.getAccessibleContext().setAccessibleName("project");
+        txt_wireNo.getAccessibleContext().setAccessibleName("wireNo");
+        txt_wireNo.getAccessibleContext().setAccessibleDescription("");
+        txt_kanbanQty.getAccessibleContext().setAccessibleName("kanbanQty");
+        txt_internalPart.getAccessibleContext().setAccessibleName("internalPart");
+        txt_operationNo.getAccessibleContext().setAccessibleName("operationNo");
+        txt_stock.getAccessibleContext().setAccessibleName("stock");
+        txt_cardNumber.getAccessibleContext().setAccessibleName("cardNumber");
+        txt_harnessPart.getAccessibleContext().setAccessibleName("harnessPart");
+        txt_bundleQty.getAccessibleContext().setAccessibleName("bundleQty");
+        txt_sourceWarehouse.getAccessibleContext().setAccessibleName("sourceWarehouse");
+        txt_destWarehouse.getAccessibleContext().setAccessibleName("destWarehouse");
+        txt_createTime.getAccessibleContext().setAccessibleName("createTime");
+        txt_createUser.getAccessibleContext().setAccessibleName("createUser");
+        txt_writeTime.getAccessibleContext().setAccessibleName("writeTime");
+        txt_writeUser.getAccessibleContext().setAccessibleName("writeUser");
+
+        btn_hide_creation_form.setText("Masquer formulaire");
+        btn_hide_creation_form.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hide_creation_formActionPerformed(evt);
+            }
+        });
+
+        btn_import_csv.setText("Importer toutes les master data .csv ...");
+        btn_import_csv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_import_csvActionPerformed(evt);
+            }
+        });
 
         btn_new.setText("Nouveau");
         btn_new.addActionListener(new java.awt.event.ActionListener() {
@@ -316,6 +563,11 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         });
 
         btn_save.setText("Enregistrer");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveActionPerformed(evt);
+            }
+        });
 
         btn_delete.setText("Supprimer");
         btn_delete.setEnabled(false);
@@ -332,97 +584,17 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             }
         });
 
-        btn_import_csv.setText("Importer les master data .csv ...");
-        btn_import_csv.addActionListener(new java.awt.event.ActionListener() {
+        btn_import_csv1.setText("Importer de nouveaux master data .csv ...");
+        btn_import_csv1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_import_csvActionPerformed(evt);
+                btn_import_csv1ActionPerformed(evt);
             }
         });
 
-        msg_lbl.setForeground(new java.awt.Color(255, 255, 255));
-
-        org.jdesktop.layout.GroupLayout form_panelLayout = new org.jdesktop.layout.GroupLayout(form_panel);
-        form_panel.setLayout(form_panelLayout);
-        form_panelLayout.setHorizontalGroup(
-            form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(form_panelLayout.createSequentialGroup()
-                .add(btn_new, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 89, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(38, 38, 38)
-                .add(btn_save)
-                .add(41, 41, 41)
-                .add(btn_delete, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(34, 34, 34)
-                .add(btn_csv_example, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 185, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18)
-                .add(btn_import_csv, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 199, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(0, 0, Short.MAX_VALUE))
-            .add(form_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(form_panelLayout.createSequentialGroup()
-                        .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel2)
-                            .add(jLabel4)
-                            .add(jLabel1)
-                            .add(jLabel3)
-                            .add(jLabel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(38, 38, 38)
-                        .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(combo_project, 0, 132, Short.MAX_VALUE)
-                            .add(txt_article_fx, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                            .add(txt_kanban_qty, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                            .add(txt_wire_num, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                            .add(txt_id)))
-                    .add(msg_lbl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 958, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        form_panelLayout.setVerticalGroup(
-            form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(form_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(txt_id, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel5))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(combo_project, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel1))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(txt_wire_num, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel2))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel4)
-                    .add(txt_kanban_qty, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(18, 18, 18)
-                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(txt_article_fx, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel3))
-                .add(18, 44, Short.MAX_VALUE)
-                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(btn_csv_example, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(btn_delete))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, btn_import_csv)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, btn_new, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, btn_save))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(msg_lbl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        txt_id.getAccessibleContext().setAccessibleName("id");
-        txt_id.getAccessibleContext().setAccessibleDescription("");
-        combo_project.getAccessibleContext().setAccessibleName("project");
-        txt_wire_num.getAccessibleContext().setAccessibleName("wire_no");
-        txt_kanban_qty.getAccessibleContext().setAccessibleName("kanban_qty");
-        txt_article_fx.getAccessibleContext().setAccessibleName("harness_pn");
-
-        btn_hide_creation_form.setText("Masquer formulaire");
-        btn_hide_creation_form.addActionListener(new java.awt.event.ActionListener() {
+        btn_duplicate.setText("Dupliquer");
+        btn_duplicate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hide_creation_formActionPerformed(evt);
+                btn_duplicateActionPerformed(evt);
             }
         });
 
@@ -433,16 +605,25 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jLabel11, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 396, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(layout.createSequentialGroup()
-                        .add(form_panel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .add(jScrollPane1)
-                    .add(layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel11, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 396, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(btn_hide_creation_form))
-                        .add(0, 0, Short.MAX_VALUE))))
+                        .add(btn_hide_creation_form)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(btn_new, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 89, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(btn_duplicate, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 89, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(48, 48, 48)
+                        .add(btn_save)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(btn_delete, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(btn_csv_example)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(btn_import_csv1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 273, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(btn_import_csv, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 219, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(form_panel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(0, 524, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -450,20 +631,23 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(jLabel11)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(btn_hide_creation_form)
-                .add(11, 11, 11)
-                .add(form_panel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(btn_hide_creation_form)
+                    .add(btn_new, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(btn_save)
+                    .add(btn_delete)
+                    .add(btn_csv_example)
+                    .add(btn_import_csv1)
+                    .add(btn_duplicate, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(18, 18, 18)
+                .add(form_panel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(19, 19, 19)
                 .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(18, 18, 18)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .add(btn_import_csv)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void combo_projectFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_combo_projectFocusGained
-
-    }//GEN-LAST:event_combo_projectFocusGained
 
     private void btn_csv_exampleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_csv_exampleActionPerformed
 
@@ -552,10 +736,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_refreshActionPerformed
 
     private void combo_project_filterFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_combo_project_filterFocusGained
-        combo_project_filter.removeAllItems();
-        if (combo_project_filter.getItemCount() == 0) {
-            ConfigProject.initProjectsJBox(this, combo_project_filter, true);
-        }
+        
     }//GEN-LAST:event_combo_project_filterFocusGained
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
@@ -581,15 +762,21 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         query.setParameter("harnessPart", "%" + txt_harness_part_filter.getText() + "%");
         query.setParameter("internalPart", "%" + txt_internal_part_filter.getText() + "%");
 
-        if (combo_project_filter.getSelectedItem().toString().equals("All")) {
-            query.setParameter("project", "%");
+        List<Object> projects = new ArrayList<Object>();
+        if (combo_project_filter.getSelectedItem().toString().equals("ALL")) {
+            
+            for (int i = 0; i < combo_project_filter.getItemCount(); i++) {
+                projects.add(combo_project_filter.getItemAt(i).toString());
+            }
         } else {
-            query.setParameter("project", "%" + combo_project_filter.getSelectedItem().toString() + "%");
+            projects.add(combo_project_filter.getSelectedItem().toString());
         }
+        query.setParameterList("project", projects);
+        System.out.println("projects "+projects);
+        System.out.println("query " + query.toString());
 
         List<WireConfig> result = query.list();
         Helper.sess.getTransaction().commit();
-        System.out.println("config result" + result.size());
         //Populate the jTable with lines
         for (WireConfig c : result) {
             Vector<Object> row = new Vector<Object>();
@@ -603,13 +790,13 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             row.add(c.getKanbanQty());
             row.add(c.getBundleQty());
             row.add(c.getOperationNo());
-            row.add(new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").format(c.getCreateTime()));
-            row.add(c.getCreateUser());
-            row.add(new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").format(c.getWriteTime()));
-            row.add(c.getWriteUser());
             row.add(c.getSourceWarehouse());
             row.add(c.getSourceLocation());
             row.add(c.getDestWarehouse());
+            row.add(c.getCreateTime());
+            row.add(c.getCreateUser());
+            row.add(c.getWriteTime());
+            row.add(c.getWriteUser());
 
             config_table_data.add(row);
         }
@@ -625,15 +812,113 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     private void btn_hide_creation_formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hide_creation_formActionPerformed
         if (btn_hide_creation_form.isSelected()) {
             form_panel.setVisible(false);
+            btn_hide_creation_form.setText("Afficher formulaire");
         } else {
             form_panel.setVisible(true);
+            btn_hide_creation_form.setText("Masquer formulaire");
         }
     }//GEN-LAST:event_btn_hide_creation_formActionPerformed
+
+    private void btn_import_csv1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_import_csv1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_import_csv1ActionPerformed
 
     private void combo_projectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_projectActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_combo_projectActionPerformed
 
+    private void combo_projectFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_combo_projectFocusGained
+
+    }//GEN-LAST:event_combo_projectFocusGained
+
+    private void txt_stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_stockActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_stockActionPerformed
+
+    private void btn_duplicateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_duplicateActionPerformed
+        txt_id.setText("#");
+        txt_createTime.setText("");
+        txt_createUser.setText("");
+        txt_writeTime.setText("");
+        txt_writeUser.setText("");
+        this.aux = null;
+        msg_lbl.setText("Element dupliqué !");
+    }//GEN-LAST:event_btn_duplicateActionPerformed
+
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        // it's a new item
+        if(txt_id.getText().equals("#")){ 
+            
+        }
+        //Editing existing item from the list
+        else{
+            
+        }
+    }//GEN-LAST:event_btn_saveActionPerformed
+    
+    /**
+     * Loop on components of JPanel and fill them with object values
+     * 
+     * IMPORTANT : For this method to work, All components property 'AccessibleName' 
+     * must have the same name as the attribute from the entity.
+     * 
+     * @see //http://tutorials.jenkov.com/java-json/jackson-objectmapper.html#read-object-from-json-reader
+     * @param form_panel JPanel which contains the components (JTextfields, JTextArea, JCombobox, etc...)
+     * @param obj   The object to map in the fields
+     * @param debug True debug messages will be printed
+     */
+    private void mapValuesInPanelFields(JPanel form_panel, Object obj, boolean debug) {
+        
+        ObjectMapper jsonMapper = new ObjectMapper();
+        try {
+            String auxJson = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+            if (debug) {
+                System.out.println(auxJson);
+            }
+            JsonNode jsonNode = jsonMapper.readValue(auxJson, JsonNode.class);
+
+            //Loop on all JTextFiels in form_panel
+            for (Component c : form_panel.getComponents()) {
+
+                if (debug) {
+                    System.out.printf("Looking for %s in json tree ", c.getAccessibleContext().getAccessibleName());
+                }
+
+                if (c instanceof JTextField) {
+                    JsonNode node = jsonNode.get(c.getAccessibleContext().getAccessibleName());
+
+                    if (debug) {
+                        System.out.printf("value found = %s ", node.asText());
+                    }
+
+                    ((JTextField) c).setText(node.asText());
+                } else if (c instanceof JTextArea) {
+                    JsonNode node = jsonNode.get(c.getAccessibleContext().getAccessibleName());
+
+                    if (debug) {
+                        System.out.printf("value found = %s ", node.asText());
+                    }
+
+                    ((JTextArea) c).setText(node.asText());
+                } else if (c instanceof JComboBox) {
+                    JsonNode node = jsonNode.get(c.getAccessibleContext().getAccessibleName());
+
+                    if (debug) {
+                        System.out.printf("value found = %s ", node.asText());
+                    }
+                    UIHelper.selectValueInJComboBox(((JComboBox) c), node.asText());
+                } else {
+                    if (debug) {
+                        System.out.println("c is type of " + c.getClass().getSimpleName());
+                    }
+                }
+            }
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
     private void clearFields() {
         UIHelper.clearTextFields(form_panel.getComponents());
         txt_id.setText("#");
@@ -653,9 +938,11 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_csv_example;
     private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_duplicate;
     private javax.swing.JButton btn_export_excel;
     private javax.swing.JToggleButton btn_hide_creation_form;
     private javax.swing.JButton btn_import_csv;
+    private javax.swing.JButton btn_import_csv1;
     private javax.swing.JButton btn_new;
     private javax.swing.JButton btn_refresh;
     private javax.swing.JButton btn_save;
@@ -664,8 +951,19 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     private javax.swing.JTable config_jtable;
     private javax.swing.JPanel form_panel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -676,13 +974,24 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel msg_lbl;
-    private javax.swing.JTextField txt_article_fx;
+    private javax.swing.JTextField txt_bundleQty;
+    private javax.swing.JTextField txt_cardNumber;
     private javax.swing.JTextField txt_card_number_filter;
+    private javax.swing.JTextField txt_createTime;
+    private javax.swing.JTextField txt_createUser;
+    private javax.swing.JTextField txt_destWarehouse;
+    private javax.swing.JTextField txt_harnessPart;
     private javax.swing.JTextField txt_harness_part_filter;
     private javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_internalPart;
     private javax.swing.JTextField txt_internal_part_filter;
-    private javax.swing.JFormattedTextField txt_kanban_qty;
-    private javax.swing.JTextField txt_wire_num;
+    private javax.swing.JFormattedTextField txt_kanbanQty;
+    private javax.swing.JTextField txt_operationNo;
+    private javax.swing.JTextField txt_sourceWarehouse;
+    private javax.swing.JTextField txt_stock;
+    private javax.swing.JTextField txt_wireNo;
+    private javax.swing.JTextField txt_writeTime;
+    private javax.swing.JTextField txt_writeUser;
     // End of variables declaration//GEN-END:variables
 
 }
