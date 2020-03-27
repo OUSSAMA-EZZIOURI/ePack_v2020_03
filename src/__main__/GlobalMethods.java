@@ -452,4 +452,13 @@ public class GlobalMethods {
         return true;
     }
 
+    public static void createDefaultDirectories() {
+        UILog.createDailyLogFile(GlobalVars.APP_PROP.getProperty("LOG_PATH"));
+        PropertiesLoader.createDailyOutPrintDir(GlobalVars.APP_PROP.getProperty("PRINT_DIR"),
+                GlobalVars.APP_PROP.getProperty("PRINT_PALLET_DIR"),
+                GlobalVars.APP_PROP.getProperty("PRINT_CLOSING_PALLET_DIR"),
+                GlobalVars.APP_PROP.getProperty("PRINT_PICKING_SHEET_DIR"),
+                GlobalVars.APP_PROP.getProperty("PRINT_DISPATCH_SHEET_DIR"));
+    }
+
 }

@@ -8,7 +8,6 @@ package __main__;
 import entity.ManufactureUsers;
 import gui.packaging.PackagingVars;
 import gui.packaging.mode3.state.Mode3_S010_UserCodeScan;
-//import gui.packaging.mode2.state.Mode2_S010_UserCodeScan;
 import helper.Helper;
 import java.net.ServerSocket;
 import javax.swing.JFrame;
@@ -457,12 +456,7 @@ public class StartFrame extends javax.swing.JFrame {
 
                     startFrameUI.setVisible(true);
 
-                    UILog.createDailyLogFile(GlobalVars.APP_PROP.getProperty("LOG_PATH"));
-                    PropertiesLoader.createDailyOutPrintDir(GlobalVars.APP_PROP.getProperty("PRINT_DIR"),
-                            GlobalVars.APP_PROP.getProperty("PRINT_PALLET_DIR"),
-                            GlobalVars.APP_PROP.getProperty("PRINT_CLOSING_PALLET_DIR"),
-                            GlobalVars.APP_PROP.getProperty("PRINT_PICKING_SHEET_DIR"),
-                            GlobalVars.APP_PROP.getProperty("PRINT_DISPATCH_SHEET_DIR"));
+                    GlobalMethods.createDefaultDirectories();
 
                 }
             });

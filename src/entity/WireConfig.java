@@ -3,8 +3,11 @@ package entity;
 import __main__.GlobalVars;
 import gui.packaging.PackagingVars;
 import hibernate.DAO;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -158,6 +161,14 @@ public class WireConfig extends DAO implements java.io.Serializable {
         return id;
     }
 
+    public String getSourceWh() {
+        return sourceWh;
+    }
+
+    public void setSourceWh(String sourceWh) {
+        this.sourceWh = sourceWh;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -179,19 +190,35 @@ public class WireConfig extends DAO implements java.io.Serializable {
     }
 
     public String getWriteTime() {
-        return new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").format(writeTime);
+        return new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(writeTime);
     }
 
     public void setWriteTime(Date writeTime) {
         this.writeTime = writeTime;
     }
 
+    public void setWriteTime(String writeTime) {
+        try {
+            this.writeTime = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(writeTime);
+        } catch (ParseException ex) {
+
+        }
+    }
+
     public String getCreateTime() {
-        return new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").format(createTime);
+        return new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(createTime);
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        try {
+            this.createTime = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").parse(createTime);
+        } catch (ParseException ex) {
+            Logger.getLogger(WireConfig.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getCreateUser() {
@@ -230,7 +257,7 @@ public class WireConfig extends DAO implements java.io.Serializable {
         return harnessPart;
     }
 
-    public void setHarnessPn(String harnessPart) {
+    public void setHarnessPart(String harnessPart) {
         this.harnessPart = harnessPart;
     }
 
@@ -238,7 +265,7 @@ public class WireConfig extends DAO implements java.io.Serializable {
         return internalPart;
     }
 
-    public void setInternalPn(String internalPart) {
+    public void setInternalPart(String internalPart) {
         this.internalPart = internalPart;
     }
 
