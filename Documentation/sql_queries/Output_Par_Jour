@@ -1,6 +1,0 @@
-SELECT 
---id, closed_time, container_state, container_state_code, create_id, create_time, harness_index, harness_part, harness_type, pack_type, pallet_number, qty_expected, qty_read, start_time, supplier_part_number, m_user, work_time, write_id, write_time, create_user, std_time, workstation, pack_workstation, segment, ucs_id, ucs_lifes, workplace, comment, order_no, special_order, dispatch_label_no, price, destination, stored_time, shipped_time, complete_time, warehouse, project, eng_change_date, reserved_time, dispatch_time, consign_no, invoice_no, eng_change, article_desc, net_weight, gross_weight, volume, label_per_piece, packaging_warehouse, priority, openning_sheet_copies, closing_sheet_copies, closing_sheet_format, print_destination
-	project, harness_type, to_char(create_time, 'DD/MM/YYYY'), harness_part, SUM(qty_read) AS Total
-	FROM public.base_container
-WHERE create_time between '2019-04-01 00:00:00' and '2019-04-30 23:59:00'	
-GROUP by project,harness_type,create_time,harness_part	;

@@ -1,1 +1,7 @@
-/build/
+build/
+log/
+print/
+deprecated.zip
+*.class
+*.log
+*.tmp
