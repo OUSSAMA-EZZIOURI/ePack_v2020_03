@@ -88,7 +88,7 @@ public class WAREHOUSE_DISPATCH_UI0008_SET_PACKAGING_OF_PILE extends javax.swing
         
         initComponents();
         if (initGui()) {
-            Helper.centerJDialog(this);
+            UIHelper.centerJDialog(this);
             this.setResizable(false);
             this.setVisible(true);
         } else {

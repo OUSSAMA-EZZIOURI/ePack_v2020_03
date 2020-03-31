@@ -15,6 +15,7 @@ import gui.warehouse_dispatch.process_reservation.S001_ReservPalletNumberScan;
 import gui.warehouse_dispatch.state.WarehouseHelper;
 import helper.HQLHelper;
 import helper.Helper;
+import helper.UIHelper;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +44,7 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
     }
 
     private void initGui() {
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
         this.setResizable(false);
         project_filter = ConfigProject.initProjectsJBox(this, project_filter, false);
         transporter_filter = ConfigTransporter.initTransporterJBox(this, transporter_filter, false);

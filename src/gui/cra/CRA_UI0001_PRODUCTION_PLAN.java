@@ -371,7 +371,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         chooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
         chooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
-        Helper.centerJFileChooser(chooser);
+        UIHelper.centerJFileChooser(chooser);
         int status = chooser.showSaveDialog(null);
 
         if (status == JFileChooser.APPROVE_OPTION) {
@@ -612,7 +612,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     private void btn_export_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export_excelActionPerformed
         JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home") + "/Desktop");
         fileChooser.setSelectedFile(new File("PLANNING.csv"));
-        Helper.centerJFileChooser(fileChooser);
+        UIHelper.centerJFileChooser(fileChooser);
         int j = fileChooser.showSaveDialog(this);
         if (j != 0) {
             return;

@@ -7,24 +7,22 @@ package gui.packaging.mode3.gui;
 
 import __main__.GlobalMethods;
 import __main__.GlobalVars;
-import entity.ConfigBarcode;
 import entity.ManufactureUsers;
 import gui.packaging.PackagingVars;
 import gui.packaging.mode3.state.Mode3_S010_UserCodeScan;
 import gui.packaging.mode3.state.Mode3_S020_HarnessPartScan;
 import helper.HQLHelper;
 import helper.Helper;
+import helper.UIHelper;
 import java.awt.event.KeyEvent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Query;
 import ui.UILog;
-import ui.config.ConfigMsg;
 import ui.error.ErrorMsg;
 import ui.info.InfoMsg;
 
@@ -43,7 +41,7 @@ public class PACKAGING_UI0002_PasswordRequest_Mode3 extends javax.swing.JDialog 
         super(parent, modal);
         this.user = user;
         initComponents();
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
         this.setResizable(false);
     }
 

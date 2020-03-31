@@ -3,51 +3,36 @@ package gui.cra;
 import __main__.GlobalMethods;
 import __main__.GlobalVars;
 import __main__.PropertiesLoader;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.ConfigProject;
 import entity.WireConfig;
+import helper.XLSXExportHelper;
 import helper.HQLHelper;
 import helper.Helper;
 import helper.UIHelper;
-import java.awt.Component;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 import org.hibernate.Query;
-import ui.UILog;
-import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  *
  * @author Oussama
  */
-public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
+public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel implements KeyListener {
 
     private JTabbedPane parent;
     Vector config_table_data = new Vector();
+    List<WireConfig> excelLines;
     WireConfig aux;
     boolean err = false;
     Vector<String> config_table_header = new Vector<String>(Arrays.asList(
@@ -69,184 +54,6 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             "Dernière modif.",
             "Modifié par."
     ));
-
-    /**
-     * Loop on components of JPanel and return an instanciated object with
-     * values
-     *
-     * IMPORTANT : For this method to work, All components property
-     * 'AccessibleName' must have the same name as the attribute from the
-     * entity.
-     *
-     * @see
-     * https://www.tutorialspoint.com/java_beanutils/standard_javabeans_basic_property_access.htm
-     * @param form_panel JPanel which contains the components (JTextfields,
-     * JTextArea, JCombobox, etc...)
-     * @param object A non object to edit
-     * @param debug True debug messages will be printed
-     */
-    private Object mapValuesFromJPanelToObj(JPanel form_panel, Object object, boolean debug) {
-        try {
-            if (debug) {
-                System.out.println("Given object is type of " + object.getClass().getCanonicalName());
-            }
-
-            //Loop on all JTextFiels in form_panel
-            for (Component c : form_panel.getComponents()) {
-                if (c.isEnabled()) {
-                    String fieldValue = "";
-                    boolean itsAField = false;
-                    boolean isEditable = false;
-                    if (c instanceof JTextField || c instanceof JTextArea) {
-                        fieldValue = ((JTextField) c).getText();
-                        itsAField = true;
-                        isEditable = ((JTextField) c).isEditable();
-                    } else if (c instanceof JComboBox) {
-                        fieldValue = ((JComboBox) c).getSelectedItem().toString();
-                        itsAField = true;
-                        isEditable = ((JComboBox) c).isEnabled();
-                    } else {
-                        if (debug) {
-                            System.out.println("Not supported type " + c.getClass().getSimpleName());
-                        }
-                    }
-
-                    if (itsAField && isEditable) {
-                        //Get the correct class name from the bean property
-                        String theType = PropertyUtils.getPropertyType(object, c.getAccessibleContext().getAccessibleName()).getCanonicalName();
-                        System.out.println("theType " + theType);
-                        //Prepare the Class with the fully qualified name
-                        Class theClass = Class.forName(theType);
-                        System.out.println("theClass is type " + theClass.getCanonicalName());
-                        //Convert to the correct class
-                        Object value = convert(theClass, fieldValue);
-                        // Setting the properties on the myBean
-                        PropertyUtils.setSimpleProperty(object, c.getAccessibleContext().getAccessibleName(), value);
-                    }
-                }
-            }
-            return object;
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvocationTargetException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (java.lang.IllegalArgumentException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    /**
-     * Loop on components of JPanel and return an instanciated object with
-     * values
-     *
-     * IMPORTANT : For this method to work, All components property
-     * 'AccessibleName' must have the same name as the attribute from the
-     * entity.
-     *
-     * @see
-     * https://www.tutorialspoint.com/java_beanutils/standard_javabeans_basic_property_access.htm
-     * @param form_panel JPanel which contains the components (JTextfields,
-     * JTextArea, JCombobox, etc...)
-     * @param className The fully classified name of the class (eg :
-     * "java.lang.Thread")
-     * @param debug True debug messages will be printed
-     */
-    private Object mapValuesFromJPanelToObj(JPanel form_panel, String className, boolean debug) {
-
-        try {
-            if (debug) {
-                System.out.println("Target simpleClassName " + className);
-            }
-
-            // Creating the bean and allows to access getter and setter properties
-            Class bean = Class.forName(className);
-            Object newObject = bean.newInstance();
-
-            //Loop on all JTextFiels in form_panel
-            for (Component c : form_panel.getComponents()) {
-                String fieldValue = "";
-                boolean itsAField = false;
-                boolean isEditable = false;
-                if (c instanceof JTextField || c instanceof JTextArea) {
-                    fieldValue = ((JTextField) c).getText();
-                    itsAField = true;
-                    isEditable = ((JTextField) c).isEditable();
-                } else if (c instanceof JComboBox) {
-                    fieldValue = ((JComboBox) c).getSelectedItem().toString();
-                    itsAField = true;
-                    isEditable = ((JComboBox) c).isEnabled();
-                } else {
-                    if (debug) {
-                        System.out.println("Not supported type " + c.getClass().getSimpleName());
-                    }
-                }
-
-                if (itsAField && isEditable) {
-                    //Get the correct class name from the bean property
-                    String theType = PropertyUtils.getPropertyType(newObject, c.getAccessibleContext().getAccessibleName()).getCanonicalName();
-                    System.out.println("theType " + theType);
-                    //Prepare the Class with the fully qualified name
-                    Class theClass = Class.forName(theType);
-                    System.out.println("theClass is type " + theClass.getCanonicalName());
-                    //Convert to the correct class
-                    Object value = convert(theClass, fieldValue);
-                    // Setting the properties on the myBean
-                    PropertyUtils.setSimpleProperty(newObject, c.getAccessibleContext().getAccessibleName(), value);
-                }
-            }
-            return newObject;
-        } catch (InstantiationException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvocationTargetException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (java.lang.IllegalArgumentException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-
-    }
-
-    static Object convert(Class<?> target, String s) {
-        if (target == Object.class || target == String.class || s == null) {
-            return s;
-        }
-        if (target == Character.class || target == char.class) {
-            return s.charAt(0);
-        }
-        if (target == Byte.class || target == byte.class) {
-            return Byte.parseByte(s);
-        }
-        if (target == Short.class || target == short.class) {
-            return Short.parseShort(s);
-        }
-        if (target == Integer.class || target == int.class) {
-            return Integer.parseInt(s);
-        }
-        if (target == Long.class || target == long.class) {
-            return Long.parseLong(s);
-        }
-        if (target == Float.class || target == float.class) {
-            return Float.parseFloat(s);
-        }
-        if (target == Double.class || target == double.class) {
-            return Double.parseDouble(s);
-        }
-        if (target == Boolean.class || target == boolean.class) {
-            return Boolean.parseBoolean(s);
-        }
-        throw new IllegalArgumentException("Don't know how to convert to " + target);
-    }
 
     public static void main(String[] args) {
 
@@ -277,7 +84,9 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     }
 
     private void initGui() {
+
         config_jtable.setModel(new DefaultTableModel(new Vector(), config_table_header));
+
         UIHelper.disableEditingJtable(config_jtable);
         this.initContainerTableDoubleClick();
 
@@ -295,16 +104,12 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                 if (evt.getClickCount() == 2) {
                     //Cleat the message field
                     msg_lbl.setText("");
+                    int id = (int) config_jtable.getValueAt(config_jtable.getSelectedRow(), 0);
 
                     Helper.startSession();
-                    Query query = Helper.sess.createQuery(HQLHelper.GET_WIRE_CONFIG_BY_ID);
-                    query.setParameter("id", config_jtable.getValueAt(config_jtable.getSelectedRow(), 0));
-
-                    Helper.sess.getTransaction().commit();
-                    aux = (WireConfig) query.list().get(0);
-
+                    aux = (WireConfig) Helper.sess.load(WireConfig.class, id);
                     //#######################
-                    mapValuesInPanelFields(form_panel, aux, true);
+                    UIHelper.mapValuesInPanelFields(form_panel, aux, false);
 
                     //########################
                     btn_delete.setEnabled(true);
@@ -343,6 +148,8 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         combo_project_filter = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         config_jtable = new javax.swing.JTable();
+        txt_wireNo_filter = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
         root_panel = new javax.swing.JPanel();
         msg_lbl = new javax.swing.JLabel();
         form_panel = new javax.swing.JPanel();
@@ -412,6 +219,12 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         btn_duplicate = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(36, 65, 86));
+        setNextFocusableComponent(combo_project);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                formKeyTyped(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -421,9 +234,22 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
 
         jLabel6.setText("Article faisceau");
 
+        txt_harness_part_filter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_harness_part_filterKeyTyped(evt);
+            }
+        });
+
         jLabel7.setText("Code interne");
 
+        txt_internal_part_filter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_internal_part_filterKeyTyped(evt);
+            }
+        });
+
         btn_export_excel.setText("Exporter en Excel");
+        btn_export_excel.setEnabled(false);
         btn_export_excel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_export_excelActionPerformed(evt);
@@ -439,12 +265,24 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
 
         jLabel8.setText("Num Carte");
 
+        txt_card_number_filter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_card_number_filterKeyTyped(evt);
+            }
+        });
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Project");
 
         combo_project_filter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " ", " ", " " }));
         combo_project_filter.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 combo_project_filterFocusGained(evt);
+            }
+        });
+        combo_project_filter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                combo_project_filterKeyTyped(evt);
             }
         });
 
@@ -463,6 +301,21 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         config_jtable.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(config_jtable);
 
+        txt_wireNo_filter.setNextFocusableComponent(txt_kanbanQty);
+        txt_wireNo_filter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_wireNo_filterActionPerformed(evt);
+            }
+        });
+        txt_wireNo_filter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_wireNo_filterKeyTyped(evt);
+            }
+        });
+
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel27.setText("Fil num");
+
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -470,7 +323,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1225, Short.MAX_VALUE)
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1226, Short.MAX_VALUE)
                     .add(jPanel2Layout.createSequentialGroup()
                         .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanel2Layout.createSequentialGroup()
@@ -485,14 +338,20 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_internal_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                     .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_harness_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                .add(35, 35, 35)
-                                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                                    .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel9, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(18, 18, 18)
                                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                    .add(txt_card_number_filter)
-                                    .add(combo_project_filter, 0, 132, Short.MAX_VALUE))))
+                                    .add(jPanel2Layout.createSequentialGroup()
+                                        .add(jLabel9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(combo_project_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(jPanel2Layout.createSequentialGroup()
+                                        .add(jLabel27)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(txt_wireNo_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                                .add(18, 18, 18)
+                                .add(jLabel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(txt_card_number_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                         .add(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -503,14 +362,17 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel6)
                     .add(txt_harness_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel8)
-                    .add(txt_card_number_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(txt_wireNo_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel27)
+                    .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jLabel8)
+                        .add(txt_card_number_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel7)
                     .add(txt_internal_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel9)
-                    .add(combo_project_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(combo_project_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel9))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(btn_export_excel)
@@ -904,7 +766,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                             .add(txt_writeUser, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(jLabel21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                     .add(form_panelLayout.createSequentialGroup()
-                        .add(36, 36, 36)
+                        .add(38, 38, 38)
                         .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(combo_project, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -946,8 +808,8 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                         .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(txt_destWarehouse, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(jLabel17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(30, 30, 30)
+                .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 11, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(form_panelLayout.createSequentialGroup()
@@ -955,9 +817,9 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                             .add(txt_wireNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(jLabel23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(txt_wireType, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_wireType, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jLabel23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .add(6, 6, 6)
                         .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(txt_length, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -1036,7 +898,6 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         txt_wireNo.getAccessibleContext().setAccessibleDescription("");
         txt_wireNo.getAccessibleContext().setAccessibleParent(root_panel);
         txt_wireType.getAccessibleContext().setAccessibleName("wireType");
-        txt_wireType.getAccessibleContext().setAccessibleDescription("Type of wire");
         txt_wireType.getAccessibleContext().setAccessibleParent(root_panel);
         txt_spoolPn.getAccessibleContext().setAccessibleName("spoolPn");
         txt_spoolPn.getAccessibleContext().setAccessibleDescription("Code Bobine");
@@ -1149,7 +1010,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                         .add(btn_delete, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(root_panel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(0, 524, Short.MAX_VALUE))
+                .add(0, 523, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1171,31 +1032,69 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_export_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export_excelActionPerformed
-        JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home") + "/Desktop");
-        fileChooser.setSelectedFile(new File("PLANNING.csv"));
-        Helper.centerJFileChooser(fileChooser);
-        int j = fileChooser.showSaveDialog(this);
-        if (j != 0) {
-            return;
-        }
-        String str = fileChooser.getSelectedFile().getAbsolutePath();
+    private Vector getConfigLines() {
+        this.config_table_data = new Vector();
+        Helper.startSession();
 
-        try (FileWriter fw = new FileWriter(str)) {
-            try (CSVPrinter printer = new CSVPrinter(fw, CSVFormat.DEFAULT
-                    .withHeader("harness_part", "internal_part", "planned_qty"))) {
-                for (int i = 0; i < this.config_jtable.getRowCount(); i++) {
-                    printer.printRecord(
-                            config_jtable.getValueAt(i, 1).toString(), //harness_part
-                            config_jtable.getValueAt(i, 2).toString(), //internal_part
-                            Integer.valueOf(config_jtable.getValueAt(i, 3).toString())//planned_qty
-                    );
-                }
+        Query query = Helper.sess.createQuery(HQLHelper.GET_WIRE_CONFIG_CPN_AND_LPN_AND_CARDNUM_AND_PROJECT);
+        query.setParameter("harnessPart", "%" + txt_harness_part_filter.getText().toUpperCase() + "%");
+        query.setParameter("internalPart", "%" + txt_internal_part_filter.getText().toUpperCase() + "%");
+        query.setParameter("wireNo", "%" + txt_wireNo_filter.getText().toUpperCase() + "%");
+        query.setParameter("cardNumber", "%" + txt_card_number_filter.getText().toUpperCase() + "%");
+
+        List<Object> projects = new ArrayList<Object>();
+        if (combo_project_filter.getSelectedItem().toString().equals("ALL")) {
+
+            for (int i = 0; i < combo_project_filter.getItemCount(); i++) {
+                projects.add(combo_project_filter.getItemAt(i).toString());
             }
-            UILog.infoDialog("Fichier enregistré dans " + fileChooser.getSelectedFile());
-        } catch (IOException ex) {
-            Logger.getLogger(CRA_UI0001_PRODUCTION_PLAN.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            projects.add(combo_project_filter.getSelectedItem().toString());
         }
+        query.setParameterList("project", projects);
+
+        List<WireConfig> result = query.list();
+        this.excelLines = new ArrayList<WireConfig>(result.size());
+
+        Helper.sess.getTransaction().commit();
+
+        //Populate the jTable with lines
+        for (WireConfig c : result) {
+            Vector<Object> row = new Vector<Object>();
+            row.add(c.getId());
+            row.add(c.getProject());
+            row.add(c.getWireNo());
+            row.add(c.getHarnessPart());
+            row.add(c.getInternalPart());
+            row.add(c.getStock());
+            row.add(c.getCardNumber());
+            row.add(c.getKanbanQty());
+            row.add(c.getBundleQty());
+            row.add(c.getOperationNo());
+            row.add(c.getSourceWarehouse());
+            row.add(c.getSourceLocation());
+            row.add(c.getDestWarehouse());
+            row.add(c.getCreateTime());
+            row.add(c.getCreateUser());
+            row.add(c.getWriteTime());
+            row.add(c.getWriteUser());
+
+            config_table_data.add(row);
+            this.excelLines.add((WireConfig) c);
+
+        }
+
+        System.out.println("lines " + this.excelLines.size());
+        return config_table_data;
+    }
+    
+    /**
+     *
+     * @param evt
+     */
+    private void btn_export_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export_excelActionPerformed
+        XLSXExportHelper h = new XLSXExportHelper();
+        h.exportToXSSFWorkbook(this, "WIRE_MASTER_DATA", this.excelLines);
     }//GEN-LAST:event_btn_export_excelActionPerformed
 
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
@@ -1221,54 +1120,6 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn_deleteActionPerformed
 
-    private Vector getConfigLines() {
-        config_table_data = new Vector();
-        Helper.startSession();
-
-        Query query = Helper.sess.createQuery(HQLHelper.GET_WIRE_CONFIG_CPN_AND_LPN_AND_CARDNUM_AND_PROJECT);
-        query.setParameter("harnessPart", "%" + txt_harness_part_filter.getText() + "%");
-        query.setParameter("internalPart", "%" + txt_internal_part_filter.getText() + "%");
-
-        List<Object> projects = new ArrayList<Object>();
-        if (combo_project_filter.getSelectedItem().toString().equals("ALL")) {
-
-            for (int i = 0; i < combo_project_filter.getItemCount(); i++) {
-                projects.add(combo_project_filter.getItemAt(i).toString());
-            }
-        } else {
-            projects.add(combo_project_filter.getSelectedItem().toString());
-        }
-        query.setParameterList("project", projects);
-        System.out.println("projects " + projects);
-        System.out.println("query " + query.toString());
-
-        List<WireConfig> result = query.list();
-        Helper.sess.getTransaction().commit();
-        //Populate the jTable with lines
-        for (WireConfig c : result) {
-            Vector<Object> row = new Vector<Object>();
-            row.add(c.getId());
-            row.add(c.getProject());
-            row.add(c.getWireNo());
-            row.add(c.getHarnessPart());
-            row.add(c.getInternalPart());
-            row.add(c.getStock());
-            row.add(c.getCardNumber());
-            row.add(c.getKanbanQty());
-            row.add(c.getBundleQty());
-            row.add(c.getOperationNo());
-            row.add(c.getSourceWarehouse());
-            row.add(c.getSourceLocation());
-            row.add(c.getDestWarehouse());
-            row.add(c.getCreateTime());
-            row.add(c.getCreateUser());
-            row.add(c.getWriteTime());
-            row.add(c.getWriteUser());
-
-            config_table_data.add(row);
-        }
-        return config_table_data;
-    }
 
     private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
 
@@ -1279,8 +1130,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     private void btn_hide_creation_formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hide_creation_formActionPerformed
         this.toggleFormVisibility();
     }//GEN-LAST:event_btn_hide_creation_formActionPerformed
-    
-    
+
     public void toggleFormVisibility() {
         if (btn_hide_creation_form.isSelected()) {
             root_panel.setVisible(false);
@@ -1290,7 +1140,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             btn_hide_creation_form.setText("Masquer formulaire");
         }
     }
-    
+
     private void combo_projectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_projectActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_combo_projectActionPerformed
@@ -1316,21 +1166,19 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
         // it's a new item
         if (txt_id.getText().equals("#")) {
-            WireConfig c = (WireConfig) this.mapValuesFromJPanelToObj(root_panel, "entity.WireConfig", true);
+            WireConfig c = (WireConfig) UIHelper.mapValuesFromJPanelToObj(root_panel, "entity.WireConfig", true);
             c.setCreateTime(new Date());
             c.setCreateId(GlobalVars.CONNECTED_USER.getId());
             c.setCreateUser(GlobalVars.CONNECTED_USER.getFNameLName());
             c.setWriteTime(new Date());
             c.setWriteId(GlobalVars.CONNECTED_USER.getId());
             c.setWriteUser(GlobalVars.CONNECTED_USER.getFNameLName());
-            System.out.println("c " + c.toString());
             c.create(c);
             msg_lbl.setText("Nouveau élement enregistré !");
             clearFields();
         } //Editing existing item from the list
         else {
-            WireConfig c = (WireConfig) this.mapValuesFromJPanelToObj(root_panel, aux, true);
-            System.out.println("c " + c.toString());
+            WireConfig c = (WireConfig) UIHelper.mapValuesFromJPanelToObj(root_panel, "entity.WireConfig", true);
             c.setWriteTime(new Date());
             c.setWriteId(GlobalVars.CONNECTED_USER.getId());
             c.setWriteUser(GlobalVars.CONNECTED_USER.getFNameLName());
@@ -1357,77 +1205,47 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_stripLength1ActionPerformed
 
-    /**
-     * Loop on components of JPanel and fill them with object values
-     *
-     * IMPORTANT : For this method to work, All components property
-     * 'AccessibleName' must have the same name as the attribute from the
-     * entity.
-     *
-     * @see
-     * //http://tutorials.jenkov.com/java-json/jackson-objectmapper.html#read-object-from-json-reader
-     * @param form_panel JPanel which contains the components (JTextfields,
-     * JTextArea, JCombobox, etc...)
-     * @param obj The object to map in the fields
-     * @param debug True debug messages will be printed
-     */
-    private void mapValuesInPanelFields(JPanel form_panel, Object obj, boolean debug) {
+    private void txt_wireNo_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_wireNo_filterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_wireNo_filterActionPerformed
 
-        ObjectMapper jsonMapper = new ObjectMapper();
-        try {
-            String auxJson = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
-            if (debug) {
-                System.out.println(auxJson);
-            }
-            JsonNode jsonNode = jsonMapper.readValue(auxJson, JsonNode.class);
-
-            //Loop on all JTextFiels in form_panel
-            for (Component c : form_panel.getComponents()) {
-
-                if (debug) {
-                    System.out.println("--------------------------");
-                    System.out.printf("Looking for %s in json tree \n", c.getAccessibleContext().getAccessibleName());
-                }
-
-                if (c instanceof JTextField) {
-                    JsonNode node = jsonNode.get(c.getAccessibleContext().getAccessibleName());
-
-                    if (debug) {
-                        System.out.printf("value found = %s \n", node.asText());
-                    }
-
-                    ((JTextField) c).setText(node.asText());
-                } else if (c instanceof JTextArea) {
-                    JsonNode node = jsonNode.get(c.getAccessibleContext().getAccessibleName());
-
-                    if (debug) {
-                        System.out.printf("value found = %s \n", node.asText());
-                    }
-
-                    ((JTextArea) c).setText(node.asText());
-                } else if (c instanceof JComboBox) {
-                    JsonNode node = jsonNode.get(c.getAccessibleContext().getAccessibleName());
-
-                    if (debug) {
-                        System.out.printf("value found = %s \n", node.asText());
-                    }
-                    UIHelper.selectValueInJComboBox(((JComboBox) c), node.asText());
-                } else {
-                    if (debug) {
-                        System.out.println("component type of %s not supported! \n" + c.getClass().getSimpleName());
-                    }
-                }
-                if (debug) System.out.println("--------------------------\n");
-            }
-        } catch (JsonProcessingException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-            UILog.errorDialog(ex.getStackTrace()[0].toString());
-        }catch (NullPointerException ex) {
-            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-            UILog.errorDialog(ex.getStackTrace()[0].toString());
+    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            refreshTable();
+        } else if (evt.getKeyCode() == KeyEvent.VK_F12) {
+            btn_save.doClick();
         }
+    }//GEN-LAST:event_formKeyTyped
 
-    }
+    private void txt_harness_part_filterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_harness_part_filterKeyTyped
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            refreshTable();
+        }
+    }//GEN-LAST:event_txt_harness_part_filterKeyTyped
+
+    private void txt_wireNo_filterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_wireNo_filterKeyTyped
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            refreshTable();
+        }
+    }//GEN-LAST:event_txt_wireNo_filterKeyTyped
+
+    private void txt_internal_part_filterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_internal_part_filterKeyTyped
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            refreshTable();
+        }
+    }//GEN-LAST:event_txt_internal_part_filterKeyTyped
+
+    private void txt_card_number_filterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_card_number_filterKeyTyped
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            refreshTable();
+        }
+    }//GEN-LAST:event_txt_card_number_filterKeyTyped
+
+    private void combo_project_filterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_combo_project_filterKeyTyped
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            refreshTable();
+        }
+    }//GEN-LAST:event_combo_project_filterKeyTyped
 
     private void clearFields() {
         UIHelper.clearJTextFields(root_panel.getComponents());
@@ -1436,11 +1254,14 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         btn_duplicate.setEnabled(false);
     }
 
-    
-
     private void refreshTable() {
         config_jtable.setModel(new DefaultTableModel(new Vector(), config_table_header));
         config_jtable.setModel(new DefaultTableModel(getConfigLines(), config_table_header));
+        if (this.excelLines.size() > 0) {
+            btn_export_excel.setEnabled(true);
+        } else {
+            btn_export_excel.setEnabled(false);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1473,6 +1294,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -1522,11 +1344,25 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     private javax.swing.JTextField txt_stripLength1;
     private javax.swing.JTextField txt_stripLength2;
     private javax.swing.JTextField txt_wireNo;
+    private javax.swing.JTextField txt_wireNo_filter;
     private javax.swing.JTextField txt_wireType;
     private javax.swing.JTextField txt_writeTime;
     private javax.swing.JTextField txt_writeUser;
     // End of variables declaration//GEN-END:variables
 
-    
+    @Override
+    public void keyTyped(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

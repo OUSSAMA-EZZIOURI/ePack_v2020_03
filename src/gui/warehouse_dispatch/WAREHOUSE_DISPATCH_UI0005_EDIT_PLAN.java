@@ -6,14 +6,13 @@
 package gui.warehouse_dispatch;
 
 import entity.ConfigProject;
-import entity.ConfigTransporter;
 import entity.ConfigWarehouse;
 import entity.LoadPlan;
 import entity.LoadPlanDestinationRel;
 import gui.warehouse_dispatch.state.WarehouseHelper;
-import helper.ComboItem;
 import helper.HQLHelper;
 import helper.Helper;
+import helper.UIHelper;
 import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -84,20 +83,10 @@ public class WAREHOUSE_DISPATCH_UI0005_EDIT_PLAN extends javax.swing.JDialog {
                 }
             }
 
-//            transporter_filter = ConfigTransporter.initTransporterJBox(this, transporter_filter, false);
-//            //Set the transporter value
-//            for (int i = 0; i < transporter_filter.getItemCount(); i++) {
-//                if (transporter_filter.getItemAt(i).toString().equals(this.lp.getTransportCompany())) {
-//                    transporter_filter.setSelectedIndex(i);
-//                    break;
-//                }
-//                
-//            }
-
             //Load plan destination
             this.initDestinationsJtable();
 
-            Helper.centerJDialog((JDialog) this);
+            UIHelper.centerJDialog((JDialog) this);
             this.setResizable(false);
         } catch (Exception e) {
             UILog.severe(ErrorMsg.APP_ERR0031[0]);

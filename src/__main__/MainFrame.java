@@ -14,7 +14,6 @@ import gui.config.CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL;
 import gui.cra.CRA_UI0001_PRODUCTION_PLAN;
 import gui.cra.CRA_UI0002_WIRE_MASTER_DATA;
 import gui.packaging.PackagingVars;
-//import gui.packaging.mode1.gui.PACKAGING_UI0001_Main_Mode1;
 import gui.packaging.mode3.gui.PACKAGING_UI0001_Main_Mode3;
 import gui.packaging.mode3.state.Mode3_S010_UserCodeScan;
 import gui.packaging.reports.PACKAGING_UI0010_PalletDetails_JPANEL;
@@ -28,7 +27,6 @@ import gui.packaging.reports.PACKAGING_UI0019_EfficiencyCalculation_JPANEL;
 import gui.packaging.reports.PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL;
 import gui.packaging.reports.PACKAGING_UI0022_ClosedPallets_JPANEL;
 import gui.packaging_warehouse.PACKAGING_WAREHOUSE_UI0001_TRANSACTIONS_JPANEL;
-//import gui.packaging_warehouse.PACKAGING_WAREHOUSE_UI0001_PasswordRequest;
 import gui.packaging_warehouse.PACKAGING_WAREHOUSE_UI0002_STOCK_JPANEL;
 import gui.packaging_warehouse.PackagingHelper;
 import gui.warehouse_dispatch.WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL;
@@ -40,6 +38,7 @@ import gui.packaging.reports.PACKAGING_UI0020_PALLET_LIST_JPANEL;
 import helper.CloseTabButtonComponent;
 import helper.Helper;
 import helper.InactivityListener;
+import helper.UIHelper;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -80,7 +79,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.setTitle(GlobalVars.APP_NAME + " " + GlobalVars.APP_VERSION + " " + GlobalVars.APP_AUTHOR);
         ImageIcon img = new ImageIcon(GlobalVars.APP_PROP.getProperty("IMG_PATH") + "/icon.png");
         this.setIconImage(img.getImage());
-        Helper.centerJFrame(this);
+        UIHelper.centerJFrame(this);
         this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
         //Intialize the innactivity auto-logout
@@ -162,19 +161,6 @@ public class MainFrame extends javax.swing.JFrame {
             MENU_05_MODULE_CONFIG.setVisible(true);
         }
 
-        //Load packaging menus depends on user profile
-        //menu_scan_mode_1.setEnabled(false);
-//        switch (GlobalVars.APP_PROP.getProperty("PACKAGING_SCAN_MODE")) {
-//            case "1":
-//                menu_scan_mode_1.setVisible(true);
-//                break;
-//            case "2":
-//                menu_scan_mode_2.setVisible(true);
-//                break;
-//            default:
-//                UILog.severeDialog(this, "Error in PACKAGING_SCAN_MODE property. Check the config.properties values.", "Properties error");
-//                break;
-//        }
     }
 
     @SuppressWarnings("unchecked")
@@ -594,7 +580,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void menu012_harness_detailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu012_harness_detailsActionPerformed
         //PACKAGING_UI0012_HarnessDetails harnessDetails;
         if (PackagingVars.context.getUser() != null && PackagingVars.context.getUser().getAccessLevel() == GlobalVars.PROFIL_ADMIN) {
-            //harnessDetails = new PACKAGING_UI0012_HarnessDetails(this, rootPaneCheckingEnabled, true);
             addNewTab(new PACKAGING_UI0012_HarnessDetails_JPANEL(rootTabbedPane, true), evt);
         } else {
             addNewTab(new PACKAGING_UI0012_HarnessDetails_JPANEL(rootTabbedPane, false), evt);

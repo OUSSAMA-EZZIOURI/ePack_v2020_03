@@ -7,21 +7,16 @@ package gui.packaging.reports;
 
 import __main__.GlobalVars;
 import entity.BaseContainer;
-import entity.BaseHarness;
 import entity.ConfigWarehouse;
-import entity.DropBaseContainer;
-import entity.DropBaseHarness;
 import entity.PackagingStockMovement;
 import gui.packaging.PackagingVars;
-import helper.ComboItem;
 import helper.HQLHelper;
 import helper.Helper;
+import helper.UIHelper;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import javax.swing.JOptionPane;
 import org.hibernate.Query;
-import ui.UILog;
 
 /**
  *
@@ -57,7 +52,7 @@ public final class PACKAGING_UI9001_DropContainerConfirmation extends javax.swin
         this.parentJpanel = (PACKAGING_UI0010_PalletDetails_JPANEL) parent;
 
         //Center the this dialog in the screen
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
         
         //Disable resizing
         this.setResizable(false);
@@ -89,7 +84,7 @@ public final class PACKAGING_UI9001_DropContainerConfirmation extends javax.swin
         
         this.setModal(true);
         //Center the this dialog in the screen
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
 
         //Disable resizing
         this.setResizable(false);

@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import helper.HQLHelper;
 import helper.InactivityListener;
+import helper.UIHelper;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.net.InetAddress;
@@ -75,7 +76,7 @@ public class StartFrame extends javax.swing.JFrame {
             ImageIcon img = new ImageIcon(GlobalVars.APP_PROP.getProperty("IMG_PATH") + "/icon.png");
             this.setIconImage(img.getImage());
             this.setTitle(GlobalVars.APP_NAME + " " + GlobalVars.APP_VERSION);
-            Helper.centerJFrame(this);
+            UIHelper.centerJFrame(this);
             this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
             login_textfield.requestFocus(true);
 

@@ -300,6 +300,7 @@ public class HQLHelper {
     public final static String GET_WIRE_CONFIG_CPN_AND_LPN_AND_CARDNUM_AND_PROJECT = "FROM WireConfig wc "
             + "WHERE wc.harnessPart LIKE :harnessPart "
             + "AND wc.internalPart LIKE :internalPart "
-            //+ "AND wc.cardNumber = :cardNumber "
+            + "AND str(wc.wireNo) LIKE :wireNo "
+            + "AND str(wc.cardNumber) LIKE :cardNumber "
             + "AND wc.project IN (:project) ";
 }

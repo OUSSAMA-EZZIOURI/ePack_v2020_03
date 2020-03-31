@@ -8,9 +8,9 @@ package gui.packaging.reports;
 import __main__.GlobalVars;
 import entity.ConfigFamily;
 import gui.packaging.PackagingVars;
-import helper.ComboItem;
 import helper.Helper;
 import helper.JTableHelper;
+import helper.UIHelper;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -68,12 +68,12 @@ public class PACKAGING_UI0015_DroppedContainer extends javax.swing.JDialog {
         initComponents();
         this.initGui();
         this.refresh();
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
     }
 
     private void initGui() {
         //Center the this dialog in the screen
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
 
         //Desable table edition
         disableEditingTables();

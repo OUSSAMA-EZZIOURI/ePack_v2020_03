@@ -25,6 +25,7 @@ import org.hibernate.Query;
 import gui.packaging.mode3.state.Mode3_S020_HarnessPartScan;
 import gui.packaging.mode3.state.Mode3_S030_NewPalletScan;
 import helper.JTableHelper;
+import helper.UIHelper;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLabel;
@@ -168,7 +169,7 @@ public final class PACKAGING_UI9000_ChoosePackType_Mode3 extends javax.swing.JDi
     }
 
     private void initGui() {
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
         load_table_header();
     }
 

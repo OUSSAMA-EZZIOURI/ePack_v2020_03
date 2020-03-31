@@ -11,6 +11,7 @@ import entity.ConfigWarehouse;
 import entity.HisBaseContainer;
 import helper.HQLHelper;
 import helper.Helper;
+import helper.UIHelper;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Query;
@@ -59,7 +60,7 @@ public final class PACKAGING_UI0010A_Changing_Status extends javax.swing.JDialog
         this.parentJpanel = (PACKAGING_UI0010_PalletDetails_JPANEL) parent;
         this.setModal(true);
         //Center the this dialog in the screen
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
 
         //Disable resizing
         this.setResizable(false);
@@ -88,7 +89,7 @@ public final class PACKAGING_UI0010A_Changing_Status extends javax.swing.JDialog
         this.parentJframe = parent;
 
         //Center the this dialog in the screen
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
 
         //Disable resizing
         this.setResizable(false);

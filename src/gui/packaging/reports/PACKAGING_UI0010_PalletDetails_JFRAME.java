@@ -17,6 +17,7 @@ import entity.LoadPlanLine;
 import gui.packaging.PackagingVars;
 import gui.packaging.mode3.state.Mode3_S040_ClosingPallet;
 import helper.PrinterHelper;
+import helper.UIHelper;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -190,7 +191,7 @@ public final class PACKAGING_UI0010_PalletDetails_JFRAME extends javax.swing.JFr
 
         //Maximaze the jframe
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        Helper.centerJFrame(this);
+        UIHelper.centerJFrame(this);
 
     }
 

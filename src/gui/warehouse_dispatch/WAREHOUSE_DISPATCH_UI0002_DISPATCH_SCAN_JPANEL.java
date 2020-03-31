@@ -70,9 +70,8 @@ import ui.error.ErrorMsg;
 import gui.warehouse_dispatch.process_reservation.S001_ReservPalletNumberScan;
 import gui.packaging.reports.PACKAGING_UI0020_PALLET_LIST_JPANEL;
 import helper.JTableHelper;
+import helper.UIHelper;
 import java.awt.GridLayout;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -3154,7 +3153,7 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
         chooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
         chooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
-        Helper.centerJFileChooser(chooser);
+        UIHelper.centerJFileChooser(chooser);
         int status = chooser.showSaveDialog(null);
 
         if (status == JFileChooser.APPROVE_OPTION) {

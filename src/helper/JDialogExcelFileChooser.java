@@ -31,9 +31,9 @@ public class JDialogExcelFileChooser extends javax.swing.JDialog {
         initComponents();
         this.wb = wb;
         //Center the this dialog in the screen
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
     }
-    
+
     public JDialogExcelFileChooser(java.awt.Frame parent, boolean modal, File selectedFile, Workbook wb) {
         super(parent, modal);
         initComponents();
@@ -41,25 +41,22 @@ public class JDialogExcelFileChooser extends javax.swing.JDialog {
         this.chooser.repaint();
         this.wb = wb;
         //Center the this dialog in the screen
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
     }
-    
+
     public JDialogExcelFileChooser(java.awt.Frame parent, boolean modal, File file) {
         super(parent, modal);
-        initComponents();        
+        initComponents();
         //Center the this dialog in the screen
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
     }
 
     public JDialogExcelFileChooser(java.awt.Frame parent, boolean modal, FileWriter fileWriter) {
         super(parent, modal);
-        initComponents();        
+        initComponents();
         //Center the this dialog in the screen
-        Helper.centerJDialog(this);
+        UIHelper.centerJDialog(this);
     }
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

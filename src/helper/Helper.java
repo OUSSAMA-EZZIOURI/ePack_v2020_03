@@ -306,48 +306,6 @@ public class Helper {
     }
     //-------------------------- END MD5 BLOC ---------------------------------
 
-    //------------------------ Center JDialog in screen ------------------------
-    /**
-     *
-     * @param jdialog
-     *
-     * Center the jdialog in the center of the screen
-     */
-    public static void centerJDialog(JDialog jdialog) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int x = (screenSize.width - jdialog.getWidth()) / 2;
-        int y = (screenSize.height - jdialog.getHeight()) / 2;
-        jdialog.setLocation(x, y);
-    }
-    
-    /**
-     *
-     * @param jfilechooser
-     *
-     * Center the jdialog in the center of the screen
-     */
-    public static void centerJFileChooser(JFileChooser jfilechooser) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int x = (screenSize.width - jfilechooser.getWidth()) / 2;
-        int y = (screenSize.height - jfilechooser.getHeight()) / 2;
-        jfilechooser.setLocation(x, y);
-    }
-
-    /**
-     *
-     * @param jframe
-     *
-     * Center the jframe in the center of the screen
-     */
-    public static void centerJFrame(JFrame jframe) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int x = (screenSize.width - jframe.getWidth()) / 2;
-        int y = (screenSize.height - jframe.getHeight()) / 2;
-        jframe.setLocation(x, y);
-    }
 
     public static void loadProjectsInJbox(JComboBox jbox) {
         List result = new ConfigFamily().select();
@@ -428,12 +386,10 @@ public class Helper {
             String packType) {
         List result = new ConfigUcs().getPackSizeList(harnessType, harnessPart, supplierPartNumber, harnessIndex, packType);
         if (result.isEmpty()) {
-            //JOptionPane.showMessageDialog(null, String.format(Helper.ERR0021_PACK_SIZE_NOT_FOUND_IN_UCS, harnessType, harnessPart, supplierPart, index), "UCS Configuration error !", ERROR_MESSAGE);
             System.err.println(String.format(Helper.ERR0021_PACK_SIZE_NOT_FOUND_IN_UCS, harnessType, harnessPart, supplierPartNumber, harnessIndex, packType));
         } else { //Map project data in the list
             for (Object o : result) {
                 ConfigUcs cu = (ConfigUcs) o;
-                //jbox.addItem(new ComboItem(String.valueOf(cu.getPackSize()),String.valueOf(cu.getPackSize())));
                 jbox.addItem(String.valueOf(cu.getPackSize()));
             }
         }
@@ -458,12 +414,6 @@ public class Helper {
     }
 
     public static void loadContainerStateInJbox(JComboBox jbox) {
-//        jbox.addItem(new ComboItem(GlobalVars.PALLET_STORED, GlobalVars.PALLET_STORED));
-//        jbox.addItem(new ComboItem(GlobalVars.PALLET_OPEN, GlobalVars.PALLET_OPEN));
-//        jbox.addItem(new ComboItem(GlobalVars.PALLET_WAITING, GlobalVars.PALLET_WAITING));
-//        jbox.addItem(new ComboItem(GlobalVars.PALLET_DISPATCHED, GlobalVars.PALLET_DISPATCHED));
-//        jbox.addItem(new ComboItem(GlobalVars.PALLET_CLOSED, GlobalVars.PALLET_CLOSED));
-        
         jbox.addItem(GlobalVars.PALLET_STORED);
         jbox.addItem(GlobalVars.PALLET_OPEN);
         jbox.addItem(GlobalVars.PALLET_WAITING);
@@ -479,7 +429,6 @@ public class Helper {
         } else {
             System.out.println(result.toString());
             for (int i = 0; i < result.size(); i++) {
-                //jbox.addItem(new ComboItem(result.get(i)[0], result.get(i)[0]));
                 jbox.addItem(result.get(i)[0]);
             }
         }
