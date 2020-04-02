@@ -59,7 +59,7 @@
                   <Component id="btn_delete_planning" min="-2" pref="168" max="-2" attributes="0"/>
                   <Component id="jLabel11" alignment="0" min="-2" pref="396" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="form_panel" alignment="0" max="32767" attributes="0"/>
+                  <Component id="craUI0001_form_panel" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="68" max="32767" attributes="0"/>
           </Group>
@@ -70,8 +70,8 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="form_panel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="craUI0001_form_panel" min="-2" pref="201" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
@@ -130,7 +130,7 @@
         <Property name="text" type="java.lang.String" value="Planning d&apos;assemblage"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JPanel" name="form_panel">
+    <Container class="javax.swing.JPanel" name="craUI0001_form_panel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="56" green="41" red="24" type="rgb"/>

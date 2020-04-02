@@ -2,6 +2,7 @@ package gui.cra;
 
 import __main__.GlobalMethods;
 import __main__.GlobalVars;
+import __main__.PropertiesLoader;
 import entity.ProductionPlan;
 import gui.warehouse_dispatch.WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL;
 import helper.HQLHelper;
@@ -29,6 +30,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -59,6 +61,21 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     Vector planning_table_data = new Vector();
     ProductionPlan aux;
     boolean err = false;
+    
+    
+    public static void main(String[] args) {
+
+        String feedback = PropertiesLoader.loadConfigProperties();
+        //LOGGER.log(Level.INFO, feedback);
+        GlobalMethods.createDefaultDirectories();
+        Helper.startSession();
+
+        CRA_UI0001_PRODUCTION_PLAN c = new CRA_UI0001_PRODUCTION_PLAN();
+        JFrame f = new JFrame();        
+        f.setSize(1200, 700);
+        f.add(c);
+        f.setVisible(true);
+    }
 
     /**
      * Creates new form CRA_UI0001_PRODUCTION_PLAN
@@ -96,7 +113,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         planning_jtable = new javax.swing.JTable();
         btn_delete_planning = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        form_panel = new javax.swing.JPanel();
+        craUI0001_form_panel = new javax.swing.JPanel();
         btn_import_csv = new javax.swing.JButton();
         btn_csv_example = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -159,8 +176,8 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Planning d'assemblage");
 
-        form_panel.setBackground(new java.awt.Color(36, 65, 86));
-        form_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        craUI0001_form_panel.setBackground(new java.awt.Color(36, 65, 86));
+        craUI0001_form_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btn_import_csv.setText("Importer le planning .csv ...");
         btn_import_csv.addActionListener(new java.awt.event.ActionListener() {
@@ -221,26 +238,26 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout form_panelLayout = new javax.swing.GroupLayout(form_panel);
-        form_panel.setLayout(form_panelLayout);
-        form_panelLayout.setHorizontalGroup(
-            form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(form_panelLayout.createSequentialGroup()
+        javax.swing.GroupLayout craUI0001_form_panelLayout = new javax.swing.GroupLayout(craUI0001_form_panel);
+        craUI0001_form_panel.setLayout(craUI0001_form_panelLayout);
+        craUI0001_form_panelLayout.setHorizontalGroup(
+            craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txt_harness_part, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                     .addComponent(txt_internal_part)
                     .addComponent(txt_qty_planned)
                     .addComponent(txt_id))
                 .addGap(103, 103, 103)
-                .addGroup(form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(form_panelLayout.createSequentialGroup()
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(btn_save)
@@ -250,25 +267,25 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                     .addComponent(btn_import_csv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-        form_panelLayout.setVerticalGroup(
-            form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(form_panelLayout.createSequentialGroup()
+        craUI0001_form_panelLayout.setVerticalGroup(
+            craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
                 .addGap(7, 7, 7)
-                .addGroup(form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_harness_part, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_csv_example))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txt_internal_part, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_import_csv))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_qty_planned, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_save)
@@ -344,7 +361,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                     .addComponent(btn_delete_planning, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1)
-                    .addComponent(form_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(craUI0001_form_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -352,8 +369,8 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(form_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(craUI0001_form_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
@@ -717,7 +734,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     }
 
     private void clearFields() {
-        UIHelper.clearJTextFields(form_panel.getComponents());
+        UIHelper.clearJTextFields(craUI0001_form_panel.getComponents());
         txt_id.setText("#");
         btn_delete.setEnabled(false);
     }
@@ -729,7 +746,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     private javax.swing.JButton btn_import_csv;
     private javax.swing.JButton btn_refresh;
     private javax.swing.JButton btn_save;
-    private javax.swing.JPanel form_panel;
+    private javax.swing.JPanel craUI0001_form_panel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
