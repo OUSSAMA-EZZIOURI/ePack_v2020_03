@@ -52,7 +52,7 @@ public class XLSXExportHelper {
             Row row = sheet.createRow(rowCount++);
             for (Field title : objectsList.get(0).getClass().getDeclaredFields()){
                 Cell cell = row.createCell(columnCount++);
-                cell.setCellValue((String) title.getName());
+                cell.setCellValue((String) title.getName().toUpperCase());
             }
             //Fill the body of the table
             for (Object c : objectsList) {
