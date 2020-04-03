@@ -148,8 +148,6 @@ public class HQLHelper {
     public final static String SET_CLOSING_SHEET_STATE = "UPDATE HisClosingPalPrint hp SET hp.printState = :state WHERE hp.id = :id";
     public final static String GET_CLOSING_SHEET = "FROM HisClosingPalPrint hp WHERE hp.closingPallet = :closingPallet";
     public final static String DEL_CLOSING_SHEET = "DELETE FROM HisClosingPalPrint hp WHERE hp.closingPallet = :closingPallet";
-    //Schedul Entry
-    public final static String GET_ALL_SCHEDULE_ENTRIES = "FROM ScheduleEntry se ORDER BY se.harnessType, se.plannedDay DESC";
 
     //DispatchNote
     public final static String GET_DISPATCH_NOTE_BY_ADVICE_NOTE_NUM = "FROM DispatchNote dn WHERE dn.adviceNoteNum = :advice_note_num";

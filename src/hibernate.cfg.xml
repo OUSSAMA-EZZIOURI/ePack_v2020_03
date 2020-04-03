@@ -27,7 +27,6 @@
         <mapping class="entity.PackagingMaster"/>
         <mapping class="entity.PackagingItems"/>
         <mapping class="entity.PackagingStockMovement"/>
-        <mapping class="entity.ScheduleEntry"/>
         <mapping class="entity.HisBaseContainer"/>
         <mapping class="entity.HisBaseHarness"/>
         <mapping class="entity.HisOpenPalPrint"/>
