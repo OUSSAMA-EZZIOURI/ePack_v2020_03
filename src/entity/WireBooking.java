@@ -25,14 +25,7 @@ public class WireBooking extends DAO implements java.io.Serializable {
     private Integer id; 
 
     @Column(name = "create_id")
-    private Integer createId;
-
-    @Column(name = "write_id")
-    private Integer writeId;
-
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    @Column(name = "write_time")
-    private Date writeTime;
+    private Integer createId;  
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(name = "create_time")
@@ -40,10 +33,7 @@ public class WireBooking extends DAO implements java.io.Serializable {
 
     @Column(name = "create_user")
     private String createUser;
-
-    @Column(name = "write_user")
-    private String writeUser;
-    
+        
     @Column(name = "wire_no")
     private String wireNo;
     
@@ -87,9 +77,8 @@ public class WireBooking extends DAO implements java.io.Serializable {
         this.qty = qty;
         this.bookingType = bookingType;
         this.createId = PackagingVars.context.getUser().getId();
-        this.writeId = PackagingVars.context.getUser().getId();
-        this.writeUser = this.createUser = PackagingVars.context.getUser().getFirstName() + " " + PackagingVars.context.getUser().getLastName();
-        this.createTime = this.writeTime = new Date();
+        this.createUser = PackagingVars.context.getUser().getFirstName() + " " + PackagingVars.context.getUser().getLastName();
+        this.createTime = new Date();
     }
 
     public Integer getId() {
@@ -106,23 +95,7 @@ public class WireBooking extends DAO implements java.io.Serializable {
 
     public void setCreateId(Integer createId) {
         this.createId = createId;
-    }
-
-    public Integer getWriteId() {
-        return writeId;
-    }
-
-    public void setWriteId(Integer writeId) {
-        this.writeId = writeId;
-    }
-
-    public Date getWriteTime() {
-        return writeTime;
-    }
-
-    public void setWriteTime(Date writeTime) {
-        this.writeTime = writeTime;
-    }
+    }  
 
     public Date getCreateTime() {
         return createTime;
@@ -138,14 +111,6 @@ public class WireBooking extends DAO implements java.io.Serializable {
 
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
-    }
-
-    public String getWriteUser() {
-        return writeUser;
-    }
-
-    public void setWriteUser(String writeUser) {
-        this.writeUser = writeUser;
     }
 
     public String getWireNo() {
@@ -214,8 +179,10 @@ public class WireBooking extends DAO implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "WireBooking{" + "id=" + id + ",\n createId=" + createId + ",\n writeId=" + writeId + ",\n writeTime=" + writeTime + ",\n createTime=" + createTime + ",\n createUser=" + createUser + ",\n writeUser=" + writeUser + ",\n wireNo=" + wireNo + ",\n project=" + project + ",\n sourceWh=" + sourceWh + ",\n sourceWhLoc=" + sourceWhLoc + ",\n destWh=" + destWh + ",\n destWhLoc=" + destWhLoc + ",\n qty=" + qty + ",\n bookingType=" + bookingType + '}';
+        return "WireBooking{" + "id=\t\t" + id + "\n- createId=\t\t" + createId + "\n- createTime=\t\t" + createTime + "\n- createUser=\t\t" + createUser + "\n- wireNo=\t\t" + wireNo + "\n- project=\t\t" + project + "\n- sourceWh=\t\t" + sourceWh + "\n- sourceWhLoc=\t\t" + sourceWhLoc + "\n- destWh=\t\t" + destWh + "\n- destWhLoc=\t\t" + destWhLoc + "\n- qty=\t\t" + qty + "\n- bookingType=\t\t" + bookingType + '}';
     }
+
+    
         
     
     //######################################################################
