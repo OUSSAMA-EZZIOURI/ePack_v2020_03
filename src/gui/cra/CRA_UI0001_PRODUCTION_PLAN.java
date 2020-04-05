@@ -1,10 +1,12 @@
 package gui.cra;
 
+import helper.FormField;
 import __main__.GlobalMethods;
 import __main__.GlobalVars;
 import __main__.PropertiesLoader;
 import entity.ProductionPlan;
 import gui.warehouse_dispatch.WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL;
+import helper.FormValidator;
 import helper.HQLHelper;
 import helper.Helper;
 import helper.JDialogExcelFileChooser;
@@ -61,8 +63,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     Vector planning_table_data = new Vector();
     ProductionPlan aux;
     boolean err = false;
-    
-    
+
     public static void main(String[] args) {
 
         String feedback = PropertiesLoader.loadConfigProperties();
@@ -71,10 +72,11 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         Helper.startSession();
 
         CRA_UI0001_PRODUCTION_PLAN c = new CRA_UI0001_PRODUCTION_PLAN();
-        JFrame f = new JFrame();        
+        JFrame f = new JFrame();
         f.setSize(1200, 700);
         f.add(c);
         f.setVisible(true);
+        
     }
 
     /**
@@ -127,7 +129,8 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         txt_id = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btn_save = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btn_new = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txt_harness_part_filter = new javax.swing.JTextField();
@@ -202,6 +205,11 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Quantité planifiée");
 
+        txt_harness_part.setBackground(new java.awt.Color(153, 255, 153));
+
+        txt_internal_part.setBackground(new java.awt.Color(153, 255, 153));
+
+        txt_qty_planned.setBackground(new java.awt.Color(153, 255, 153));
         txt_qty_planned.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txt_qty_plannedFocusLost(evt);
@@ -217,6 +225,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         });
 
         msg_lbl.setForeground(new java.awt.Color(255, 255, 255));
+        msg_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         txt_id.setEditable(false);
         txt_id.setText("#");
@@ -231,10 +240,17 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("Nouveau");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_new.setText("Nouveau");
+        btn_new.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_newActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -258,19 +274,24 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                 .addGap(103, 103, 103)
                 .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btn_new)
                         .addGap(18, 18, 18)
                         .addComponent(btn_save)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_delete))
                     .addComponent(btn_csv_example, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_import_csv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_import_csv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap())
+            .addComponent(msg_lbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         craUI0001_form_panelLayout.setVerticalGroup(
             craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addContainerGap()
+                .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -278,7 +299,8 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                 .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_harness_part, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_csv_example))
+                    .addComponent(btn_csv_example)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -290,9 +312,8 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                     .addComponent(txt_qty_planned, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_save)
                     .addComponent(btn_delete)
-                    .addComponent(jButton1))
-                .addGap(20, 20, 20)
-                .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_new))
+                .addGap(42, 42, 42))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -501,7 +522,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
                 try {
                     int i = 1;
-                    for (CSVRecord record : csvParser) {                       
+                    for (CSVRecord record : csvParser) {
                         try {
                             createNewPlanningLine(record);
                         } catch (Exception e) {
@@ -576,6 +597,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             if (txt_id.getText().equals("#")) {//New item
                 //@to do ajouter les controls du formulaire
                 try {
+
                     ProductionPlan p = new ProductionPlan(
                             txt_harness_part.getText(), txt_internal_part.getText(), Integer.valueOf(txt_qty_planned.getText()));
                     p.create(p);
@@ -583,6 +605,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                     String[] msg = {"Nouveau élement créé"};
                     msg_lbl.setText(msg[0]);
                     refreshPlanningTable();
+
                 } catch (Exception e) {
                     String[] msg = {"Valeur numérique incorrecte! Saisir un entier supérieur à 0."};
                     msg_lbl.setText(msg[0]);
@@ -671,9 +694,13 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn_deleteActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
         clearFields();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_newActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.validateFields();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private Vector getPlanningLines() {
         planning_table_data = new Vector();
@@ -736,18 +763,35 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     private void clearFields() {
         UIHelper.clearJTextFields(craUI0001_form_panel.getComponents());
         txt_id.setText("#");
+        txt_harness_part.setBackground(GlobalVars.BG_DEFAULT_GREEN);
+        txt_internal_part.setBackground(GlobalVars.BG_DEFAULT_GREEN);
+        txt_qty_planned.setBackground(GlobalVars.BG_DEFAULT_GREEN);
         btn_delete.setEnabled(false);
     }
+    
+    private boolean validateFields(){
+        final List<FormField> fieldsList = Arrays.asList(
+                new FormField(txt_harness_part, "text", "Marrakech", "Merci de saisir Marrakech.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, GlobalVars.BG_DEFAULT_GREEN),
+                new FormField(txt_internal_part, "text", "Casa", "Merci de saisir Casa.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, GlobalVars.BG_DEFAULT_GREEN),
+                new FormField(txt_qty_planned, "int", "[1-9]{4}", "La quantité doit être numérique.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, GlobalVars.BG_DEFAULT_GREEN)                
+        );
+        
+        return new FormValidator().validateFields(fieldsList, true);
+        
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_csv_example;
     private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_delete_planning;
     private javax.swing.JButton btn_export_excel;
     private javax.swing.JButton btn_import_csv;
+    private javax.swing.JButton btn_new;
     private javax.swing.JButton btn_refresh;
     private javax.swing.JButton btn_save;
     private javax.swing.JPanel craUI0001_form_panel;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

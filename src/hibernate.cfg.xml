@@ -2,18 +2,14 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        
+        <!--   -->
         <mapping class="entity.BaseHarness"/>
         <mapping class="entity.BaseContainer"/> 
-                             
-
         <mapping class="entity.ConfigCompany"/>    
         <mapping class="entity.ConfigProject"/>               
         <mapping class="entity.BaseModule"/>
         <mapping class="entity.ManufactureUsers"/>
-       
         <mapping class="entity.BaseHarnessAdditionalBarecode"/>        
-        
         <mapping class="entity.ConfigFamily"/>        
         <mapping class="entity.ConfigUcs"/>
         <mapping class="entity.ConfigShift"/>
@@ -47,6 +43,5 @@
         <mapping class="entity.WireConfig"/>   
         <mapping class="entity.WireBooking"/>         
      <!--   -->
-     
     </session-factory>
 </hibernate-configuration>

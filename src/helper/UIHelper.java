@@ -86,7 +86,6 @@ public class UIHelper {
         int y = (screenSize.height - jframe.getHeight()) / 2;
         jframe.setLocation(x, y);
     }
-
     
     /**
      * Delete the text content of given components
@@ -354,9 +353,6 @@ public class UIHelper {
         }
 
     }
-    
-    
-
     
      /**
      * Loop on components of JPanel and return an instanciated object with

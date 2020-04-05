@@ -7,6 +7,7 @@ package __main__;
 
 import entity.ConfigCompany;
 import entity.ManufactureUsers;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -46,6 +47,23 @@ public class GlobalVars {
 
     
     public static ManufactureUsers CONNECTED_USER = new ManufactureUsers();
+    
+    
+    //........................ COLORS .........................
+    /**
+     * Default light green for required form field
+     */
+    public static Color BG_DEFAULT_GREEN = new Color(153,255,153);
+    
+    /**
+     * Default light yellow for required form field in case of error
+     */
+    public static Color BG_DEFAULT_YELLOW = new Color(255,255,0);
+    
+    /**
+     * Default Blue for Jpanel
+     */
+    public static Color BG_DEFAULT_BLUE = new Color(36,65,86);
     //........................ PREFIXS .........................
     /**
      *
