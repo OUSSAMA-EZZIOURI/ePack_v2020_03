@@ -3,7 +3,11 @@ package entity;
 import __main__.GlobalVars;
 import gui.packaging.PackagingVars;
 import hibernate.DAO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -109,20 +113,36 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
         this.writeId = writeId;
     }
 
-    public Date getWriteTime() {
-        return writeTime;
+    public String getWriteTime() {
+        return new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(writeTime);
     }
 
     public void setWriteTime(Date writeTime) {
         this.writeTime = writeTime;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public void setWriteTime(String writeTime) {
+        try {
+            this.writeTime = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(writeTime);
+        } catch (ParseException ex) {
+
+        }
+    }
+
+    public String getCreateTime() {
+        return new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(createTime);
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        try {
+            this.createTime = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").parse(createTime);
+        } catch (ParseException ex) {
+            Logger.getLogger(WireConfig.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getCreateUser() {

@@ -52,22 +52,25 @@ public class FormValidator {
             }
             if (field.getComponent() instanceof JTextField) {
                 if (debug) {
-                    System.out.println(((JTextField)field.getComponent()).getName() + " is a JTextField");
+                    System.out.println(field.getComponent().getName() + " is a JTextField");
                 }                        
                 if (!Pattern.matches(field.getRegex(), ((JTextField) field.getComponent()).getText())) {
                     if (debug) {
                         System.out.println(((JTextField) field.getComponent()).getText()+" value doesn't matches the pattern "+field.getRegex());
                     }
                     field.getErrMsgContainer().setText(field.getErrorMsg());
+                    field.getErrMsgContainer().setForeground(Color.red);
                     field.getComponent().setBackground(field.getErrBgColor());
                     field.getComponent().requestFocus();
+                    ((JTextField) field.getComponent()).selectAll();
                     return false;
                 } else {
                     if (debug) {
                         System.out.println(((JTextField) field.getComponent()).getText() + " value matches the pattern "+field.getRegex());
                     }
+                    field.getErrMsgContainer().setForeground(Color.green);
                     field.getErrMsgContainer().setText("");
-                    field.getComponent().setBackground(Color.GREEN);
+                    field.getComponent().setBackground(field.getDefaultBgColor());
                     continue;
                 }
             } 
@@ -77,25 +80,3 @@ public class FormValidator {
     }
 
 }
-//            else if (field.getComponent() instanceof JTextArea) {
-//                if (debug) {
-//                    System.out.println(((JTextField)field.getComponent()).getName() + " is a JTextArea");
-//                }
-//                //To do : Check for the type of the field and convert it before test
-//                if (!Pattern.matches(((JTextArea) field.getComponent()).getText(), field.getRegex())) {
-//                    if (debug) {
-//                        System.out.println(((JTextArea) field.getComponent()).getText() + " value matches doesn't the pattern "+field.getRegex());
-//                    }
-//                    field.getErrMsgContainer().setText(field.getErrorMsg());
-//                    field.getComponent().setBackground(field.getErrBgColor());
-//                    return false;
-//                } else {
-//                    if (debug) {
-//                        System.out.println(((JTextArea) field.getComponent()).getText() + " value matches the pattern "+field.getRegex());
-//                    }
-//                    field.getErrMsgContainer().setText("");
-//                    field.getComponent().setBackground(Color.GREEN);
-//                    field.getComponent().requestFocus();
-//                    continue;
-//                }
-//            }

@@ -415,7 +415,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel implements K
         combo_project.setBackground(new java.awt.Color(153, 255, 153));
         combo_project.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " ", " " }));
         combo_project.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 167, 0), 2));
-        combo_project.setNextFocusableComponent(txt_wireNo);
+        combo_project.setNextFocusableComponent(txt_harnessPart);
         combo_project.setPreferredSize(new java.awt.Dimension(130, 24));
         combo_project.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -436,6 +436,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel implements K
 
         txt_harnessPart.setBackground(new java.awt.Color(153, 255, 153));
         txt_harnessPart.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 167, 0), 2));
+        txt_harnessPart.setNextFocusableComponent(txt_internalPart);
         txt_harnessPart.setPreferredSize(new java.awt.Dimension(130, 24));
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
