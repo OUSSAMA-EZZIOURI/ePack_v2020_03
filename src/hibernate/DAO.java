@@ -8,7 +8,6 @@ package hibernate;
 import helper.Helper;
 import javax.persistence.Table;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 
 /**
@@ -17,14 +16,17 @@ import org.hibernate.SQLQuery;
  */
 public class DAO {
 
+    /**
+     * Create an object of the given entity in the database
+     * @param obj The object to be saved
+     * @return The id of the new aved object, otherwise it returns 0.
+     */
     public int create(Object obj) {
 
         try {
             Helper.sess.beginTransaction();
             int id = (int) Helper.sess.save(obj);
             Helper.sess.getTransaction().commit();
-            //Helper.sess.flush();
-            //Helper.sess.clear();
             return id;
         } catch (HibernateException e) {
             if (Helper.sess.getTransaction() != null && Helper.sess.getTransaction().isActive()) {
@@ -43,6 +45,10 @@ public class DAO {
         return 0;
     }
 
+    /**
+     * Update the object in the database
+     * @param obj The object to be deleted
+     */
     public void update(Object obj) {
         try {
 
@@ -68,6 +74,10 @@ public class DAO {
         }
     }
 
+    /**
+     * Delete the object from the database
+     * @param obj The object to be deleted
+     */
     public void delete(Object obj) {
         try {
             Helper.sess.beginTransaction();
@@ -91,6 +101,11 @@ public class DAO {
         }
     }
 
+    /**
+     * 
+     * @param obj
+     * @return
+     */
     public int trancate(Object obj) {
         try {
             Class<?> c = obj.getClass();
