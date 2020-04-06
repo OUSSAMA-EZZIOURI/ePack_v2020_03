@@ -63,7 +63,7 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
         this.internalPart = internalPart.toUpperCase();
         this.createId = PackagingVars.context.getUser().getId();
         this.writeId = PackagingVars.context.getUser().getId();
-        this.writeUser = this.createUser = (GlobalVars.CONNECTED_USER.getFirstName() 
+        this.writeUser = this.createUser = (GlobalVars.CONNECTED_USER.getFirstName()
                 + " " + GlobalVars.CONNECTED_USER.getLastName()).toUpperCase();
         this.createTime = this.writeTime = new Date();
     }
@@ -149,19 +149,22 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
         this.plannedQty = plannedQty;
     }
 
-   
-    
     public void setPlannedQty(int plannedQty) {
-        this.plannedQty =  plannedQty;
+        this.plannedQty = plannedQty;
     }
 
     @Override
     public String toString() {
         return "ProductionPlan{" + "id=" + id + "\n, harnessPart=" + harnessPart + "\n, internalPart=" + internalPart + "\n, createId=" + createId + "\n, writeId=" + writeId + "\n, writeTime=" + writeTime + "\n, createTime=" + createTime + "\n, createUser=" + createUser + "\n, writeUser=" + writeUser + "\n, plannedQty=" + plannedQty + '}';
     }
-    
-    
-    
-    
-    
+
+    @Override
+    public void update(Object obj) {
+        ProductionPlan aux = (ProductionPlan) obj;
+        aux.setWriteId(GlobalVars.CONNECTED_USER.getId());
+        aux.setWriteUser(GlobalVars.CONNECTED_USER.getFirstName() + " " + GlobalVars.CONNECTED_USER.getLastName());
+        aux.setWriteTime(new Date());
+        super.update(aux); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
