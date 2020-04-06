@@ -449,6 +449,15 @@ public class WireConfig extends DAO implements java.io.Serializable {
     public String toString() {
         return "WireConfig{" + "id=" + id + ", createId=" + createId + ", writeId=" + writeId + ", writeTime=" + writeTime + ", createTime=" + createTime + ", createUser=" + createUser + ", writeUser=" + writeUser + ", project=" + project + ", productWireNo=" + productWireNo + ", harnessPart=" + harnessPart + ", internalPart=" + internalPart + ", wireNo=" + wireNo + ", operationNo=" + operationNo + ", wireType=" + wireType + ", spoolPn=" + spoolPn + ", multicoreName=" + multicoreName + ", color=" + color + ", type=" + type + ", length=" + length + ", intTerm1=" + intTerm1 + ", stripLength1=" + stripLength1 + ", intSeal1=" + intSeal1 + ", intTerm2=" + intTerm2 + ", stripLength2=" + stripLength2 + ", intSeal2=" + intSeal2 + ", description=" + description + ", warehouse=" + sourceWh + ", whLocation=" + sourceLocation + ", destination_wh=" + destWarehouse + ", cardNumber=" + cardNumber + ", kanbanQty=" + kanbanQty + ", bundleQty=" + bundleQty + ", stock=" + stock + "}\n";
     }
+    
+    @Override
+    public void update(Object obj) {
+        WireConfig aux = (WireConfig) obj;
+        aux.setWriteId(GlobalVars.CONNECTED_USER.getId());
+        aux.setWriteUser(GlobalVars.CONNECTED_USER.getFirstName() + " " + GlobalVars.CONNECTED_USER.getLastName());
+        aux.setWriteTime(new Date());
+        super.update(aux); //To change body of generated methods, choose Tools | Templates.
+    }
 
     //######################################################################   
     /**
