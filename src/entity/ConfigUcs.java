@@ -96,11 +96,11 @@ public class ConfigUcs extends DAO implements java.io.Serializable {
 
     @Column(name = "project")
     private String project;
-    
+
     //finish goods warehouse
     @Column(name = "warehouse")
     private String warehouse;
-    
+
     //packaging warehouse
     @Column(name = "packaging_warehouse")
     private String packaging_warehouse;
@@ -165,27 +165,25 @@ public class ConfigUcs extends DAO implements java.io.Serializable {
      */
     @Column(name = "label_per_piece", nullable = true)
     private Boolean labelPerPiece;
-    
+
     @Column(name = "priority")
     private int priority;
-    
+
     @Column(name = "openning_sheet_copies")
     private int openningSheetCopies;
-    
+
     @Column(name = "closing_sheet_copies")
     private int closingSheetCopies;
-    
+
     @Column(name = "closing_sheet_format")
     private int closingSheetFormat;
-    
+
     /**
      * True : Print the destination in closing sheet label False : Print à dash
      * "-" unstead of destination
      */
     @Column(name = "print_destination", nullable = true)
     private Boolean print_destination;
-
-    
 
     //@ManyToOne(optional = true, cascade = CascadeType.REFRESH)
     //private AssyWorkstation assyWorkstation;
@@ -436,8 +434,6 @@ public class ConfigUcs extends DAO implements java.io.Serializable {
     public void setPackaging_warehouse(String packaging_warehouse) {
         this.packaging_warehouse = packaging_warehouse;
     }
-    
-    
 
     public String getProject() {
         return project;
@@ -534,7 +530,7 @@ public class ConfigUcs extends DAO implements java.io.Serializable {
     public void setClosingSheetFormat(int closingSheetFormat) {
         this.closingSheetFormat = closingSheetFormat;
     }
-    
+
     public Boolean getPrint_destination() {
         return print_destination;
     }
@@ -542,7 +538,7 @@ public class ConfigUcs extends DAO implements java.io.Serializable {
     public void setPrint_destination(Boolean print_destination) {
         this.print_destination = print_destination;
     }
-    
+
     //######################################################################
     public List select(String hp) {
         Helper.startSession();
@@ -642,6 +638,21 @@ public class ConfigUcs extends DAO implements java.io.Serializable {
             return false;
         }
 
+    }
+    
+    /**
+     * Search the given harness part in the database 
+     * @param hp The harness part to look for
+     * @return Return true if it exists, return false otherwise
+     */
+    public static boolean isHarnessPartExist(String hp) {
+         
+        Helper.startSession();
+        Query query = Helper.sess.createQuery(HQLHelper.GET_UCS_BY_HP);
+        query.setParameter("hp", hp);
+
+        Helper.sess.getTransaction().commit();
+        return !query.list().isEmpty();
     }
 
 }
