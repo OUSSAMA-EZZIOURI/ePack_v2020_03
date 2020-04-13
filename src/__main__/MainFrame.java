@@ -7,12 +7,13 @@ package __main__;
 
 import entity.ManufactureUsers;
 import gui.config.CONFIG_UI0001_CONFIG_BARCODE_JPANEL;
-import gui.config.CONFIG_UI0001_CONFIG_UCS_JPANEL;
+import gui.config.CONFIG_UI0001_CONFIG_PN_JPANEL;
 import gui.config.CONFIG_UI0002_CONFIG_PACK_MASTERDATA_JPANEL;
 import gui.config.CONFIG_UI0003_CONFIG_USERS_JPANEL;
 import gui.config.CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL;
 import gui.cra.CRA_UI0001_PRODUCTION_PLAN;
 import gui.cra.CRA_UI0002_WIRE_MASTER_DATA;
+import gui.logviewer.LOGVIEWER_UI0001;
 import gui.packaging.PackagingVars;
 import gui.packaging.mode3.gui.PACKAGING_UI0001_Main_Mode3;
 import gui.packaging.mode3.state.Mode3_S010_UserCodeScan;
@@ -91,7 +92,7 @@ public class MainFrame extends javax.swing.JFrame {
                 try {
                     /* Create and display the form */
 
-                    StartFrame ui = new StartFrame();
+                    AuthFrame ui = new AuthFrame();
                     ui.setVisible(true);
                     UILog.createDailyLogFile(GlobalVars.APP_PROP.getProperty("LOG_PATH"));
                     PropertiesLoader.createDailyOutPrintDir(GlobalVars.APP_PROP.getProperty("PRINT_DIR"),
@@ -195,15 +196,17 @@ public class MainFrame extends javax.swing.JFrame {
         MENU_06_PRODUCTION_PLAN = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         MENU_05_MODULE_CONFIG = new javax.swing.JMenu();
-        MENU_01_00_CONFIG_UCS = new javax.swing.JMenuItem();
+        MENU_01_00_CONFIG_PN = new javax.swing.JMenuItem();
         MENU_01_01_CONFIG_BARCODE = new javax.swing.JMenuItem();
         MENU_01_02_CONFIG_PACK_MASTERDATA = new javax.swing.JMenuItem();
         MENU_01_03_AVANCE = new javax.swing.JMenu();
         MENU_01_03_00_CONFIG_USERS = new javax.swing.JMenuItem();
         MENU_01_03_01_CONFIG_COMPANY = new javax.swing.JMenuItem();
         MENU_06_MODULE_HELP = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         logoutMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
 
         jMenuItem3.setText("jMenuItem3");
 
@@ -430,13 +433,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         MENU_05_MODULE_CONFIG.setText("Configuration");
 
-        MENU_01_00_CONFIG_UCS.setText("Configuration Standard Pack");
-        MENU_01_00_CONFIG_UCS.addActionListener(new java.awt.event.ActionListener() {
+        MENU_01_00_CONFIG_PN.setText("Articles Master Data");
+        MENU_01_00_CONFIG_PN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MENU_01_00_CONFIG_UCSActionPerformed(evt);
+                MENU_01_00_CONFIG_PNActionPerformed(evt);
             }
         });
-        MENU_05_MODULE_CONFIG.add(MENU_01_00_CONFIG_UCS);
+        MENU_05_MODULE_CONFIG.add(MENU_01_00_CONFIG_PN);
 
         MENU_01_01_CONFIG_BARCODE.setText("Format Code à barre / QR");
         MENU_01_01_CONFIG_BARCODE.addActionListener(new java.awt.event.ActionListener() {
@@ -478,9 +481,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         MENU_06_MODULE_HELP.setText("Session");
 
+        jMenuItem4.setText("Log system");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        MENU_06_MODULE_HELP.add(jMenuItem4);
+
         logoutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         logoutMenuItem.setMnemonic('x');
-        logoutMenuItem.setText("Se déconnecter");
+        logoutMenuItem.setText("Fermer la session");
         logoutMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutMenuItemActionPerformed(evt);
@@ -497,6 +508,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         MENU_06_MODULE_HELP.add(exitMenuItem);
+        MENU_06_MODULE_HELP.add(jSeparator1);
 
         menuBar.add(MENU_06_MODULE_HELP);
 
@@ -603,9 +615,9 @@ public class MainFrame extends javax.swing.JFrame {
         addNewTab(new WAREHOUSE_FG_UI0001_SCAN_JPANEL(null, rootTabbedPane, GlobalVars.CONNECTED_USER), evt);
     }//GEN-LAST:event_MENU_00_01_FG_RECEPTIONActionPerformed
 
-    private void MENU_01_00_CONFIG_UCSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_01_00_CONFIG_UCSActionPerformed
-        addNewTab(new CONFIG_UI0001_CONFIG_UCS_JPANEL(rootTabbedPane), evt);
-    }//GEN-LAST:event_MENU_01_00_CONFIG_UCSActionPerformed
+    private void MENU_01_00_CONFIG_PNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_01_00_CONFIG_PNActionPerformed
+        addNewTab(new CONFIG_UI0001_CONFIG_PN_JPANEL(rootTabbedPane), evt);
+    }//GEN-LAST:event_MENU_01_00_CONFIG_PNActionPerformed
 
     private void MENU_01_01_CONFIG_BARCODEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_01_01_CONFIG_BARCODEActionPerformed
 
@@ -739,7 +751,7 @@ public class MainFrame extends javax.swing.JFrame {
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        StartFrame ui = new StartFrame();
+                        AuthFrame ui = new AuthFrame();
 
                         ui.setVisible(true);
                         UILog.createDailyLogFile(GlobalVars.APP_PROP.getProperty("LOG_PATH"));
@@ -784,12 +796,16 @@ public class MainFrame extends javax.swing.JFrame {
         addNewTab(new CRA_UI0002_WIRE_MASTER_DATA(rootTabbedPane), evt);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        addNewTab(new LOGVIEWER_UI0001(rootTabbedPane), evt);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MENU_00_01_FG_RECEPTION;
     private javax.swing.JMenuItem MENU_00_02_PART_STOCK;
     private javax.swing.JMenuItem MENU_00_03_PACKAGING_STOCK;
-    private javax.swing.JMenuItem MENU_01_00_CONFIG_UCS;
+    private javax.swing.JMenuItem MENU_01_00_CONFIG_PN;
     private javax.swing.JMenuItem MENU_01_01_CONFIG_BARCODE;
     private javax.swing.JMenuItem MENU_01_02_CONFIG_PACK_MASTERDATA;
     private javax.swing.JMenuItem MENU_01_03_00_CONFIG_USERS;
@@ -807,6 +823,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuItem logoutMenuItem;
     private javax.swing.JMenuItem menu010_pallet_details;
     private javax.swing.JMenuItem menu011_prod_statistics;

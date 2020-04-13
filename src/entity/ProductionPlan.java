@@ -179,12 +179,23 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
     }
 
     @Override
+    public int create(Object obj) {
+        ProductionPlan aux = (ProductionPlan) obj;
+        aux.writeId = aux.createId = GlobalVars.CONNECTED_USER.getId();
+        aux.writeUser = aux.createUser = GlobalVars.CONNECTED_USER.getFullName();
+        aux.createTime = aux.writeTime = new Date();
+
+        return super.create(aux); 
+    }
+
+    @Override
     public void update(Object obj) {
         ProductionPlan aux = (ProductionPlan) obj;
         aux.setWriteId(GlobalVars.CONNECTED_USER.getId());
         aux.setWriteUser(GlobalVars.CONNECTED_USER.getFirstName() + " " + GlobalVars.CONNECTED_USER.getLastName());
         aux.setWriteTime(new Date());
-        super.update(aux); //To change body of generated methods, choose Tools | Templates.
+        
+        super.update(aux); 
     }
 
 }

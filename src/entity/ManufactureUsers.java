@@ -193,7 +193,7 @@ public class ManufactureUsers extends DAO implements java.io.Serializable {
         this.project = project;
     }
     
-    public String getFNameLName(){
+    public String getFullName(){
         return this.getFirstName().toUpperCase()+" "+this.getLastName().toUpperCase();
     }
     

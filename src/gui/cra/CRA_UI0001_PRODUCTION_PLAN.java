@@ -4,6 +4,7 @@ import helper.FormField;
 import __main__.GlobalMethods;
 import __main__.GlobalVars;
 import __main__.PropertiesLoader;
+import entity.ConfigUcs;
 import entity.ProductionPlan;
 import gui.warehouse_dispatch.WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL;
 import helper.FormValidator;
@@ -121,9 +122,9 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txt_harness_part = new javax.swing.JTextField();
-        txt_internal_part = new javax.swing.JTextField();
-        txt_qty_planned = new javax.swing.JTextField();
+        txt_harnessPart = new javax.swing.JTextField();
+        txt_internalPart = new javax.swing.JTextField();
+        txt_qtyPlanned = new javax.swing.JTextField();
         btn_delete = new javax.swing.JButton();
         msg_lbl = new javax.swing.JLabel();
         txt_id = new javax.swing.JTextField();
@@ -205,24 +206,27 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Article faisceau");
+        jLabel2.setPreferredSize(new java.awt.Dimension(130, 24));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Code interne");
+        jLabel3.setPreferredSize(new java.awt.Dimension(130, 24));
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Quantité planifiée");
+        jLabel4.setPreferredSize(new java.awt.Dimension(130, 24));
 
-        txt_harness_part.setBackground(new java.awt.Color(255, 255, 255));
-        txt_harness_part.setNextFocusableComponent(txt_internal_part);
+        txt_harnessPart.setNextFocusableComponent(txt_internalPart);
+        txt_harnessPart.setPreferredSize(new java.awt.Dimension(130, 24));
 
-        txt_internal_part.setBackground(new java.awt.Color(255, 255, 255));
-        txt_internal_part.setNextFocusableComponent(txt_qty_planned);
+        txt_internalPart.setNextFocusableComponent(txt_qtyPlanned);
+        txt_internalPart.setPreferredSize(new java.awt.Dimension(130, 24));
 
-        txt_qty_planned.setBackground(new java.awt.Color(255, 255, 255));
-        txt_qty_planned.setNextFocusableComponent(btn_save);
-        txt_qty_planned.addFocusListener(new java.awt.event.FocusAdapter() {
+        txt_qtyPlanned.setNextFocusableComponent(btn_save);
+        txt_qtyPlanned.setPreferredSize(new java.awt.Dimension(130, 24));
+        txt_qtyPlanned.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_qty_plannedFocusLost(evt);
+                txt_qtyPlannedFocusLost(evt);
             }
         });
 
@@ -241,10 +245,12 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
         txt_id.setEditable(false);
         txt_id.setText("#");
-        txt_id.setNextFocusableComponent(txt_harness_part);
+        txt_id.setNextFocusableComponent(txt_harnessPart);
+        txt_id.setPreferredSize(new java.awt.Dimension(130, 24));
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("ID");
+        jLabel5.setPreferredSize(new java.awt.Dimension(130, 24));
 
         btn_save.setText("Enregistrer");
         btn_save.addActionListener(new java.awt.event.ActionListener() {
@@ -311,93 +317,86 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_harness_part, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                    .addComponent(txt_internal_part)
-                    .addComponent(txt_qty_planned)
-                    .addComponent(txt_id))
-                .addGap(18, 18, 18)
-                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_createTime, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_createUser, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_writeTime, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_writeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(msg_lbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
-                        .addComponent(btn_new)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_save)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_delete))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btn_import_csv, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_csv_example, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(101, 101, 101))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, craUI0001_form_panelLayout.createSequentialGroup()
-                .addGap(0, 17, Short.MAX_VALUE)
-                .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
+                                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_harnessPart, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                                    .addComponent(txt_internalPart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txt_qtyPlanned, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txt_id, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_createTime, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                                    .addComponent(txt_createUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txt_writeTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txt_writeUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
+                                .addComponent(btn_import_csv)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_new)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_csv_example)))
+                        .addGap(127, 127, 127)
+                        .addComponent(btn_delete)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         craUI0001_form_panelLayout.setVerticalGroup(
             craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
                 .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btn_delete)
+                    .addComponent(btn_csv_example)
+                    .addComponent(btn_save)
+                    .addComponent(btn_new)
+                    .addComponent(btn_import_csv))
+                .addGap(9, 9, 9)
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_createTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
-                        .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txt_harness_part, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_csv_example))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txt_internal_part, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_import_csv))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_qty_planned, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_save)
-                            .addComponent(btn_delete)
-                            .addComponent(btn_new)))
-                    .addGroup(craUI0001_form_panelLayout.createSequentialGroup()
-                        .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(txt_createTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(txt_createUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(txt_writeTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_writeUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(42, 42, 42))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_createUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_harnessPart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_writeTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_internalPart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_writeUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_qtyPlanned, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 63, 63))
         );
 
-        txt_harness_part.getAccessibleContext().setAccessibleName("harnessPart");
-        txt_internal_part.getAccessibleContext().setAccessibleName("internalPart");
-        txt_qty_planned.getAccessibleContext().setAccessibleName("plannedQty");
+        txt_harnessPart.getAccessibleContext().setAccessibleName("harnessPart");
+        txt_internalPart.getAccessibleContext().setAccessibleName("internalPart");
+        txt_qtyPlanned.getAccessibleContext().setAccessibleName("plannedQty");
         txt_id.getAccessibleContext().setAccessibleName("id");
         txt_createTime.getAccessibleContext().setAccessibleName("createTime");
         txt_createUser.getAccessibleContext().setAccessibleName("createUser");
@@ -406,10 +405,8 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Article faisceau");
 
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Code interne");
 
         btn_export_excel.setText("Exporter en Excel");
@@ -443,7 +440,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                 .addComponent(btn_refresh)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_export_excel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(257, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -471,7 +468,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1)
                     .addComponent(craUI0001_form_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -479,11 +476,11 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(craUI0001_form_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(craUI0001_form_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_delete_planning, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -655,20 +652,29 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
      *
      * @return True if all fields match the patterns, false otherwise
      */
-    private boolean validateFields() {
+    private boolean validatePatterns() {
         final List<FormField> fieldsList = Arrays.asList(
-                new FormField(txt_harness_part, "text",
+                new FormField(txt_harnessPart, "text",
                         "[a-zA-Z0-9]{6,25}", "Le code acticle doit être "
                         + "alpha-numérique et de longueur entre 6 et 25 caractères.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE),
-                new FormField(txt_internal_part, "text",
+                new FormField(txt_internalPart, "text",
                         "[a-zA-Z0-9]{6,25}",
                         "Le code interne doit être "
                         + "alpha-numérique et de longueur entre 6 et 25 caractères.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE),
-                new FormField(txt_qty_planned, "int", "^[1-9]{1}+\\d*$", "La quantité doit être numérique et supérieur à 0.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE)
+                new FormField(txt_qtyPlanned, "int", "^[1-9]{1}+\\d*$", "La quantité doit être numérique et supérieur à 0.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE)
         );
 
-        return new FormValidator().validateFields(fieldsList, false);
+        return new FormValidator().validatePatterns(fieldsList, false);
 
+    }
+    
+    /**
+     * Validate value in the database.
+     * 
+     * @return 
+     */
+    private boolean validateValues() {
+        return true;
     }
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
@@ -678,40 +684,43 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         if (!txt_id.getText().equals("#")) {
             lineId = Integer.valueOf(txt_id.getText());
         }
-        if (validateFields()) {//Inputs matches regex
-            if (is_CPN_OR_LPN_Planned(txt_harness_part.getText(), txt_internal_part.getText(), lineId)) {
-                String[] msg = {"Article ou/et Module interne déjà planifiés!"};
-                //UILog.errorDialog(msg[0]);
-                msg_lbl.setText(msg[0]);
+        if (validatePatterns()  && validateValues()) {//Inputs matches regex
+            if (!isHarnessPartExist(txt_harnessPart.getText())) { //IF PN exists in Configuration Standard Part
                 msg_lbl.setForeground(Color.red);
-                txt_harness_part.requestFocus();
-                txt_harness_part.selectAll();
-                txt_harness_part.setBackground(Color.yellow);
-                txt_internal_part.setBackground(Color.yellow);
+                msg_lbl.setText(String.format("L'article %s n'est pas paramétré ou n'existe pas. Vérifier le menu Article Master Data", txt_harnessPart.getText()));
+                txt_harnessPart.requestFocus();
+                txt_harnessPart.selectAll();
+            } else if (!isSupplierPartExist(txt_internalPart.getText())) { //IF internal module exists in Configuration Standard Part
+                msg_lbl.setForeground(Color.red);
+                msg_lbl.setText(String.format("Le module interne %s n'est pas paramétré ou n'existe pas. Vérifier le menu Article Master Data", txt_internalPart.getText()));
+                txt_internalPart.requestFocus();
+                txt_internalPart.selectAll();
+            } else if (is_CPN_OR_LPN_Planned(txt_harnessPart.getText(), txt_internalPart.getText(), lineId)) {
+                msg_lbl.setText(String.format("Article %s ou/et module interne %s déjà planifiés!",txt_harnessPart.getText(),txt_internalPart.getText()));
+                msg_lbl.setForeground(Color.red);
+                txt_harnessPart.requestFocus();
+                txt_harnessPart.selectAll();
+                txt_harnessPart.setBackground(Color.yellow);
+                txt_internalPart.setBackground(Color.yellow);
             } //Is the internal part exist in production plan
-            else if (isInternalPartPlanned(txt_internal_part.getText(), lineId)) {
-                String[] msg = {"Le module interne " + txt_internal_part.getText() + " est déjà planifié!"};
-                //UILog.errorDialog(msg[0]);
-                msg_lbl.setText(msg[0]);
+            else if (isInternalPartPlanned(txt_internalPart.getText(), lineId)) {
+                msg_lbl.setText("Le module interne " + txt_internalPart.getText() + " est déjà planifié!");
                 msg_lbl.setForeground(Color.red);
-                txt_internal_part.requestFocus();
-                txt_internal_part.selectAll();
-                txt_internal_part.setBackground(Color.yellow);
+                txt_internalPart.requestFocus();
+                txt_internalPart.selectAll();
+                txt_internalPart.setBackground(Color.yellow);
             } else { //BINGO : Everything is all right, now we"ll save the object
-                
                 msg_lbl.setForeground(Color.green);
-
                 if (lineId == 0) {//It's a new item
-
-                    ProductionPlan p = new ProductionPlan(
-                            txt_harness_part.getText(), txt_internal_part.getText(), Integer.valueOf(txt_qty_planned.getText()));
+                    ProductionPlan p = (ProductionPlan) UIHelper.mapValuesFromJPanelToObj(craUI0001_form_panel, "entity.ProductionPlan", true);
+//                    ProductionPlan p = new ProductionPlan(
+//                            txt_harness_part.getText(), txt_internal_part.getText(), Integer.valueOf(txt_qty_planned.getText()));
                     lineId = p.create(p);
                     msg_lbl.setText("Nouveau élement créé #" + lineId);
-
                 } else {//It's a modification
-                    aux.setHarnessPart(txt_harness_part.getText());
-                    aux.setInternalPart(txt_internal_part.getText());
-                    aux.setPlannedQty(Integer.valueOf(txt_qty_planned.getText()));
+                    aux.setHarnessPart(txt_harnessPart.getText());
+                    aux.setInternalPart(txt_internalPart.getText());
+                    aux.setPlannedQty(Integer.valueOf(txt_qtyPlanned.getText()));
                     aux.update(aux);
                     msg_lbl.setText("Changements enregistrés!");
                 }
@@ -720,9 +729,9 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn_saveActionPerformed
 
-    private void txt_qty_plannedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_qty_plannedFocusLost
+    private void txt_qtyPlannedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_qtyPlannedFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_qty_plannedFocusLost
+    }//GEN-LAST:event_txt_qtyPlannedFocusLost
 
     private void btn_export_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export_excelActionPerformed
         XLSXExportHelper h = new XLSXExportHelper();
@@ -740,6 +749,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         if (confirmed == 0) {
             aux.delete(aux);
             clearFields();
+            msg_lbl.setBackground(Color.green);
             msg_lbl.setText("Elément supprimé !");
             refreshPlanningTable();
         }
@@ -802,6 +812,14 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         return false;
     }
 
+    private boolean isHarnessPartExist(String hp) {
+        return ConfigUcs.isHarnessPartExist(hp);
+    }
+
+    private boolean isSupplierPartExist(String sp) {
+        return ConfigUcs.isSupplierPartExist(sp);
+    }
+
     private void refreshPlanningTable() {
         planning_jtable.setModel(new DefaultTableModel(new Vector(), planning_table_header));
         planning_jtable.setModel(new DefaultTableModel(getPlanningLines(), planning_table_header));
@@ -850,12 +868,12 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
     private javax.swing.JTable planning_jtable;
     private javax.swing.JTextField txt_createTime;
     private javax.swing.JTextField txt_createUser;
-    private javax.swing.JTextField txt_harness_part;
+    private javax.swing.JTextField txt_harnessPart;
     private javax.swing.JTextField txt_harness_part_filter;
     private javax.swing.JTextField txt_id;
-    private javax.swing.JTextField txt_internal_part;
+    private javax.swing.JTextField txt_internalPart;
     private javax.swing.JTextField txt_internal_part_filter;
-    private javax.swing.JTextField txt_qty_planned;
+    private javax.swing.JTextField txt_qtyPlanned;
     private javax.swing.JTextField txt_writeTime;
     private javax.swing.JTextField txt_writeUser;
     // End of variables declaration//GEN-END:variables

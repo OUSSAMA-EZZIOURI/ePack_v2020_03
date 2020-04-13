@@ -654,5 +654,20 @@ public class ConfigUcs extends DAO implements java.io.Serializable {
         Helper.sess.getTransaction().commit();
         return !query.list().isEmpty();
     }
+    
+    /**
+     * Search the given supplier part in the database 
+     * @param sp The harness part to look for
+     * @return Return true if it exists, return false otherwise
+     */
+    public static boolean isSupplierPartExist(String sp) {
+         
+        Helper.startSession();
+        Query query = Helper.sess.createQuery(HQLHelper.GET_UCS_BY_SUPPLIER_PART);
+        query.setParameter("sp", sp);
+
+        Helper.sess.getTransaction().commit();
+        return !query.list().isEmpty();
+    }
 
 }

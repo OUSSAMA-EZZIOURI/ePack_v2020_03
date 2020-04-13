@@ -451,6 +451,16 @@ public class WireConfig extends DAO implements java.io.Serializable {
     }
     
     @Override
+    public int create(Object obj) {
+        WireConfig aux = (WireConfig) obj;
+        aux.writeId = aux.createId = GlobalVars.CONNECTED_USER.getId();
+        aux.writeUser = aux.createUser = GlobalVars.CONNECTED_USER.getFullName();
+        aux.createTime = aux.writeTime = new Date();
+
+        return super.create(aux); 
+    }
+    
+    @Override
     public void update(Object obj) {
         WireConfig aux = (WireConfig) obj;
         aux.setWriteId(GlobalVars.CONNECTED_USER.getId());
@@ -459,10 +469,6 @@ public class WireConfig extends DAO implements java.io.Serializable {
         super.update(aux); //To change body of generated methods, choose Tools | Templates.
     }
 
-    //######################################################################   
-    /**
-     * public List select() { Helper.startSession(); Query query =
-     * Helper.sess.createQuery(HQLHelper.); UILog.info(query.getQueryString());
-     * Helper.sess.getTransaction().commit(); return query.list(); } *
-     */
+
+    
 }

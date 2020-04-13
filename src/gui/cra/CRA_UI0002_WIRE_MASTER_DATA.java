@@ -5,10 +5,13 @@ import __main__.GlobalVars;
 import __main__.PropertiesLoader;
 import entity.ConfigProject;
 import entity.WireConfig;
+import helper.FormField;
+import helper.FormValidator;
 import helper.XLSXExportHelper;
 import helper.HQLHelper;
 import helper.Helper;
 import helper.UIHelper;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -28,7 +31,7 @@ import org.hibernate.Query;
  *
  * @author Oussama
  */
-public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel implements KeyListener {
+public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
 
     private JTabbedPane parent;
     Vector config_table_data = new Vector();
@@ -1023,12 +1026,12 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel implements K
                     .add(layout.createSequentialGroup()
                         .add(btn_hide_creation_form)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(btn_new, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 89, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(btn_duplicate, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 89, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(48, 48, 48)
-                        .add(btn_save)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(btn_new, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 89, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(58, 58, 58)
+                        .add(btn_save)
+                        .add(284, 284, 284)
                         .add(btn_delete, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(root_panel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
@@ -1109,7 +1112,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel implements K
         System.out.println("lines " + this.excelLines.size());
         return config_table_data;
     }
-    
+
     /**
      *
      * @param evt
@@ -1184,34 +1187,81 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel implements K
         this.aux = null;
         msg_lbl.setText("Element dupliqué !");
     }//GEN-LAST:event_btn_duplicateActionPerformed
-    
-    private String formValidation(){
+
+    private String formValidation() {
         return "";
     }
-    
-    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-        // it's a new item
-        if (txt_id.getText().equals("#")) {
-            WireConfig c = (WireConfig) UIHelper.mapValuesFromJPanelToObj(root_panel, "entity.WireConfig", true);
-            c.setCreateTime(new Date());
-            c.setCreateId(GlobalVars.CONNECTED_USER.getId());
-            c.setCreateUser(GlobalVars.CONNECTED_USER.getFNameLName());
-            c.setWriteTime(new Date());
-            c.setWriteId(GlobalVars.CONNECTED_USER.getId());
-            c.setWriteUser(GlobalVars.CONNECTED_USER.getFNameLName());
-            c.create(c);
-            msg_lbl.setText("Nouveau élement enregistré !");
-            clearFields();
-        } //Editing existing item from the list
-        else {
-            WireConfig c = (WireConfig) UIHelper.mapValuesFromJPanelToObj(root_panel, "entity.WireConfig", true);
-            c.setWriteTime(new Date());
-            c.setWriteId(GlobalVars.CONNECTED_USER.getId());
-            c.setWriteUser(GlobalVars.CONNECTED_USER.getFNameLName());
 
-            //c.update(c);
-            msg_lbl.setText("Modification effectuée !");
-            clearFields();
+    /**
+     *
+     * @return True if all fields match the patterns, false otherwise
+     */
+    private boolean validatePatterns() {
+        final List<FormField> fieldsList = Arrays.asList(
+                new FormField(combo_project, "text",
+                        "[a-zA-Z0-9]{1,25}", "Le code acticle doit être "
+                        + "alpha-numérique et de longueur entre 1 et 25 caractères.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE),
+                new FormField(txt_harnessPart, "text",
+                        "[a-zA-Z0-9]{6,25}", "Le code acticle doit être "
+                        + "alpha-numérique et de longueur entre 6 et 25 caractères.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE),
+                new FormField(txt_internalPart, "text",
+                        "[a-zA-Z0-9]{6,25}",
+                        "Le code interne doit être "
+                        + "alpha-numérique et de longueur entre 6 et 25 caractères.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE),
+                new FormField(txt_sourceWarehouse, "text",
+                        "[a-zA-Z0-9]{1,25}",
+                        "Le nom du magasin source doit être "
+                        + "alpha-numérique et de longueur entre 1 et 25 caractères.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE),
+                new FormField(txt_sourceLocation, "text",
+                        "[a-zA-Z0-9]{1, 20}",
+                        "Le nom de location doit être "
+                        + "alpha-numérique et de longueur entre 1 et 20 caractères.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE),
+                new FormField(txt_destWarehouse, "text",
+                        "[a-zA-Z0-9]{1,25}",
+                        "Le nom du magasin destination doit être "
+                        + "alpha-numérique et de longueur entre 1 et 25 caractères.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE),
+                new FormField(txt_stock, "int", "^[0-9]{1}+\\d*$", 
+                        "La quantité en stock être numérique.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE),
+                new FormField(txt_cardNumber, "int", "^[0-9]{1}+\\d*$", 
+                        "Le numéro de la carte doit être numérique.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE),
+                new FormField(txt_bundleQty, "int", "^[1-9]{1}+\\d*$", 
+                        "La quantité du bundle doit être numérique et supérieure à 0.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE),
+                new FormField(txt_wireNo, "text",
+                        "[a-zA-Z0-9]{1,25}",
+                        "Le numéro du fil doit être "
+                        + "alpha-numérique et de longueur entre 1 et 25 caractères.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE)
+        );
+
+        return new FormValidator().validatePatterns(fieldsList, false);
+
+    }
+    
+    /**
+     * Validate value in the database.
+     * 
+     * @return 
+     */
+    private boolean validateValues() {
+        return true;
+    }
+
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+
+        if (validatePatterns() && validateValues()){  //Validate GUI user inputs
+            // it's a new item
+            if (txt_id.getText().equals("#")) {
+                WireConfig c = (WireConfig) UIHelper.mapValuesFromJPanelToObj(craUI0002_form_panel, "entity.WireConfig", true);
+                c.create(c);
+                msg_lbl.setText("Nouveau élement enregistré !");
+                clearFields();
+            } //Editing existing item from the list
+            else {
+                WireConfig c = (WireConfig) UIHelper.mapValuesFromJPanelToObj(craUI0002_form_panel, "entity.WireConfig", true);
+
+                c.update(c);
+                msg_lbl.setText("Modification effectuée !");
+                clearFields();
+            }
         }
     }//GEN-LAST:event_btn_saveActionPerformed
 
@@ -1375,20 +1425,5 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel implements K
     private javax.swing.JTextField txt_writeTime;
     private javax.swing.JTextField txt_writeUser;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }

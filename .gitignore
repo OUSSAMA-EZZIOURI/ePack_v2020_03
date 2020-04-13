@@ -5,3 +5,4 @@ deprecated.zip
 *.class
 *.log
 *.tmp
+/dist/

@@ -62,7 +62,7 @@ public class GlobalMethods {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    StartFrame ui = new StartFrame();
+                    AuthFrame ui = new AuthFrame();
 
                     ui.setVisible(true);
                     UILog.createDailyLogFile(GlobalVars.APP_PROP.getProperty("LOG_PATH"));

@@ -21,17 +21,17 @@ public class GlobalVars {
     /**
      *
      */
-    public static String APP_NAME = "ePack";
+    public static String APP_NAME = "ePack System";
 
     /**
      *
      */
-    public static String APP_VERSION = "v20.03";
+    public static String APP_VERSION = "v2.3";
 
     /**
      *
      */
-    public static String APP_AUTHOR = "Designed By EZZIOURI Oussama";
+    public static String APP_AUTHOR = "Réalisé par EZZIOURI Oussama";
 
     /**
      *

@@ -3,6 +3,7 @@ package helper;
 import java.awt.Color;
 import java.util.List;
 import java.util.regex.Pattern;
+import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -36,27 +37,30 @@ import javax.swing.JTextField;
 public class FormValidator {
 
     /**
-     *
-     * @param fieldsList
-     * @param debug
-     * @return
+     * Validate if the fields are matching the patterns given by the user.
+     * 
+     * @param fieldsList a list of object FormField, check FormField class for
+     * more detail
+     * @param debug to enable or not the debugging mode
+     * 
+     * @return true if all fields matches their patterns, false otherwise
      */
-    public boolean validateFields(List<FormField> fieldsList, boolean debug) {
-        System.out.println("fieldsList "+fieldsList.size());
+    public boolean validatePatterns(List<FormField> fieldsList, boolean debug) {
+        System.out.println("fieldsList " + fieldsList.size());
         System.out.println(fieldsList.toString());
         for (FormField field : fieldsList) {
             //Loop on each line
-            
+
             if (debug) {
                 System.out.println("\n- field " + field.getComponent().getName());
             }
             if (field.getComponent() instanceof JTextField) {
                 if (debug) {
                     System.out.println(field.getComponent().getName() + " is a JTextField");
-                }                        
+                }
                 if (!Pattern.matches(field.getRegex(), ((JTextField) field.getComponent()).getText())) {
                     if (debug) {
-                        System.out.println(((JTextField) field.getComponent()).getText()+" value doesn't matches the pattern "+field.getRegex());
+                        System.out.println(((JTextField) field.getComponent()).getText() + " value doesn't matches the pattern " + field.getRegex());
                     }
                     field.getErrMsgContainer().setText(field.getErrorMsg());
                     field.getErrMsgContainer().setForeground(Color.red);
@@ -66,14 +70,36 @@ public class FormValidator {
                     return false;
                 } else {
                     if (debug) {
-                        System.out.println(((JTextField) field.getComponent()).getText() + " value matches the pattern "+field.getRegex());
+                        System.out.println(((JTextField) field.getComponent()).getText() + " value matches the pattern " + field.getRegex());
                     }
                     field.getErrMsgContainer().setForeground(Color.green);
                     field.getErrMsgContainer().setText("");
                     field.getComponent().setBackground(field.getDefaultBgColor());
                     continue;
                 }
-            } 
+            } else if (field.getComponent() instanceof JComboBox) {
+                if (debug) {
+                    System.out.println(field.getComponent() + " is a JComboBox");
+                }
+                if (!Pattern.matches(field.getRegex(), ((JComboBox) field.getComponent()).getSelectedItem().toString())) {
+                    if (debug) {
+                        System.out.println(((JComboBox) field.getComponent()).getSelectedItem().toString() + " value doesn't matches the pattern " + field.getRegex());
+                    }
+                    field.getErrMsgContainer().setText(field.getErrorMsg());
+                    field.getErrMsgContainer().setForeground(Color.red);
+                    field.getComponent().setBackground(field.getErrBgColor());
+                    field.getComponent().requestFocus();                    
+                    return false;
+                } else {
+                    if (debug) {
+                        System.out.println(((JTextField) field.getComponent()).getText() + " value matches the pattern " + field.getRegex());
+                    }
+                    field.getErrMsgContainer().setForeground(Color.green);
+                    field.getErrMsgContainer().setText("");
+                    field.getComponent().setBackground(field.getDefaultBgColor());
+                    continue;
+                }
+            }
 
         }
         return true;
