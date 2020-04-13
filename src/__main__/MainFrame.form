@@ -289,25 +289,33 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MENU_01_02_CONFIG_PACK_MASTERDATAActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MENU_01_03_CONFIG_USERS">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Utilisateurs"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MENU_01_03_CONFIG_USERSActionPerformed"/>
+              </Events>
+            </MenuItem>
             <Menu class="javax.swing.JMenu" name="MENU_01_03_AVANCE">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Avanc&#xe9;"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="MENU_01_03_00_CONFIG_USERS">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Utilisateurs"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MENU_01_03_00_CONFIG_USERSActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="MENU_01_03_01_CONFIG_COMPANY">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Param&#xe9;trage de base"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MENU_01_03_01_CONFIG_COMPANYActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="MENU_01_03_02_LOGVIEWER">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Log system"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MENU_01_03_02_LOGVIEWERActionPerformed"/>
                   </Events>
                 </MenuItem>
               </SubComponents>
@@ -319,13 +327,7 @@
             <Property name="text" type="java.lang.String" value="Session"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Log system"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
-              </Events>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="logoutMenuItem">
               <Properties>
@@ -350,8 +352,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitMenuItemActionPerformed"/>
               </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
             </MenuItem>
           </SubComponents>
         </Menu>

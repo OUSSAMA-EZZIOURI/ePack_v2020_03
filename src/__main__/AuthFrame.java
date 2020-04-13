@@ -49,7 +49,7 @@ public class AuthFrame extends javax.swing.JFrame {
 
     private ManufactureUsers user;
 
-    static InactivityListener ExitListener;
+    static InactivityListener inactivityListener;
 
     //int InactivityLogoutTime = 30; //In minutes
     int InactivityExitTime = 30; //In minutes
@@ -57,7 +57,7 @@ public class AuthFrame extends javax.swing.JFrame {
     /**
      * Boot the Nimbus look and feel
      */
-    private static void bootLookAndFeel() {
+    private void loadLookAndFeel() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 System.out.println("" + info.getName());
@@ -79,51 +79,68 @@ public class AuthFrame extends javax.swing.JFrame {
     /**
      *
      */
-    private void bootstrap() {
+    private void loadProperties() {
         String feedback = PropertiesLoader.loadConfigProperties();
         GlobalMethods.createDefaultDirectories();
         LOGGER = Logger.getLogger(ClassName.class.getName());
-        LOGGER.log(Level.INFO, feedback);
+        //LOGGER.log(Level.INFO, feedback);
+    }
+
+    private void loadAppIcon() {
+        ImageIcon img = new ImageIcon(GlobalVars.APP_PROP.getProperty("IMG_PATH") + "/icon.png");
+        this.setIconImage(img.getImage());
+    }
+
+    private void loadLabelsContent() {
+        versionLabel.setText(GlobalVars.APP_NAME + " " + GlobalVars.APP_VERSION);
+        authorLabel.setText(GlobalVars.APP_AUTHOR);
+        this.setTitle(GlobalVars.APP_NAME + " " + GlobalVars.APP_VERSION);
+    }
+
+    private void setInactivityListener() {
+        InactivityExitTime = Integer.valueOf(GlobalVars.APP_PROP.getProperty("INACTIVITY_EXIT_TIME"));
+        //Set innactivity exit action
+        //Intialize the innactivity auto-logout
+        Action logout = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                //Disconnect the user and close mainFrame UI
+                System.out.println("Call for exit action ");
+                //System.exit(0);
+                JFrame frame = (JFrame) e.getSource();
+                frame.dispose();
+            }
+
+        };
+        inactivityListener = new InactivityListener(this, logout, InactivityExitTime);
+        inactivityListener.start();
+    }
+
+    private void setJFrameOptions() {
+        UIHelper.centerJFrame(this);
+        this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
     /**
      * Creates new form UI0000_ProjectChoice
      */
     public AuthFrame() {
-        initComponents();
-
-        bootstrap();
-
-        bootLookAndFeel();
 
         try {
-            versionLabel.setText(GlobalVars.APP_NAME + " " + GlobalVars.APP_VERSION);
+            initComponents();
 
-            authorLabel.setText(GlobalVars.APP_AUTHOR);
+            loadProperties();
 
-            InactivityExitTime = Integer.valueOf(GlobalVars.APP_PROP.getProperty("INACTIVITY_EXIT_TIME"));
+            loadLookAndFeel();
 
-            ImageIcon img = new ImageIcon(GlobalVars.APP_PROP.getProperty("IMG_PATH") + "/icon.png");
-            this.setIconImage(img.getImage());
-            this.setTitle(GlobalVars.APP_NAME + " " + GlobalVars.APP_VERSION);
-            UIHelper.centerJFrame(this);
-            this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+            loadAppIcon();
+
+            loadLabelsContent();
+
+            setInactivityListener();
+
+            setJFrameOptions();
+
             login_textfield.requestFocus(true);
-
-            //Set innactivity exit action
-            //Intialize the innactivity auto-logout
-            Action logout = new AbstractAction() {
-                public void actionPerformed(ActionEvent e) {
-                    //Disconnect the user and close mainFrame UI
-                    System.out.println("Call for exit action ");
-                    //System.exit(0);
-                    JFrame frame = (JFrame) e.getSource();
-                    frame.dispose();
-                }
-
-            };
-            ExitListener = new InactivityListener(this, logout, InactivityExitTime);
-            ExitListener.start();
 
         } catch (Exception e) {
             UILog.exceptionDialog(this, e);
@@ -135,70 +152,55 @@ public class AuthFrame extends javax.swing.JFrame {
      * Creates new form UI0000_ProjectChoice
      */
     public AuthFrame(SplashScreen.Task task) throws InterruptedException {
+        try {
+        initComponents();
+
         Random random = new Random();
         int progress = task.getProgress();
         int oldProgress = progress;
-        initComponents();
-        System.out.println("Authentication components intialized.");
+
+        System.out.println("Starting...");
         oldProgress = progress;
         progress = oldProgress + random.nextInt(10);
         task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
         Thread.sleep(random.nextInt(2000));
 
-        bootLookAndFeel();
-        System.out.println("Boot application theme.");
+        loadLookAndFeel();
+        System.out.println("Load application theme...");
         oldProgress = progress;
         progress = oldProgress + random.nextInt(30);
         task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
         Thread.sleep(random.nextInt(2000));
 
-        bootstrap();
-        System.out.println("Log and print directories created.");
+        loadProperties();
+        System.out.println("Load properties...");
         oldProgress = progress;
         progress = oldProgress + random.nextInt(50);
         task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
         Thread.sleep(random.nextInt(2000));
 
-        UIHelper.centerJFrame(this);
+        //UIHelper.centerJFrame(this);
+        System.out.println("Load window content...");
+        oldProgress = progress;
+        progress = oldProgress + random.nextInt(60);
+        task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
+        Thread.sleep(random.nextInt(2000));
+        loadAppIcon();
+        loadLabelsContent();
 
-        try {
-            versionLabel.setText(GlobalVars.APP_NAME + " " + GlobalVars.APP_VERSION);
+        System.out.println("Set innactivity listener...");
+        oldProgress = progress;
+        progress = oldProgress + random.nextInt(70);
+        task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
+        Thread.sleep(random.nextInt(2000));
+        setInactivityListener();
 
-            authorLabel.setText(GlobalVars.APP_AUTHOR);
-
-            InactivityExitTime = Integer.valueOf(GlobalVars.APP_PROP.getProperty("INACTIVITY_EXIT_TIME"));
-
-            ImageIcon img = new ImageIcon(GlobalVars.APP_PROP.getProperty("IMG_PATH") + "/icon.png");
-            this.setIconImage(img.getImage());
-            this.setTitle(GlobalVars.APP_NAME + " " + GlobalVars.APP_VERSION);
-            this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-            login_textfield.requestFocus(true);
-
-            System.out.println("Intialize the innactivity auto-logout");
-            oldProgress = progress;
-            progress = oldProgress + random.nextInt(70);
-            task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
-            Thread.sleep(random.nextInt(2000));
-
-            Action logout = new AbstractAction() {
-                public void actionPerformed(ActionEvent e) {
-                    //Disconnect the user and close mainFrame UI
-                    System.out.println("Call for exit action ");
-                    //System.exit(0);
-                    JFrame frame = (JFrame) e.getSource();
-                    frame.dispose();
-                }
-
-            };
-
-            System.out.println("Adding exit listener");
-            oldProgress = progress;
-            progress = oldProgress + random.nextInt(75);
-            task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
-            Thread.sleep(random.nextInt(2000));
-
-            ExitListener = new InactivityListener(this, logout, InactivityExitTime);
-            ExitListener.start();
+        System.out.println("Finalizing...");
+        oldProgress = progress;
+        progress = oldProgress + random.nextInt(90);
+        task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
+        Thread.sleep(random.nextInt(2000));        
+        setJFrameOptions();
 
         } catch (Exception e) {
             UILog.exceptionDialog(this, e);
@@ -344,7 +346,7 @@ public class AuthFrame extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(pwd_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_exit)
                     .addComponent(login_btn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -418,7 +420,7 @@ public class AuthFrame extends javax.swing.JFrame {
         if (checkLoginAndPass(login_textfield.getText(), pwd_textfield.getText())) {
             MainFrame mainFrame = new MainFrame(this, true, this.user);
             mainFrame.setVisible(true);
-            ExitListener.stop();
+            inactivityListener.stop();
             this.dispose();
         }
     }//GEN-LAST:event_login_btnActionPerformed
@@ -525,34 +527,6 @@ public class AuthFrame extends javax.swing.JFrame {
 
     }
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Boot the Nimbus look and feel */
-//        bootLookAndFeel();
-//        
-//        
-//        try {
-//
-//            /* Create and display the form */
-//            java.awt.EventQueue.invokeLater(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                    AuthFrame startFrameUI = new AuthFrame(progress);
-//
-//                    startFrameUI.setVisible(true);
-//
-//                    GlobalMethods.createDefaultDirectories();
-//
-//                }
-//            });
-//        } catch (Exception e) {
-//            UILog.exceptionDialog(null, e);
-//        }
-//
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel authorLabel;

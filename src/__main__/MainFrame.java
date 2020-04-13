@@ -199,14 +199,14 @@ public class MainFrame extends javax.swing.JFrame {
         MENU_01_00_CONFIG_PN = new javax.swing.JMenuItem();
         MENU_01_01_CONFIG_BARCODE = new javax.swing.JMenuItem();
         MENU_01_02_CONFIG_PACK_MASTERDATA = new javax.swing.JMenuItem();
+        MENU_01_03_CONFIG_USERS = new javax.swing.JMenuItem();
         MENU_01_03_AVANCE = new javax.swing.JMenu();
-        MENU_01_03_00_CONFIG_USERS = new javax.swing.JMenuItem();
         MENU_01_03_01_CONFIG_COMPANY = new javax.swing.JMenuItem();
+        MENU_01_03_02_LOGVIEWER = new javax.swing.JMenuItem();
         MENU_06_MODULE_HELP = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         logoutMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
 
         jMenuItem3.setText("jMenuItem3");
 
@@ -457,15 +457,15 @@ public class MainFrame extends javax.swing.JFrame {
         });
         MENU_05_MODULE_CONFIG.add(MENU_01_02_CONFIG_PACK_MASTERDATA);
 
-        MENU_01_03_AVANCE.setText("Avancé");
-
-        MENU_01_03_00_CONFIG_USERS.setText("Utilisateurs");
-        MENU_01_03_00_CONFIG_USERS.addActionListener(new java.awt.event.ActionListener() {
+        MENU_01_03_CONFIG_USERS.setText("Utilisateurs");
+        MENU_01_03_CONFIG_USERS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MENU_01_03_00_CONFIG_USERSActionPerformed(evt);
+                MENU_01_03_CONFIG_USERSActionPerformed(evt);
             }
         });
-        MENU_01_03_AVANCE.add(MENU_01_03_00_CONFIG_USERS);
+        MENU_05_MODULE_CONFIG.add(MENU_01_03_CONFIG_USERS);
+
+        MENU_01_03_AVANCE.setText("Avancé");
 
         MENU_01_03_01_CONFIG_COMPANY.setText("Paramétrage de base");
         MENU_01_03_01_CONFIG_COMPANY.addActionListener(new java.awt.event.ActionListener() {
@@ -475,19 +475,20 @@ public class MainFrame extends javax.swing.JFrame {
         });
         MENU_01_03_AVANCE.add(MENU_01_03_01_CONFIG_COMPANY);
 
+        MENU_01_03_02_LOGVIEWER.setText("Log system");
+        MENU_01_03_02_LOGVIEWER.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MENU_01_03_02_LOGVIEWERActionPerformed(evt);
+            }
+        });
+        MENU_01_03_AVANCE.add(MENU_01_03_02_LOGVIEWER);
+
         MENU_05_MODULE_CONFIG.add(MENU_01_03_AVANCE);
 
         menuBar.add(MENU_05_MODULE_CONFIG);
 
         MENU_06_MODULE_HELP.setText("Session");
-
-        jMenuItem4.setText("Log system");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        MENU_06_MODULE_HELP.add(jMenuItem4);
+        MENU_06_MODULE_HELP.add(jSeparator1);
 
         logoutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         logoutMenuItem.setMnemonic('x');
@@ -508,7 +509,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         MENU_06_MODULE_HELP.add(exitMenuItem);
-        MENU_06_MODULE_HELP.add(jSeparator1);
 
         menuBar.add(MENU_06_MODULE_HELP);
 
@@ -624,10 +624,10 @@ public class MainFrame extends javax.swing.JFrame {
         addNewTab(new CONFIG_UI0001_CONFIG_BARCODE_JPANEL(rootTabbedPane), evt);
     }//GEN-LAST:event_MENU_01_01_CONFIG_BARCODEActionPerformed
 
-    private void MENU_01_03_00_CONFIG_USERSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_01_03_00_CONFIG_USERSActionPerformed
+    private void MENU_01_03_CONFIG_USERSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_01_03_CONFIG_USERSActionPerformed
         addNewTab(new CONFIG_UI0003_CONFIG_USERS_JPANEL(rootTabbedPane), evt);
 
-    }//GEN-LAST:event_MENU_01_03_00_CONFIG_USERSActionPerformed
+    }//GEN-LAST:event_MENU_01_03_CONFIG_USERSActionPerformed
 
     private void MENU_00_03_PACKAGING_STOCKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_00_03_PACKAGING_STOCKActionPerformed
         Helper.startSession();
@@ -796,9 +796,9 @@ public class MainFrame extends javax.swing.JFrame {
         addNewTab(new CRA_UI0002_WIRE_MASTER_DATA(rootTabbedPane), evt);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void MENU_01_03_02_LOGVIEWERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_01_03_02_LOGVIEWERActionPerformed
         addNewTab(new LOGVIEWER_UI0001(rootTabbedPane), evt);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_MENU_01_03_02_LOGVIEWERActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -808,9 +808,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem MENU_01_00_CONFIG_PN;
     private javax.swing.JMenuItem MENU_01_01_CONFIG_BARCODE;
     private javax.swing.JMenuItem MENU_01_02_CONFIG_PACK_MASTERDATA;
-    private javax.swing.JMenuItem MENU_01_03_00_CONFIG_USERS;
     private javax.swing.JMenuItem MENU_01_03_01_CONFIG_COMPANY;
+    private javax.swing.JMenuItem MENU_01_03_02_LOGVIEWER;
     private javax.swing.JMenu MENU_01_03_AVANCE;
+    private javax.swing.JMenuItem MENU_01_03_CONFIG_USERS;
     private javax.swing.JMenu MENU_01_PRODUCTION;
     private javax.swing.JMenu MENU_02_MODULE_FG;
     private javax.swing.JMenu MENU_03_MODULE_DISPATCH;
@@ -823,7 +824,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuItem logoutMenuItem;
     private javax.swing.JMenuItem menu010_pallet_details;

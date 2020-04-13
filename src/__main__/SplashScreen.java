@@ -36,9 +36,11 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         });
     }
 
-    private void initLogos() {
+    private void initLabels() {
         //Java logo
         app_name.setText(GlobalVars.APP_NAME+" "+GlobalVars.APP_VERSION);
+        rights.setText("Tous droits réservés © 2020");
+        this.setTitle(GlobalVars.APP_NAME+" "+GlobalVars.APP_VERSION);
         realised.setText(GlobalVars.APP_AUTHOR);
     }
 
@@ -70,7 +72,7 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
     public SplashScreen() {
         initComponents();
 
-        initLogos();
+        initLabels();
 
         UIHelper.centerJFrame(this);
 
@@ -113,30 +115,21 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        leoni_logo = new javax.swing.JLabel();
-        postgresql_logo = new javax.swing.JLabel();
         scrollPane = new javax.swing.JScrollPane();
         taskOutput = new javax.swing.JTextArea();
         progressBar = new javax.swing.JProgressBar();
         realised = new javax.swing.JLabel();
         java_logo = new javax.swing.JLabel();
-        all_rigths_reserved = new javax.swing.JLabel();
+        rights = new javax.swing.JLabel();
         app_name = new javax.swing.JLabel();
         car_logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
+        setTitle("ePack System");
         setBackground(new java.awt.Color(0, 0, 51));
         setResizable(false);
-        setType(java.awt.Window.Type.UTILITY);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
-
-        leoni_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/__main__/images/leoni-logo.png"))); // NOI18N
-        leoni_logo.setPreferredSize(new java.awt.Dimension(32, 32));
-
-        postgresql_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/__main__/images/postgresql-logo.png"))); // NOI18N
-        postgresql_logo.setPreferredSize(new java.awt.Dimension(32, 32));
 
         scrollPane.setBackground(new java.awt.Color(0, 0, 51));
 
@@ -147,7 +140,7 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         taskOutput.setRows(1);
         taskOutput.setTabSize(0);
         taskOutput.setAutoscrolls(false);
-        taskOutput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 51)));
+        taskOutput.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         taskOutput.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         taskOutput.setFocusable(false);
         taskOutput.setOpaque(false);
@@ -155,19 +148,22 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         taskOutput.setRequestFocusEnabled(false);
         scrollPane.setViewportView(taskOutput);
 
-        realised.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        realised.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         realised.setForeground(new java.awt.Color(255, 255, 255));
+        realised.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         realised.setText("{AUTHOR}");
 
         java_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/__main__/images/java-logo.png"))); // NOI18N
         java_logo.setPreferredSize(new java.awt.Dimension(32, 32));
 
-        all_rigths_reserved.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        all_rigths_reserved.setForeground(new java.awt.Color(255, 255, 255));
-        all_rigths_reserved.setText("Tous droits réservés © 2020");
+        rights.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        rights.setForeground(new java.awt.Color(255, 255, 255));
+        rights.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        rights.setText("{RIGHTS}");
 
-        app_name.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        app_name.setFont(new java.awt.Font("Dialog", 2, 24)); // NOI18N
         app_name.setForeground(new java.awt.Color(255, 255, 255));
+        app_name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         app_name.setText("{APP NAME}");
 
         car_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/__main__/images/splash-bg.png"))); // NOI18N
@@ -179,19 +175,16 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(leoni_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(111, 111, 111)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(all_rigths_reserved)
-                    .addComponent(realised)
-                    .addComponent(app_name))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(realised, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+                    .addComponent(rights, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(70, 70, 70)
                 .addComponent(java_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(postgresql_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
             .addComponent(car_logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(progressBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(scrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(app_name, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,26 +192,20 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
                 .addGap(13, 13, 13)
                 .addComponent(app_name)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(car_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addComponent(car_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(realised)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(all_rigths_reserved))
-                            .addComponent(leoni_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(postgresql_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(java_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(realised)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rights))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(java_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -237,15 +224,13 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel all_rigths_reserved;
     private javax.swing.JLabel app_name;
     private javax.swing.JLabel car_logo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel java_logo;
-    private javax.swing.JLabel leoni_logo;
-    private javax.swing.JLabel postgresql_logo;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JLabel realised;
+    private javax.swing.JLabel rights;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTextArea taskOutput;
     // End of variables declaration//GEN-END:variables
@@ -265,9 +250,9 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
             // Sleep for at least one second to simulate "startup".
             try {
 
-                System.out.println("\n\nIntialize application frame...");
+                System.out.println("Intialize application frame...");
                 authFrame = new AuthFrame(this);
-                System.out.println("\n\nApplication intialized.");
+                System.out.println("Application intialized.");
 
                 setProgress(100);
             } catch (InterruptedException ignore) {
@@ -281,7 +266,6 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
      * Executed in event dispatch thread
          */
         public void done() {
-            taskOutput.append("Done!");
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {

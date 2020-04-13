@@ -9,8 +9,6 @@ import __main__.GlobalVars;
 import entity.ConfigFamily;
 import entity.ConfigShift;
 import entity.ConfigUcs;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,9 +16,6 @@ import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import org.hibernate.Session;
@@ -232,7 +227,10 @@ public class Helper {
     /**
      *
      */
-    public static String ERR0000_DB_CONNECT_FAILED = "com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure";
+    public static String ERR0000_DB_CONNECT_FAILED = "La communication à la base de données a échouée.\nMerci de vérifier si: "
+            + "\n\t- Le serveur est allumé et connecté au réseau"
+            + "\n\t- Cette machine est connectée au réseau"
+            + "\n\t- Le service postgresql est démarré au niveau du serveur";
 
     
     /**
@@ -261,8 +259,9 @@ public class Helper {
             //Helper.openSession();
             Helper.sess.beginTransaction();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, Helper.ERR0000_DB_CONNECT_FAILED, "Database error !", ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Helper.ERR0000_DB_CONNECT_FAILED, "Erreur de communication", ERROR_MESSAGE);            
             System.err.println("Initial SessionFactory creation failed." + e.getMessage());
+            System.exit(-1);
         }
     }
 
@@ -405,11 +404,11 @@ public class Helper {
             //JOptionPane.showMessageDialog(null, String.format(Helper.ERR0022_PACK_TYPE_NOT_FOUND_IN_UCS, harnessType, harnessPart, supplierPart, harnessIndex, packType), "UCS Configuration error !", ERROR_MESSAGE);
             System.err.println(String.format(Helper.ERR0022_PACK_TYPE_NOT_FOUND_IN_UCS, harnessType, harnessPart, supplierPartNumber, harnessIndex));
         } else { //Map project data in the list
-            for (Object o : result) {
-                ConfigUcs cu = (ConfigUcs) o;
+            result.forEach((o) -> {
+                //ConfigUcs cu = (ConfigUcs) o;
                 //jbox.addItem(new ComboItem(String.valueOf(cu.getPackType()),String.valueOf(cu.getPackType())));
-                jbox.addItem(String.valueOf(cu.getPackType()));
-            }
+                jbox.addItem(String.valueOf(((ConfigUcs) o).getPackType()));
+            });
         }
     }
 

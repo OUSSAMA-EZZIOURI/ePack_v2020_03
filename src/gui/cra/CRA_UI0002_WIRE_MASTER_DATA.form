@@ -42,8 +42,8 @@
                       <EmptySpace min="-2" pref="284" max="-2" attributes="0"/>
                       <Component id="btn_delete" min="-2" pref="103" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="root_panel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="table_panel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="form_panel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="523" max="32767" attributes="0"/>
           </Group>
@@ -63,9 +63,9 @@
                   <Component id="btn_duplicate" alignment="3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="root_panel" min="-2" max="-2" attributes="0"/>
+              <Component id="form_panel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <Component id="table_panel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -83,7 +83,7 @@
         <Property name="text" type="java.lang.String" value="Master data fils"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JPanel" name="jPanel2">
+    <Container class="javax.swing.JPanel" name="table_panel">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -295,7 +295,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="root_panel">
+    <Container class="javax.swing.JPanel" name="form_panel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="56" green="41" red="24" type="rgb"/>
@@ -660,7 +660,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="id"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -706,7 +706,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="project"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
               <Events>
@@ -752,7 +752,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="harnessPart"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -788,7 +788,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="internalPart"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -825,7 +825,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="sourceWarehouse"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -862,7 +862,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="destWarehouse"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -899,7 +899,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="sourceLocation"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -935,7 +935,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="stock"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
               <Events>
@@ -973,7 +973,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="cardNumber"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1004,7 +1004,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="kanbanQty"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1039,7 +1039,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="bundleQty"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1106,7 +1106,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="createTime"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1121,7 +1121,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="createUser"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1136,7 +1136,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="writeTime"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1151,7 +1151,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="writeUser"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1187,7 +1187,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="wireNo"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
               <Events>
@@ -1201,7 +1201,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="wireType"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1230,7 +1230,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="spoolPn"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Code Bobine"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1242,7 +1242,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="color"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Color"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1271,7 +1271,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="intTerm1"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Terminal C&#xf4;t&#xe9; 1"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1290,7 +1290,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="intSeal1"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Joint C&#xf4;t&#xe9; 1"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1299,7 +1299,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="intSeal2"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Joint c&#xf4;t&#xe9; 2"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1308,7 +1308,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="intTerm2"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Terminal c&#xf4;t&#xe9; 2"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
               <Events>
@@ -1350,7 +1350,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="stripLength1"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Longeur Strip c&#xf4;t&#xe9; 1"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
               <Events>
@@ -1372,7 +1372,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="stripLength2"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Longeur Strip c&#xf4;t&#xe9; 2"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1380,7 +1380,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="length"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1388,7 +1388,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="operationNo"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
               <Events>
@@ -1412,7 +1412,7 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="multicoreName"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>
@@ -1451,7 +1451,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="description"/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Description du fil"/>
                 <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="root_panel"/>
+                  <ComponentRef name="form_panel"/>
                 </Property>
               </AccessibilityProperties>
             </Component>

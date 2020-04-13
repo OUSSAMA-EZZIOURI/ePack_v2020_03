@@ -138,7 +138,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel11 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        table_panel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txt_harness_part_filter = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -153,7 +153,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         config_jtable = new javax.swing.JTable();
         txt_wireNo_filter = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
-        root_panel = new javax.swing.JPanel();
+        form_panel = new javax.swing.JPanel();
         msg_lbl = new javax.swing.JLabel();
         craUI0002_form_panel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -233,7 +233,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Master data fils");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        table_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel6.setText("Article faisceau");
 
@@ -319,35 +319,35 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel27.setText("Fil num");
 
-        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel2Layout.createSequentialGroup()
+        org.jdesktop.layout.GroupLayout table_panelLayout = new org.jdesktop.layout.GroupLayout(table_panel);
+        table_panel.setLayout(table_panelLayout);
+        table_panelLayout.setHorizontalGroup(
+            table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(table_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1226, Short.MAX_VALUE)
-                    .add(jPanel2Layout.createSequentialGroup()
-                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel2Layout.createSequentialGroup()
+                    .add(table_panelLayout.createSequentialGroup()
+                        .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(table_panelLayout.createSequentialGroup()
                                 .add(btn_refresh)
                                 .add(18, 18, 18)
                                 .add(btn_export_excel))
-                            .add(jPanel2Layout.createSequentialGroup()
-                                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(table_panelLayout.createSequentialGroup()
+                                .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(jLabel6)
                                     .add(jLabel7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                                 .add(18, 18, 18)
-                                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_internal_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                     .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_harness_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                                 .add(18, 18, 18)
-                                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                    .add(jPanel2Layout.createSequentialGroup()
+                                .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                    .add(table_panelLayout.createSequentialGroup()
                                         .add(jLabel9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                         .add(combo_project_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                    .add(jPanel2Layout.createSequentialGroup()
+                                    .add(table_panelLayout.createSequentialGroup()
                                         .add(jLabel27)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                         .add(txt_wireNo_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
@@ -358,27 +358,27 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                         .add(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel2Layout.createSequentialGroup()
+        table_panelLayout.setVerticalGroup(
+            table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(table_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jLabel8)
                         .add(txt_card_number_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jLabel6)
                         .add(txt_harness_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(txt_wireNo_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(jLabel27)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel7)
                     .add(txt_internal_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(combo_project_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel9))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(btn_export_excel)
                     .add(btn_refresh))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -388,8 +388,8 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
 
         txt_card_number_filter.getAccessibleContext().setAccessibleName("card_number");
 
-        root_panel.setBackground(new java.awt.Color(36, 65, 86));
-        root_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        form_panel.setBackground(new java.awt.Color(36, 65, 86));
+        form_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         msg_lbl.setForeground(new java.awt.Color(255, 255, 255));
         msg_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -890,88 +890,88 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
 
         txt_id.getAccessibleContext().setAccessibleName("id");
         txt_id.getAccessibleContext().setAccessibleDescription("");
-        txt_id.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_id.getAccessibleContext().setAccessibleParent(form_panel);
         combo_project.getAccessibleContext().setAccessibleName("project");
-        combo_project.getAccessibleContext().setAccessibleParent(root_panel);
+        combo_project.getAccessibleContext().setAccessibleParent(form_panel);
         txt_harnessPart.getAccessibleContext().setAccessibleName("harnessPart");
-        txt_harnessPart.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_harnessPart.getAccessibleContext().setAccessibleParent(form_panel);
         txt_internalPart.getAccessibleContext().setAccessibleName("internalPart");
-        txt_internalPart.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_internalPart.getAccessibleContext().setAccessibleParent(form_panel);
         txt_sourceWarehouse.getAccessibleContext().setAccessibleName("sourceWarehouse");
-        txt_sourceWarehouse.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_sourceWarehouse.getAccessibleContext().setAccessibleParent(form_panel);
         txt_destWarehouse.getAccessibleContext().setAccessibleName("destWarehouse");
-        txt_destWarehouse.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_destWarehouse.getAccessibleContext().setAccessibleParent(form_panel);
         txt_sourceLocation.getAccessibleContext().setAccessibleName("sourceLocation");
-        txt_sourceLocation.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_sourceLocation.getAccessibleContext().setAccessibleParent(form_panel);
         txt_stock.getAccessibleContext().setAccessibleName("stock");
-        txt_stock.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_stock.getAccessibleContext().setAccessibleParent(form_panel);
         txt_cardNumber.getAccessibleContext().setAccessibleName("cardNumber");
-        txt_cardNumber.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_cardNumber.getAccessibleContext().setAccessibleParent(form_panel);
         txt_kanbanQty.getAccessibleContext().setAccessibleName("kanbanQty");
-        txt_kanbanQty.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_kanbanQty.getAccessibleContext().setAccessibleParent(form_panel);
         txt_bundleQty.getAccessibleContext().setAccessibleName("bundleQty");
-        txt_bundleQty.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_bundleQty.getAccessibleContext().setAccessibleParent(form_panel);
         txt_createTime.getAccessibleContext().setAccessibleName("createTime");
-        txt_createTime.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_createTime.getAccessibleContext().setAccessibleParent(form_panel);
         txt_createUser.getAccessibleContext().setAccessibleName("createUser");
-        txt_createUser.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_createUser.getAccessibleContext().setAccessibleParent(form_panel);
         txt_writeTime.getAccessibleContext().setAccessibleName("writeTime");
-        txt_writeTime.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_writeTime.getAccessibleContext().setAccessibleParent(form_panel);
         txt_writeUser.getAccessibleContext().setAccessibleName("writeUser");
-        txt_writeUser.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_writeUser.getAccessibleContext().setAccessibleParent(form_panel);
         txt_wireNo.getAccessibleContext().setAccessibleName("wireNo");
         txt_wireNo.getAccessibleContext().setAccessibleDescription("");
-        txt_wireNo.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_wireNo.getAccessibleContext().setAccessibleParent(form_panel);
         txt_wireType.getAccessibleContext().setAccessibleName("wireType");
-        txt_wireType.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_wireType.getAccessibleContext().setAccessibleParent(form_panel);
         txt_spoolPn.getAccessibleContext().setAccessibleName("spoolPn");
         txt_spoolPn.getAccessibleContext().setAccessibleDescription("Code Bobine");
-        txt_spoolPn.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_spoolPn.getAccessibleContext().setAccessibleParent(form_panel);
         txt_color.getAccessibleContext().setAccessibleName("color");
         txt_color.getAccessibleContext().setAccessibleDescription("Color");
-        txt_color.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_color.getAccessibleContext().setAccessibleParent(form_panel);
         txt_intTerm1.getAccessibleContext().setAccessibleName("intTerm1");
         txt_intTerm1.getAccessibleContext().setAccessibleDescription("Terminal Côté 1");
-        txt_intTerm1.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_intTerm1.getAccessibleContext().setAccessibleParent(form_panel);
         txt_intSeal1.getAccessibleContext().setAccessibleName("intSeal1");
         txt_intSeal1.getAccessibleContext().setAccessibleDescription("Joint Côté 1");
-        txt_intSeal1.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_intSeal1.getAccessibleContext().setAccessibleParent(form_panel);
         txt_intSeal2.getAccessibleContext().setAccessibleName("intSeal2");
         txt_intSeal2.getAccessibleContext().setAccessibleDescription("Joint côté 2");
-        txt_intSeal2.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_intSeal2.getAccessibleContext().setAccessibleParent(form_panel);
         txt_intTerm2.getAccessibleContext().setAccessibleName("intTerm2");
         txt_intTerm2.getAccessibleContext().setAccessibleDescription("Terminal côté 2");
-        txt_intTerm2.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_intTerm2.getAccessibleContext().setAccessibleParent(form_panel);
         txt_stripLength1.getAccessibleContext().setAccessibleName("stripLength1");
         txt_stripLength1.getAccessibleContext().setAccessibleDescription("Longeur Strip côté 1");
-        txt_stripLength1.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_stripLength1.getAccessibleContext().setAccessibleParent(form_panel);
         txt_stripLength2.getAccessibleContext().setAccessibleName("stripLength2");
         txt_stripLength2.getAccessibleContext().setAccessibleDescription("Longeur Strip côté 2");
-        txt_stripLength2.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_stripLength2.getAccessibleContext().setAccessibleParent(form_panel);
         txt_length.getAccessibleContext().setAccessibleName("length");
-        txt_length.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_length.getAccessibleContext().setAccessibleParent(form_panel);
         txt_operationNo.getAccessibleContext().setAccessibleName("operationNo");
-        txt_operationNo.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_operationNo.getAccessibleContext().setAccessibleParent(form_panel);
         txt_multicoreName.getAccessibleContext().setAccessibleName("multicoreName");
-        txt_multicoreName.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_multicoreName.getAccessibleContext().setAccessibleParent(form_panel);
         txt_description.getAccessibleContext().setAccessibleName("description");
         txt_description.getAccessibleContext().setAccessibleDescription("Description du fil");
-        txt_description.getAccessibleContext().setAccessibleParent(root_panel);
+        txt_description.getAccessibleContext().setAccessibleParent(form_panel);
 
-        org.jdesktop.layout.GroupLayout root_panelLayout = new org.jdesktop.layout.GroupLayout(root_panel);
-        root_panel.setLayout(root_panelLayout);
-        root_panelLayout.setHorizontalGroup(
-            root_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, root_panelLayout.createSequentialGroup()
+        org.jdesktop.layout.GroupLayout form_panelLayout = new org.jdesktop.layout.GroupLayout(form_panel);
+        form_panel.setLayout(form_panelLayout);
+        form_panelLayout.setHorizontalGroup(
+            form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, form_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(root_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                .add(form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(msg_lbl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 863, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, craUI0002_form_panel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .add(199, 199, 199))
         );
-        root_panelLayout.setVerticalGroup(
-            root_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(root_panelLayout.createSequentialGroup()
+        form_panelLayout.setVerticalGroup(
+            form_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(form_panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(msg_lbl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1033,8 +1033,8 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                         .add(btn_save)
                         .add(284, 284, 284)
                         .add(btn_delete, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(root_panel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(table_panel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(form_panel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(0, 523, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -1050,9 +1050,9 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                     .add(btn_delete)
                     .add(btn_duplicate, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .add(18, 18, 18)
-                .add(root_panel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(form_panel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(table_panel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(56, 56, 56))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -1148,7 +1148,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
 
     private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
 
-        UIHelper.clearJTextFields(root_panel.getComponents());
+        UIHelper.clearJTextFields(form_panel.getComponents());
         txt_id.setText("#");
     }//GEN-LAST:event_btn_newActionPerformed
 
@@ -1158,10 +1158,10 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
 
     public void toggleFormVisibility() {
         if (btn_hide_creation_form.isSelected()) {
-            root_panel.setVisible(false);
+            form_panel.setVisible(false);
             btn_hide_creation_form.setText("Afficher formulaire");
         } else {
-            root_panel.setVisible(true);
+            form_panel.setVisible(true);
             btn_hide_creation_form.setText("Masquer formulaire");
         }
     }
@@ -1324,7 +1324,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     }//GEN-LAST:event_combo_project_filterKeyTyped
 
     private void clearFields() {
-        UIHelper.clearJTextFields(root_panel.getComponents());
+        UIHelper.clearJTextFields(form_panel.getComponents());
         txt_id.setText("#");
         btn_delete.setEnabled(false);
         btn_duplicate.setEnabled(false);
@@ -1352,6 +1352,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> combo_project_filter;
     private javax.swing.JTable config_jtable;
     private javax.swing.JPanel craUI0002_form_panel;
+    private javax.swing.JPanel form_panel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1387,11 +1388,10 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel msg_lbl;
-    private javax.swing.JPanel root_panel;
+    private javax.swing.JPanel table_panel;
     private javax.swing.JTextField txt_bundleQty;
     private javax.swing.JTextField txt_cardNumber;
     private javax.swing.JTextField txt_card_number_filter;
