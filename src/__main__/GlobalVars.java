@@ -32,7 +32,11 @@ public class GlobalVars {
      *
      */
     public static String APP_AUTHOR = "Réalisé par EZZIOURI Oussama";
-
+    
+    /**
+     * 
+     */
+    public static String ALL_RIGHTS_RESERVED = "Tous droits réservés © 2020";
     /**
      *
      */
@@ -121,6 +125,7 @@ public class GlobalVars {
     
      //Prevent from openning many windows, maximum 1 window allowed
     public static int OPENED_SCAN_WINDOW = 0;
+    
     
     /**
      * To do : This method must be migrated to a database table in order to 

@@ -37,9 +37,8 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
     }
 
     private void initLabels() {
-        //Java logo
         app_name.setText(GlobalVars.APP_NAME+" "+GlobalVars.APP_VERSION);
-        rights.setText("Tous droits réservés © 2020");
+        rights.setText(GlobalVars.ALL_RIGHTS_RESERVED);
         this.setTitle(GlobalVars.APP_NAME+" "+GlobalVars.APP_VERSION);
         realised.setText(GlobalVars.APP_AUTHOR);
     }
@@ -150,7 +149,7 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
 
         realised.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         realised.setForeground(new java.awt.Color(255, 255, 255));
-        realised.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        realised.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         realised.setText("{AUTHOR}");
 
         java_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/__main__/images/java-logo.png"))); // NOI18N
@@ -158,7 +157,7 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
 
         rights.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         rights.setForeground(new java.awt.Color(255, 255, 255));
-        rights.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        rights.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rights.setText("{RIGHTS}");
 
         app_name.setFont(new java.awt.Font("Dialog", 2, 24)); // NOI18N
@@ -174,17 +173,20 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(realised, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
-                    .addComponent(rights, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(70, 70, 70)
+                .addGap(107, 107, 107)
                 .addComponent(java_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(realised, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                    .addComponent(rights, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(162, 162, 162))
             .addComponent(car_logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(progressBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(scrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(app_name, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,7 +194,7 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
                 .addGap(13, 13, 13)
                 .addComponent(app_name)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(car_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                .addComponent(car_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
@@ -202,10 +204,10 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(java_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 

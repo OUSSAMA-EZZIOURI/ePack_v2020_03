@@ -6,6 +6,7 @@
 package __main__;
 
 import entity.ManufactureUsers;
+import gui.about.PACKAGE_07_ABOUT_UI0001;
 import gui.config.CONFIG_UI0001_CONFIG_BARCODE_JPANEL;
 import gui.config.CONFIG_UI0001_CONFIG_PN_JPANEL;
 import gui.config.CONFIG_UI0002_CONFIG_PACK_MASTERDATA_JPANEL;
@@ -207,6 +208,8 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         logoutMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
+        MENU_07_ABOUT = new javax.swing.JMenu();
+        MENU_07_ABOUT_UI0001 = new javax.swing.JMenuItem();
 
         jMenuItem3.setText("jMenuItem3");
 
@@ -487,7 +490,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         menuBar.add(MENU_05_MODULE_CONFIG);
 
-        MENU_06_MODULE_HELP.setText("Session");
+        MENU_06_MODULE_HELP.setText("Profil");
         MENU_06_MODULE_HELP.add(jSeparator1);
 
         logoutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
@@ -511,6 +514,23 @@ public class MainFrame extends javax.swing.JFrame {
         MENU_06_MODULE_HELP.add(exitMenuItem);
 
         menuBar.add(MENU_06_MODULE_HELP);
+
+        MENU_07_ABOUT.setText("?");
+        MENU_07_ABOUT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MENU_07_ABOUTActionPerformed(evt);
+            }
+        });
+
+        MENU_07_ABOUT_UI0001.setText("A propos");
+        MENU_07_ABOUT_UI0001.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MENU_07_ABOUT_UI0001ActionPerformed(evt);
+            }
+        });
+        MENU_07_ABOUT.add(MENU_07_ABOUT_UI0001);
+
+        menuBar.add(MENU_07_ABOUT);
 
         setJMenuBar(menuBar);
 
@@ -800,6 +820,14 @@ public class MainFrame extends javax.swing.JFrame {
         addNewTab(new LOGVIEWER_UI0001(rootTabbedPane), evt);
     }//GEN-LAST:event_MENU_01_03_02_LOGVIEWERActionPerformed
 
+    private void MENU_07_ABOUTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_07_ABOUTActionPerformed
+        
+    }//GEN-LAST:event_MENU_07_ABOUTActionPerformed
+
+    private void MENU_07_ABOUT_UI0001ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_07_ABOUT_UI0001ActionPerformed
+        new PACKAGE_07_ABOUT_UI0001().setVisible(true);
+    }//GEN-LAST:event_MENU_07_ABOUT_UI0001ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MENU_00_01_FG_RECEPTION;
@@ -820,6 +848,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu MENU_06_CRA;
     private javax.swing.JMenu MENU_06_MODULE_HELP;
     private javax.swing.JMenuItem MENU_06_PRODUCTION_PLAN;
+    private javax.swing.JMenu MENU_07_ABOUT;
+    private javax.swing.JMenuItem MENU_07_ABOUT_UI0001;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
