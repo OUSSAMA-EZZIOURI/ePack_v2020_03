@@ -435,7 +435,7 @@
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="packaging_wh_filter" max="32767" attributes="0"/>
                               <Component id="create_time_txt" alignment="0" max="32767" attributes="0"/>
-                              <Component id="warehouse_filter" alignment="0" max="32767" attributes="0"/>
+                              <Component id="fg_warehouse_filter" alignment="0" max="32767" attributes="0"/>
                               <Component id="project_filter" alignment="0" pref="176" max="32767" attributes="0"/>
                               <Component id="assy_txtbox" alignment="0" pref="176" max="32767" attributes="0"/>
                           </Group>
@@ -496,7 +496,7 @@
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="warehouse_filter" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                                      <Component id="fg_warehouse_filter" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                                       <Component id="login_lbl5" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -601,7 +601,7 @@
                     <Property name="text" type="java.lang.String" value="Magasin F.G"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="warehouse_filter">
+                <Component class="javax.swing.JComboBox" name="fg_warehouse_filter">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="cc" red="cc" type="rgb"/>
@@ -620,8 +620,8 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="warehouse_filterItemStateChanged"/>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="warehouse_filterActionPerformed"/>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="fg_warehouse_filterItemStateChanged"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fg_warehouse_filterActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="login_lbl">

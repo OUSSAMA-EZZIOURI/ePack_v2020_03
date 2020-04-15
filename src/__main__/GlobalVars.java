@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -32,9 +33,9 @@ public class GlobalVars {
      *
      */
     public static String APP_AUTHOR = "Réalisé par EZZIOURI Oussama";
-    
+
     /**
-     * 
+     *
      */
     public static String ALL_RIGHTS_RESERVED = "Tous droits réservés © 2020";
     /**
@@ -49,25 +50,23 @@ public class GlobalVars {
 
     public static ConfigCompany COMPANY_INFO = new ConfigCompany();
 
-    
     public static ManufactureUsers CONNECTED_USER = new ManufactureUsers();
-    
-    
+
     //........................ COLORS .........................
     /**
      * Default light green for required form field
      */
-    public static Color BG_DEFAULT_GREEN = new Color(153,255,153);
-    
+    public static Color BG_DEFAULT_GREEN = new Color(153, 255, 153);
+
     /**
      * Default light yellow for required form field in case of error
      */
-    public static Color BG_DEFAULT_YELLOW = new Color(255,255,0);
-    
+    public static Color BG_DEFAULT_YELLOW = new Color(255, 255, 0);
+
     /**
      * Default Blue for Jpanel
      */
-    public static Color BG_DEFAULT_BLUE = new Color(36,65,86);
+    public static Color BG_DEFAULT_BLUE = new Color(36, 65, 86);
     //........................ PREFIXS .........................
     /**
      *
@@ -83,12 +82,12 @@ public class GlobalVars {
      *
      */
     public static String DISPATCH_PN_PREFIX = GlobalVars.APP_PROP.getProperty("DISPATCH_PN_PREFIX");
-    
+
     /**
-     * 
+     *
      */
     public static String DISPATCH_QUANTITY_PREFIX = GlobalVars.APP_PROP.getProperty("DISPATCH_QUANTITY_PREFIX");
-    
+
     /**
      *
      */
@@ -103,15 +102,14 @@ public class GlobalVars {
      *
      */
     public static String QUANTITY_PREFIX = GlobalVars.APP_PROP.getProperty("QUANTITY_PREFIX");
-    
 
     /**
      *
      */
     public static String CLOSING_PALLET_PREFIX = GlobalVars.APP_PROP.getProperty("CLOSING_PALLET_PREFIX");
-    
+
     /**
-     * 
+     *
      */
     public static String WAREHOUSE_PREFIX = GlobalVars.APP_PROP.getProperty("WAREHOUSE_PREFIX");
 
@@ -121,22 +119,15 @@ public class GlobalVars {
     public static String OPEN_PALLET_KEYWORD = GlobalVars.APP_PROP.getProperty("OPEN_PALLET_KEYWORD");
     public static String WEIGHT_PREFIX = GlobalVars.APP_PROP.getProperty("WEIGHT_PREFIX");
     public static String FIFO_DATE_PREFIX = GlobalVars.APP_PROP.getProperty("FIFO_DATE_PREFIX");
-    
-    
-     //Prevent from openning many windows, maximum 1 window allowed
+
+    //Prevent from openning many windows, maximum 1 window allowed
     public static int OPENED_SCAN_WINDOW = 0;
-    
-    
+
     /**
-     * To do : This method must be migrated to a database table in order to 
-     * facilitate the update.
-     * and some fields must be allocated by project 
-     * QUANTITY_PREFIX
-     * HARN_PART_PREFIX
-     * DISPATCH_QUANTITY_PREFIX
-     * DISPATCH_PN_PREFIX
-     * DISPATCH_SERIAL_NO_PREFIX
-     * WAREHOUSE_PREFIX
+     * To do : This method must be migrated to a database table in order to
+     * facilitate the update. and some fields must be allocated by project
+     * QUANTITY_PREFIX HARN_PART_PREFIX DISPATCH_QUANTITY_PREFIX
+     * DISPATCH_PN_PREFIX DISPATCH_SERIAL_NO_PREFIX WAREHOUSE_PREFIX
      */
     public static void mapProperties() {
 
@@ -157,7 +148,7 @@ public class GlobalVars {
         DISPATCH_SERIAL_NO_PREFIX = GlobalVars.APP_PROP.getProperty("DISPATCH_SERIAL_NO_PREFIX");
 
         DISPATCH_PN_PREFIX = GlobalVars.APP_PROP.getProperty("DISPATCH_PN_PREFIX");
-        
+
         DISPATCH_QUANTITY_PREFIX = GlobalVars.APP_PROP.getProperty("DISPATCH_QUANTITY_PREFIX");
 
         WEIGHT_PREFIX = GlobalVars.APP_PROP.getProperty("WEIGHT_PREFIX");
@@ -172,7 +163,6 @@ public class GlobalVars {
      *
      */
     //public static String UCS_SPLITER = "|";
-
     //##########################################################################
     //##########################################################################
     //##########################################################################
@@ -315,22 +305,26 @@ public class GlobalVars {
         {PALLET_CLOSED, ""},
         {PALLET_STORED, ""},
         {PALLET_RESERVED, ""},
-        {PALLET_DISPATCHED, ""}, 
+        {PALLET_DISPATCHED, ""},
         {PALLET_BLOCKED, ""},
         {PALLET_DELETED, ""}
     };
+
     
+    
+    
+
     /**
      *
      * @return the state's code
      */
-    public static String getStateCode(String state){
-        switch (state){
+    public static String getStateCode(String state) {
+        switch (state) {
             case PALLET_CLOSED:
                 return PALLET_CLOSED_CODE;
             case PALLET_STORED:
                 return PALLET_STORED_CODE;
-                        
+
         }
         return null;
     }
@@ -357,8 +351,6 @@ public class GlobalVars {
     /**
      *
      */
-    
-
     public enum ACCESS_LEVEL {
 
         PROFIL_OPERATOR(1000), PROFIL_WAREHOUSE_AGENT(2000), PROFIL_ADMIN(9000), PROFIL_READER(0000);

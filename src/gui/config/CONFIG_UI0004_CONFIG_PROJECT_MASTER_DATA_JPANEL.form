@@ -1812,12 +1812,14 @@
                       <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="5">
-                        <StringItem index="0" value="PACKAGING"/>
-                        <StringItem index="1" value="FINISHED_GOODS"/>
-                        <StringItem index="2" value="TRANSIT"/>
-                        <StringItem index="3" value="INVENTORY"/>
-                        <StringItem index="4" value="SCRAP"/>
+                      <StringArray count="7">
+                        <StringItem index="0" value="FINISHED_GOODS"/>
+                        <StringItem index="1" value="PACKAGING"/>
+                        <StringItem index="2" value="INVENTORY"/>
+                        <StringItem index="3" value="SCRAP"/>
+                        <StringItem index="4" value="TRANSIT"/>
+                        <StringItem index="5" value="WIRES"/>
+                        <StringItem index="6" value="RAW_MATERIAL"/>
                       </StringArray>
                     </Property>
                   </Properties>

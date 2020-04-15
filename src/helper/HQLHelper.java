@@ -301,4 +301,15 @@ public class HQLHelper {
             + "AND str(wc.wireNo) LIKE :wireNo "
             + "AND str(wc.cardNumber) LIKE :cardNumber "
             + "AND wc.project IN (:project) ";
+    
+    //WireStockLoc
+    public final static String GET_WIRE_LOCATION_LIKE_WH_AND_LOC = "FROM WireStockLoc t "
+            + "WHERE t.warehouse LIKE :warehouse AND t.location LIKE :location "
+            + "AND t.project LIKE :project "
+            + "ORDER BY writeTime DESC";
+    
+    public final static String GET_WIRE_LOCATION_WHERE_PROJECT_WH_AND_LOC = "FROM WireStockLoc t "
+            + "WHERE (t.warehouse = :warehouse "
+            + "AND t.location = :location AND t.project = :project) "
+            + "AND t.id != :id ORDER BY writeTime DESC";
 }

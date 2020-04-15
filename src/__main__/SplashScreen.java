@@ -5,7 +5,6 @@ import helper.UIHelper;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.PrintStream;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER;
@@ -19,7 +18,7 @@ import javax.swing.text.DefaultCaret;
 public class SplashScreen extends javax.swing.JFrame implements PropertyChangeListener {
 
     private Task task;
-    private AuthFrame authFrame;
+    private static AuthFrame authFrame;
 
     public static void main(String[] args) {
         //Load the look and feel
@@ -41,6 +40,34 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         rights.setText(GlobalVars.ALL_RIGHTS_RESERVED);
         this.setTitle(GlobalVars.APP_NAME+" "+GlobalVars.APP_VERSION);
         realised.setText(GlobalVars.APP_AUTHOR);
+    }
+    
+    private void initTextArea(){
+//        PrintStream printStream = new PrintStream(new JTextAreaOutputStream(taskOutput));        
+//        System.setOut(printStream);
+//        System.setErr(printStream);
+
+        //Intialize jtextArea properties
+        taskOutput.setEditable(false);
+        taskOutput.setLineWrap(true);
+        taskOutput.setWrapStyleWord(true);
+        scrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
+        DefaultCaret caret = (DefaultCaret) taskOutput.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+        taskOutput.setCaret(caret);
+    }
+    
+    private void initProgressBar(){
+        progressBar.setValue(0);
+        // Call setStringPainted now so that the progress bar height
+        // stays the same whether or not the string is shown.
+        progressBar.setStringPainted(true);
+        progressBar.setIndeterminate(true);
+        // Instances of javax.swing.SwingWorker are not reusuable, so
+        // we create new instances as needed.
+        task = new Task();
+        task.addPropertyChangeListener(this);
+        task.execute();
     }
 
     /**
@@ -73,32 +100,11 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
 
         initLabels();
 
-        UIHelper.centerJFrame(this);
-
-        PrintStream printStream = new PrintStream(new JTextAreaOutputStream(taskOutput));
-        //PrintStream printStream = new PrintStream(new JLabelOutputStream(outputLabel));
-        System.setOut(printStream);
-        System.setErr(printStream);
-
-        //Intialize jtextArea properties
-        taskOutput.setEditable(false);
-        taskOutput.setLineWrap(true);
-        taskOutput.setWrapStyleWord(true);
-        scrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
-        DefaultCaret caret = (DefaultCaret) taskOutput.getCaret();
-        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
-        taskOutput.setCaret(caret);
+        initTextArea();
         
-        progressBar.setValue(0);
-        // Call setStringPainted now so that the progress bar height
-        // stays the same whether or not the string is shown.
-        progressBar.setStringPainted(true);
-        progressBar.setIndeterminate(true);
-        // Instances of javax.swing.SwingWorker are not reusuable, so
-        // we create new instances as needed.
-        task = new Task();
-        task.addPropertyChangeListener(this);
-        task.execute();
+        initProgressBar();
+        
+        UIHelper.centerJFrame(this);
 
         this.setVisible(true);
 
@@ -118,7 +124,6 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         taskOutput = new javax.swing.JTextArea();
         progressBar = new javax.swing.JProgressBar();
         realised = new javax.swing.JLabel();
-        java_logo = new javax.swing.JLabel();
         rights = new javax.swing.JLabel();
         app_name = new javax.swing.JLabel();
         car_logo = new javax.swing.JLabel();
@@ -152,9 +157,6 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         realised.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         realised.setText("{AUTHOR}");
 
-        java_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/__main__/images/java-logo.png"))); // NOI18N
-        java_logo.setPreferredSize(new java.awt.Dimension(32, 32));
-
         rights.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         rights.setForeground(new java.awt.Color(255, 255, 255));
         rights.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -172,14 +174,6 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addComponent(java_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(realised, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
-                    .addComponent(rights, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(162, 162, 162))
             .addComponent(car_logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(scrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(app_name, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -187,6 +181,8 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
                 .addContainerGap()
                 .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(realised, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
+            .addComponent(rights, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,16 +191,11 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
                 .addComponent(app_name)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(car_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(realised)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rights))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(java_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(realised)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rights)
+                .addGap(18, 18, 18)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -229,7 +220,6 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
     private javax.swing.JLabel app_name;
     private javax.swing.JLabel car_logo;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel java_logo;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JLabel realised;
     private javax.swing.JLabel rights;
@@ -244,9 +234,6 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
          */
         @Override
         public Void doInBackground() {
-
-            Random random = new Random();
-            int progress = 0;
             // Initialize progress property.
             setProgress(0);
             // Sleep for at least one second to simulate "startup".
@@ -254,7 +241,7 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
 
                 System.out.println("Intialize application frame...");
                 authFrame = new AuthFrame(this);
-                System.out.println("Application intialized.");
+                
 
                 setProgress(100);
             } catch (InterruptedException ignore) {
@@ -287,6 +274,8 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
             taskOutput.append(String.format("Completed %d%% of task.\n", progress));
 
             if (progress == 100) {
+                //Reset output stream;
+                GlobalMethods.resetOutputStram();
                 authFrame.setVisible(true);
                 this.dispose();
             }

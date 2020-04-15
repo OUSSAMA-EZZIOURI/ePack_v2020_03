@@ -70,7 +70,7 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
         login_lbl3 = new javax.swing.JLabel();
         project_filter = new javax.swing.JComboBox();
         login_lbl4 = new javax.swing.JLabel();
-        warehouse_filter = new javax.swing.JComboBox<>();
+        fg_warehouse_filter = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         deliveryDatePicker = new org.jdesktop.swingx.JXDatePicker();
         jLabel2 = new javax.swing.JLabel();
@@ -134,23 +134,23 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
         login_lbl4.setText("Magasin F.G");
         jPanel1.add(login_lbl4);
 
-        warehouse_filter.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        warehouse_filter.addItemListener(new java.awt.event.ItemListener() {
+        fg_warehouse_filter.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        fg_warehouse_filter.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                warehouse_filterItemStateChanged(evt);
+                fg_warehouse_filterItemStateChanged(evt);
             }
         });
-        warehouse_filter.addMouseListener(new java.awt.event.MouseAdapter() {
+        fg_warehouse_filter.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                warehouse_filterMouseClicked(evt);
+                fg_warehouse_filterMouseClicked(evt);
             }
         });
-        warehouse_filter.addActionListener(new java.awt.event.ActionListener() {
+        fg_warehouse_filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                warehouse_filterActionPerformed(evt);
+                fg_warehouse_filterActionPerformed(evt);
             }
         });
-        jPanel1.add(warehouse_filter);
+        jPanel1.add(fg_warehouse_filter);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("Date d'expédition (obligatoire) :");
@@ -290,7 +290,7 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
                     lp.setPlanState(WarehouseHelper.LOAD_PLAN_STATE_OPEN);
                     lp.setTruckNo((truck_no_text.getText().isEmpty()) ? "" : truck_no_text.getText());
                     lp.setProject(project_filter.getSelectedItem().toString());
-                    lp.setFgWarehouse(warehouse_filter.getSelectedItem().toString());
+                    lp.setFgWarehouse(fg_warehouse_filter.getSelectedItem().toString());
 
                     String packaging_wh = new ConfigWarehouse().getPackagingWh(project_filter.getSelectedItem().toString());
                     lp.setPackagingWarehouse(packaging_wh);
@@ -335,14 +335,14 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
         this.dispose();
     }//GEN-LAST:event_cancel_btnActionPerformed
 
-    private void warehouse_filterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_warehouse_filterItemStateChanged
+    private void fg_warehouse_filterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_fg_warehouse_filterItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_warehouse_filterItemStateChanged
+    }//GEN-LAST:event_fg_warehouse_filterItemStateChanged
 
-    private void warehouse_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warehouse_filterActionPerformed
+    private void fg_warehouse_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fg_warehouse_filterActionPerformed
 
 
-    }//GEN-LAST:event_warehouse_filterActionPerformed
+    }//GEN-LAST:event_fg_warehouse_filterActionPerformed
 
     private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
     }//GEN-LAST:event_formMouseEntered
@@ -352,16 +352,17 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
     }//GEN-LAST:event_project_filterItemStateChanged
 
     private void project_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_project_filterActionPerformed
-        warehouse_filter = ConfigWarehouse.initWarehouseJBox(this, warehouse_filter, String.valueOf(project_filter.getSelectedItem()), 1, false);
+        fg_warehouse_filter = ConfigWarehouse.initWarehouseJBox(this, fg_warehouse_filter, 
+                String.valueOf(project_filter.getSelectedItem()), ConfigWarehouse.FINISHED_GOODS, false);
     }//GEN-LAST:event_project_filterActionPerformed
 
     private void destinations_tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_destinations_tableMouseEntered
 
     }//GEN-LAST:event_destinations_tableMouseEntered
 
-    private void warehouse_filterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_warehouse_filterMouseClicked
+    private void fg_warehouse_filterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fg_warehouse_filterMouseClicked
 
-    }//GEN-LAST:event_warehouse_filterMouseClicked
+    }//GEN-LAST:event_fg_warehouse_filterMouseClicked
 
     private void main_tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_main_tabbedPaneStateChanged
         switch (main_tabbedPane.getSelectedIndex()) {
@@ -461,6 +462,7 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
     private javax.swing.JButton cancel_btn;
     private org.jdesktop.swingx.JXDatePicker deliveryDatePicker;
     private javax.swing.JTable destinations_table;
+    private javax.swing.JComboBox<String> fg_warehouse_filter;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -475,7 +477,6 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
     private javax.swing.JScrollPane tab2_fdp;
     private javax.swing.JComboBox<String> transporter_filter;
     private javax.swing.JTextField truck_no_text;
-    private javax.swing.JComboBox<String> warehouse_filter;
     // End of variables declaration//GEN-END:variables
 
 }

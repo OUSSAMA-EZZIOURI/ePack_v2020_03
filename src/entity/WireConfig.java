@@ -464,7 +464,7 @@ public class WireConfig extends DAO implements java.io.Serializable {
     public void update(Object obj) {
         WireConfig aux = (WireConfig) obj;
         aux.setWriteId(GlobalVars.CONNECTED_USER.getId());
-        aux.setWriteUser(GlobalVars.CONNECTED_USER.getFirstName() + " " + GlobalVars.CONNECTED_USER.getLastName());
+        aux.setWriteUser(GlobalVars.CONNECTED_USER.getFullName());
         aux.setWriteTime(new Date());
         super.update(aux); //To change body of generated methods, choose Tools | Templates.
     }

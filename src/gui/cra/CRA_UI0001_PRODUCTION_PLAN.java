@@ -205,14 +205,17 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         });
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Article faisceau");
         jLabel2.setPreferredSize(new java.awt.Dimension(130, 24));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Code interne");
         jLabel3.setPreferredSize(new java.awt.Dimension(130, 24));
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Quantité planifiée");
         jLabel4.setPreferredSize(new java.awt.Dimension(130, 24));
 
@@ -249,6 +252,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         txt_id.setPreferredSize(new java.awt.Dimension(130, 24));
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("ID");
         jLabel5.setPreferredSize(new java.awt.Dimension(130, 24));
 
@@ -503,7 +507,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
                 File selectedFile = chooser.getSelectedFile();
                 //target.close();
-                File source = new File(".\\src\\production_plan_csv_example.csv");
+                File source = new File(".\\src\\csv\\production_plan_csv_example.csv");
                 System.out.println(" source " + source.getAbsolutePath() + ".csv");
 
                 File dest = chooser.getSelectedFile();
@@ -576,11 +580,6 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                     aux = (ProductionPlan) Helper.sess.load(ProductionPlan.class, id);
                     //#######################
                     UIHelper.mapValuesInPanelFields(craUI0001_form_panel, aux, true);
-//                    txt_id.setText(aux.getId() + "");
-//                    txt_harness_part.setText(aux.getHarnessPart());
-//                    txt_internal_part.setText(aux.getInternalPart());
-//
-//                    txt_qty_planned.setText(aux.getPlannedQty().toString());
                     btn_delete.setEnabled(true);
                 }
             }

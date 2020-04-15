@@ -1450,7 +1450,7 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
 
         warehousePane_field_WhType.setBackground(new java.awt.Color(204, 204, 255));
         warehousePane_field_WhType.setForeground(new java.awt.Color(0, 0, 0));
-        warehousePane_field_WhType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PACKAGING", "FINISHED_GOODS", "TRANSIT", "INVENTORY", "SCRAP" }));
+        warehousePane_field_WhType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FINISHED_GOODS", "PACKAGING", "INVENTORY", "SCRAP", "TRANSIT", "WIRES", "RAW_MATERIAL" }));
 
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("Type");
@@ -2335,6 +2335,7 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
                 msg_lbl.setText(msg[0]);
                 GlobalMethods.clearPaneFieldsValues(workplace_fields);
                 refreshWorkplaceTable();
+                GlobalMethods.disableEditingTable(workplace_jtable);
             }
         }
     }//GEN-LAST:event_workplacePane_btn_saveActionPerformed
@@ -2376,6 +2377,7 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
                 msg_lbl.setText(msg[0]);
                 GlobalMethods.clearPaneFieldsValues(segment_fields);
                 refreshSegmentTable();
+                GlobalMethods.disableEditingTable(segment_jtable);
             }
         }
     }//GEN-LAST:event_segmentPane_btn_saveActionPerformed
@@ -2608,6 +2610,7 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
                 "CITY"
         ),
                 company_jtable);
+        GlobalMethods.disableEditingTable(company_jtable);
     }
 
     private void refreshProjectTable() {
@@ -2630,6 +2633,7 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
                 "DESCRIPTION"
         ),
                 project_jtable);
+        GlobalMethods.disableEditingTable(project_jtable);
     }
 
     private void refreshFamilyTable() {
@@ -2652,6 +2656,8 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
                 "FAMILY"
         ),
                 family_jtable);
+        
+        GlobalMethods.disableEditingTable(family_jtable);
     }
 
     private void refreshSegmentTable() {
@@ -2724,6 +2730,7 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
                 "DESIGNATION"
         ),
                 warehouse_jtable);
+        GlobalMethods.disableEditingTable(warehouse_jtable);
     }
 
     private void refreshTransportersTable() {
@@ -2742,6 +2749,7 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
         GlobalMethods.reset_jtable_data(resultList, transportersDataVector, Arrays.asList(
                 "ID",
                 "NAME"), transporter_jtable);
+        GlobalMethods.disableEditingTable(transporter_jtable);
     }
 
     private void initWarehouseTableDoubleClick() {

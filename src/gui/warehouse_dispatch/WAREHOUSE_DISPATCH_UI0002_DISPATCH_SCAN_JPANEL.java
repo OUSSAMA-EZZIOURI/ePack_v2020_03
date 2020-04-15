@@ -3162,7 +3162,7 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
 
                 File selectedFile = chooser.getSelectedFile();
                 //target.close();
-                File source = new File(".\\src\\odette_csv_example.csv");
+                File source = new File(".\\src\\csv\\odette_csv_example.csv");
                 System.out.println(" source " + source.getAbsolutePath() + ".csv");
 
                 File dest = chooser.getSelectedFile();

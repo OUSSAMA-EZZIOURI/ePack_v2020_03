@@ -78,7 +78,6 @@ public class PACKAGE_07_ABOUT_UI0001 extends javax.swing.JFrame {
 
         java_logo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         java_logo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/__main__/images/postgresql-logo.png"))); // NOI18N
-        java_logo1.setPreferredSize(new java.awt.Dimension(32, 32));
 
         java_logo3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         java_logo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/__main__/images/hibernate-logo.png"))); // NOI18N
@@ -132,7 +131,7 @@ public class PACKAGE_07_ABOUT_UI0001 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splash_container, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(splash_container, javax.swing.GroupLayout.PREFERRED_SIZE, 592, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

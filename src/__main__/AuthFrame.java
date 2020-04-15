@@ -14,9 +14,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import helper.HQLHelper;
 import helper.InactivityListener;
+import helper.JTextAreaOutputStream;
 import helper.UIHelper;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -49,9 +51,8 @@ public class AuthFrame extends javax.swing.JFrame {
 
     private ManufactureUsers user;
 
-    static InactivityListener inactivityListener;
+    static InactivityListener inactivityExitListener;
 
-    //int InactivityLogoutTime = 30; //In minutes
     int InactivityExitTime = 30; //In minutes
 
     /**
@@ -83,7 +84,7 @@ public class AuthFrame extends javax.swing.JFrame {
         String feedback = PropertiesLoader.loadConfigProperties();
         GlobalMethods.createDefaultDirectories();
         LOGGER = Logger.getLogger(ClassName.class.getName());
-        //LOGGER.log(Level.INFO, feedback);
+        LOGGER.log(Level.INFO, feedback);
     }
 
     private void loadAppIcon() {
@@ -111,8 +112,8 @@ public class AuthFrame extends javax.swing.JFrame {
             }
 
         };
-        inactivityListener = new InactivityListener(this, logout, InactivityExitTime);
-        inactivityListener.start();
+        inactivityExitListener = new InactivityListener(this, logout, InactivityExitTime);
+        inactivityExitListener.start();
     }
 
     private void setJFrameOptions() {
@@ -153,59 +154,70 @@ public class AuthFrame extends javax.swing.JFrame {
      */
     public AuthFrame(SplashScreen.Task task) throws InterruptedException {
         try {
-        initComponents();
+            initComponents();
 
-        Random random = new Random();
-        int progress = task.getProgress();
-        int oldProgress = progress;
+            Random random = new Random();
+            int progress = task.getProgress();
+            int oldProgress = progress;
 
-        System.out.println("Starting...");
-        oldProgress = progress;
-        progress = oldProgress + random.nextInt(10);
-        task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
-        Thread.sleep(random.nextInt(2000));
+            System.out.println("Starting...");
+            oldProgress = progress;
+            progress = oldProgress + random.nextInt(10);
+            task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
+            Thread.sleep(random.nextInt(2000));
 
-        loadLookAndFeel();
-        System.out.println("Load application theme...");
-        oldProgress = progress;
-        progress = oldProgress + random.nextInt(30);
-        task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
-        Thread.sleep(random.nextInt(2000));
+            loadLookAndFeel();
+            System.out.println("Load application theme...");
+            oldProgress = progress;
+            progress = oldProgress + random.nextInt(30);
+            task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
+            Thread.sleep(random.nextInt(2000));
 
-        loadProperties();
-        System.out.println("Load properties...");
-        oldProgress = progress;
-        progress = oldProgress + random.nextInt(50);
-        task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
-        Thread.sleep(random.nextInt(2000));
+            loadProperties();
+            System.out.println("Load properties...");
+            oldProgress = progress;
+            progress = oldProgress + random.nextInt(50);
+            task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
+            Thread.sleep(random.nextInt(2000));
 
-        //UIHelper.centerJFrame(this);
-        System.out.println("Load window content...");
-        oldProgress = progress;
-        progress = oldProgress + random.nextInt(60);
-        task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
-        Thread.sleep(random.nextInt(2000));
-        loadAppIcon();
-        loadLabelsContent();
+            //UIHelper.centerJFrame(this);
+            System.out.println("Load window content...");
+            oldProgress = progress;
+            progress = oldProgress + random.nextInt(60);
+            task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
+            Thread.sleep(random.nextInt(2000));
+            loadAppIcon();
+            loadLabelsContent();
 
-        System.out.println("Set innactivity listener...");
-        oldProgress = progress;
-        progress = oldProgress + random.nextInt(70);
-        task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
-        Thread.sleep(random.nextInt(2000));
-        setInactivityListener();
+            System.out.println("Set innactivity listener...");
+            oldProgress = progress;
+            progress = oldProgress + random.nextInt(70);
+            task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
+            Thread.sleep(random.nextInt(2000));
+            setInactivityListener();
 
-        System.out.println("Finalizing...");
-        oldProgress = progress;
-        progress = oldProgress + random.nextInt(90);
-        task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
-        Thread.sleep(random.nextInt(2000));        
-        setJFrameOptions();
+            System.out.println("Finalizing...");
+            oldProgress = progress;
+            progress = oldProgress + random.nextInt(90);
+            task.firePropertyChange("progress", oldProgress, Math.min(progress, 100));
+            Thread.sleep(random.nextInt(2000));
+            setJFrameOptions();
+            System.out.println("Application intialized.");
 
         } catch (Exception e) {
             UILog.exceptionDialog(this, e);
             System.exit(-1);
         }
+    }
+    
+    /**
+     * Instanciate the main window and close the actual one
+     */
+    private void success() {
+        MainFrame mainFrame = new MainFrame(this, true, this.user);
+        mainFrame.setVisible(true);
+        inactivityExitListener.stop();
+        this.dispose();
     }
 
     /**
@@ -417,20 +429,21 @@ public class AuthFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_btnActionPerformed
-        if (checkLoginAndPass(login_textfield.getText(), pwd_textfield.getText())) {
-            MainFrame mainFrame = new MainFrame(this, true, this.user);
-            mainFrame.setVisible(true);
-            inactivityListener.stop();
-            this.dispose();
+        //UILog.infoDialog("Event "+evt.toString());
+        System.out.println("Event " + evt.toString());
+        if (checkLoginAndPass(login_textfield.getText(), new String(pwd_textfield.getPassword()))) {
+            //System.out.println("check auth "+checkLoginAndPass(login_textfield.getText(), new String(pwd_textfield.getPassword())));
+            //this.dispose();
+            //UILog.infoDialog("check auth "+checkLoginAndPass(login_textfield.getText(), new String(pwd_textfield.getPassword())));
+            success();
+
         }
     }//GEN-LAST:event_login_btnActionPerformed
 
     private void pwd_textfieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwd_textfieldKeyTyped
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (checkLoginAndPass(login_textfield.getText(), new String(pwd_textfield.getPassword()))) {
-                MainFrame mainFrame = new MainFrame(this, true, this.user);
-                mainFrame.setVisible(true);
-                this.dispose();
+                success();
             }
         } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.dispose();
@@ -440,10 +453,7 @@ public class AuthFrame extends javax.swing.JFrame {
     private void pwd_textfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwd_textfieldKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (checkLoginAndPass(login_textfield.getText(), new String(pwd_textfield.getPassword()))) {
-                //this.select_menu();
-                MainFrame mainFrame = new MainFrame(this, true, this.user);
-                mainFrame.setVisible(true);
-                this.dispose();
+                success();
             }
         } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.dispose();
@@ -453,9 +463,7 @@ public class AuthFrame extends javax.swing.JFrame {
     private void login_btnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_login_btnKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (checkLoginAndPass(login_textfield.getText(), new String(pwd_textfield.getPassword()))) {
-                MainFrame mainFrame = new MainFrame(this, true, this.user);
-                mainFrame.setVisible(true);
-                this.dispose();
+                success();
             }
         } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.dispose();
@@ -542,5 +550,7 @@ public class AuthFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField pwd_textfield;
     private javax.swing.JLabel versionLabel;
     // End of variables declaration//GEN-END:variables
+
+    
 
 }

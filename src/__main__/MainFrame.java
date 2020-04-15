@@ -14,6 +14,7 @@ import gui.config.CONFIG_UI0003_CONFIG_USERS_JPANEL;
 import gui.config.CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL;
 import gui.cra.CRA_UI0001_PRODUCTION_PLAN;
 import gui.cra.CRA_UI0002_WIRE_MASTER_DATA;
+import gui.cra.CRA_UI0003_STOCK_LOCATIONS;
 import gui.logviewer.LOGVIEWER_UI0001;
 import gui.packaging.PackagingVars;
 import gui.packaging.mode3.gui.PACKAGING_UI0001_Main_Mode3;
@@ -65,11 +66,16 @@ import ui.info.InfoMsg;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    static InactivityListener LogoutListener, ExitListener;
+    static InactivityListener inactivityLogoutListener, inactivityExitListener;
 
-    int InactivityLogoutTime = 30; //In minutes
+    int inactivityLogoutTime = 30; //In minutes
 
-    //private ManufactureUsers user;
+    /**
+     * 
+     * @param parent
+     * @param b
+     * @param user 
+     */
     public MainFrame(Frame parent, boolean b, ManufactureUsers user) {
         initComponents();
         GlobalVars.CONNECTED_USER = user;
@@ -77,6 +83,9 @@ public class MainFrame extends javax.swing.JFrame {
         intiGui();
     }
 
+    /**
+     * 
+     */
     private void intiGui() {
         this.setTitle(GlobalVars.APP_NAME + " " + GlobalVars.APP_VERSION + " " + GlobalVars.APP_AUTHOR);
         ImageIcon img = new ImageIcon(GlobalVars.APP_PROP.getProperty("IMG_PATH") + "/icon.png");
@@ -95,12 +104,12 @@ public class MainFrame extends javax.swing.JFrame {
 
                     AuthFrame ui = new AuthFrame();
                     ui.setVisible(true);
-                    UILog.createDailyLogFile(GlobalVars.APP_PROP.getProperty("LOG_PATH"));
-                    PropertiesLoader.createDailyOutPrintDir(GlobalVars.APP_PROP.getProperty("PRINT_DIR"),
-                            GlobalVars.APP_PROP.getProperty("PRINT_PALLET_DIR"),
-                            GlobalVars.APP_PROP.getProperty("PRINT_CLOSING_PALLET_DIR"),
-                            GlobalVars.APP_PROP.getProperty("PRINT_PICKING_SHEET_DIR"),
-                            GlobalVars.APP_PROP.getProperty("PRINT_DISPATCH_SHEET_DIR"));
+//                    UILog.createDailyLogFile(GlobalVars.APP_PROP.getProperty("LOG_PATH"));
+//                    PropertiesLoader.createDailyOutPrintDir(GlobalVars.APP_PROP.getProperty("PRINT_DIR"),
+//                            GlobalVars.APP_PROP.getProperty("PRINT_PALLET_DIR"),
+//                            GlobalVars.APP_PROP.getProperty("PRINT_CLOSING_PALLET_DIR"),
+//                            GlobalVars.APP_PROP.getProperty("PRINT_PICKING_SHEET_DIR"),
+//                            GlobalVars.APP_PROP.getProperty("PRINT_DISPATCH_SHEET_DIR"));
 
                     JFrame frame = (JFrame) e.getSource();
                     frame.dispose();
@@ -117,16 +126,24 @@ public class MainFrame extends javax.swing.JFrame {
             }
 
         };
-        InactivityLogoutTime = Integer.valueOf(GlobalVars.APP_PROP.getProperty("INACTIVITY_LOGOUT_TIME"));
-        LogoutListener = new InactivityListener(this, auto_logout, InactivityLogoutTime);
-        LogoutListener.start();
+        inactivityLogoutTime = Integer.valueOf(GlobalVars.APP_PROP.getProperty("INACTIVITY_LOGOUT_TIME"));
+        inactivityLogoutListener = new InactivityListener(this, auto_logout, inactivityLogoutTime);
+        inactivityLogoutListener.start();
 
     }
 
+    /**
+     *
+     * @return
+     */
     public JTabbedPane getRootTabbedPane() {
         return rootTabbedPane;
     }
 
+    /**
+     *
+     * @param rootTabbedPane
+     */
     public void setRootTabbedPane(JTabbedPane rootTabbedPane) {
         this.rootTabbedPane = rootTabbedPane;
     }
@@ -195,7 +212,11 @@ public class MainFrame extends javax.swing.JFrame {
         packaging_stock_menu = new javax.swing.JMenuItem();
         MENU_06_CRA = new javax.swing.JMenu();
         MENU_06_PRODUCTION_PLAN = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        MENU_06_WIRE_STOCK = new javax.swing.JMenuItem();
+        MENU_06_WIRE_DEMAND = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        MENU_06_WIRE_MASTER_DATA = new javax.swing.JMenuItem();
+        MENU_06_PAGODAS_LOCATION = new javax.swing.JMenuItem();
         MENU_05_MODULE_CONFIG = new javax.swing.JMenu();
         MENU_01_00_CONFIG_PN = new javax.swing.JMenuItem();
         MENU_01_01_CONFIG_BARCODE = new javax.swing.JMenuItem();
@@ -424,13 +445,28 @@ public class MainFrame extends javax.swing.JFrame {
         });
         MENU_06_CRA.add(MENU_06_PRODUCTION_PLAN);
 
-        jMenuItem2.setText("Master data fil");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        MENU_06_WIRE_STOCK.setText("Stock fil");
+        MENU_06_CRA.add(MENU_06_WIRE_STOCK);
+
+        MENU_06_WIRE_DEMAND.setText("Besoin des fils");
+        MENU_06_CRA.add(MENU_06_WIRE_DEMAND);
+        MENU_06_CRA.add(jSeparator2);
+
+        MENU_06_WIRE_MASTER_DATA.setText("Master data fil");
+        MENU_06_WIRE_MASTER_DATA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                MENU_06_WIRE_MASTER_DATAActionPerformed(evt);
             }
         });
-        MENU_06_CRA.add(jMenuItem2);
+        MENU_06_CRA.add(MENU_06_WIRE_MASTER_DATA);
+
+        MENU_06_PAGODAS_LOCATION.setText("Emplacements Pagodas");
+        MENU_06_PAGODAS_LOCATION.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MENU_06_PAGODAS_LOCATIONActionPerformed(evt);
+            }
+        });
+        MENU_06_CRA.add(MENU_06_PAGODAS_LOCATION);
 
         menuBar.add(MENU_06_CRA);
 
@@ -561,14 +597,14 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * To be used because the custom UILog object has not been initialized yet !
      */
-    private static final Logger LOGGER = Logger.getLogger(TypeData.ClassName.class.getName());
+//    private static final Logger LOGGER = Logger.getLogger(TypeData.ClassName.class.getName());
 
     // static initializer
-    {
-        /* Create and display the form */
-        String feedback = PropertiesLoader.loadConfigProperties();
-        LOGGER.log(Level.INFO, feedback);
-    }
+//    {
+//        /* Create and display the form */
+//        String feedback = PropertiesLoader.loadConfigProperties();
+//        LOGGER.log(Level.INFO, feedback);
+//    }
 
     private void menu011_prod_statisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu011_prod_statisticsActionPerformed
         addNewTab(new PACKAGING_UI0011_ProdStatistics_JPANEL(rootTabbedPane), evt);
@@ -687,14 +723,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void packaging_stock_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_packaging_stock_menuActionPerformed
         GlobalMethods.addNewTabToParent("Stock d'emballage", this.rootTabbedPane, new PACKAGING_WAREHOUSE_UI0002_STOCK_JPANEL(this.rootTabbedPane), evt);
     }//GEN-LAST:event_packaging_stock_menuActionPerformed
-//
-//   private void menu_scan_mode_1ActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-//        PackagingVars.mode2_context.setState(new Mode2_S010_UserCodeScan());
-//        PackagingVars.Packaging_Gui_Mode2 = new PACKAGING_UI0001_Main_Mode2(null, this);
-//        PackagingVars.Packaging_Gui_Mode2.reloadDataTable();
-//        PackagingVars.Packaging_Gui_Mode2.disableAdminMenus();
-//        
-//    }   
+  
 
     private void MENU_03_MODULE_DISPATCHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MENU_03_MODULE_DISPATCHMouseClicked
 
@@ -751,22 +780,13 @@ public class MainFrame extends javax.swing.JFrame {
                 JOptionPane.WARNING_MESSAGE);
 
         if (confirmed == 0) {
-                
-            if(PackagingVars.Packaging_Gui_Mode3 != null){
+
+            if (PackagingVars.Packaging_Gui_Mode3 != null) {
                 PackagingVars.Packaging_Gui_Mode3.dispose();
                 GlobalVars.OPENED_SCAN_WINDOW = 0;
             }
-//            if (PackagingVars.Packaging_Gui_Mode2 != null || PackagingVars.Packaging_Gui_Mode3 != null) {
-//                //Ferme l'interface contenu contenant s'elle ouverte.
-//                if (GlobalVars.APP_PROP.getProperty("PACKAGING_SCAN_MODE").equals("1")) {
-//                    PackagingVars.Packaging_Gui_Mode2.dispose();
-//                    GlobalVars.OPENED_SCAN_WINDOW = 0;
-//                } else if (GlobalVars.APP_PROP.getProperty("PACKAGING_SCAN_MODE").equals("2")) {
-//                    PackagingVars.Packaging_Gui_Mode3.dispose();
-//                    GlobalVars.OPENED_SCAN_WINDOW = 0;
-//                }
-//            }
-                try {
+
+            try {
                 /* Create and display the form */
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     @Override
@@ -812,21 +832,25 @@ public class MainFrame extends javax.swing.JFrame {
         addNewTab(new CRA_UI0001_PRODUCTION_PLAN(rootTabbedPane), evt);
     }//GEN-LAST:event_MENU_06_PRODUCTION_PLANActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void MENU_06_WIRE_MASTER_DATAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_06_WIRE_MASTER_DATAActionPerformed
         addNewTab(new CRA_UI0002_WIRE_MASTER_DATA(rootTabbedPane), evt);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_MENU_06_WIRE_MASTER_DATAActionPerformed
 
     private void MENU_01_03_02_LOGVIEWERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_01_03_02_LOGVIEWERActionPerformed
         addNewTab(new LOGVIEWER_UI0001(rootTabbedPane), evt);
     }//GEN-LAST:event_MENU_01_03_02_LOGVIEWERActionPerformed
 
     private void MENU_07_ABOUTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_07_ABOUTActionPerformed
-        
+
     }//GEN-LAST:event_MENU_07_ABOUTActionPerformed
 
     private void MENU_07_ABOUT_UI0001ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_07_ABOUT_UI0001ActionPerformed
         new PACKAGE_07_ABOUT_UI0001().setVisible(true);
     }//GEN-LAST:event_MENU_07_ABOUT_UI0001ActionPerformed
+
+    private void MENU_06_PAGODAS_LOCATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_06_PAGODAS_LOCATIONActionPerformed
+        addNewTab(new CRA_UI0003_STOCK_LOCATIONS(rootTabbedPane), evt);
+    }//GEN-LAST:event_MENU_06_PAGODAS_LOCATIONActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -847,14 +871,18 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu MENU_05_MODULE_CONFIG;
     private javax.swing.JMenu MENU_06_CRA;
     private javax.swing.JMenu MENU_06_MODULE_HELP;
+    private javax.swing.JMenuItem MENU_06_PAGODAS_LOCATION;
     private javax.swing.JMenuItem MENU_06_PRODUCTION_PLAN;
+    private javax.swing.JMenuItem MENU_06_WIRE_DEMAND;
+    private javax.swing.JMenuItem MENU_06_WIRE_MASTER_DATA;
+    private javax.swing.JMenuItem MENU_06_WIRE_STOCK;
     private javax.swing.JMenu MENU_07_ABOUT;
     private javax.swing.JMenuItem MENU_07_ABOUT_UI0001;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JMenuItem logoutMenuItem;
     private javax.swing.JMenuItem menu010_pallet_details;
     private javax.swing.JMenuItem menu011_prod_statistics;

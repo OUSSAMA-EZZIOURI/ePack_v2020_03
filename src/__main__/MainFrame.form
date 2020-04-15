@@ -250,12 +250,32 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MENU_06_PRODUCTION_PLANActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+            <MenuItem class="javax.swing.JMenuItem" name="MENU_06_WIRE_STOCK">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Stock fil"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MENU_06_WIRE_DEMAND">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Besoin des fils"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MENU_06_WIRE_MASTER_DATA">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Master data fil"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MENU_06_WIRE_MASTER_DATAActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MENU_06_PAGODAS_LOCATION">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Emplacements Pagodas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MENU_06_PAGODAS_LOCATIONActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

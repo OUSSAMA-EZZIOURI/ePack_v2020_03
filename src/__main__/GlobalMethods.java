@@ -16,6 +16,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,7 +29,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -304,6 +304,14 @@ public class GlobalMethods {
                 new CloseTabButtonComponent(parent));
         parent.setSelectedIndex(parent.getTabCount() - 1);
     }
+    
+    
+    public static void resetOutputStram() {
+        PrintStream standardOut = System.out;
+        PrintStream standardErr = System.err;
+        System.setErr(standardErr);
+        System.setOut(standardOut);
+    }
 
     /**
      *
@@ -385,7 +393,6 @@ public class GlobalMethods {
                 box.removeAllItems();
                 for (Object o : result) {
                     ConfigWarehouse cp = (ConfigWarehouse) o;
-                    //box.addItem(new ComboItem(cp.getWarehouse(), cp.getWarehouse()));
                     box.addItem(cp.getWarehouse());
                 }
 

@@ -1,8 +1,13 @@
 package entity;
 
+import __main__.GlobalVars;
 import gui.packaging.PackagingVars;
 import hibernate.DAO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +28,12 @@ public class WireStockLoc extends DAO implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wire_stock_loc_id_seq")
     @SequenceGenerator(name = "wire_stock_loc_id_seq", sequenceName = "wire_stock_loc_id_seq", allocationSize = 1)
     private Integer id;
+    
+    @Column(name = "project")
+    private String project;
+
+    @Column(name = "warehouse")
+    private String warehouse;
 
     @Column(name = "location")
     private String location;
@@ -50,7 +61,9 @@ public class WireStockLoc extends DAO implements java.io.Serializable {
     public WireStockLoc() {
     }
 
-    public WireStockLoc(String location) {
+    public WireStockLoc(String project, String warehouse, String location) {
+        this.project = project;
+        this.warehouse = warehouse;
         this.location = location;
         this.createId = PackagingVars.context.getUser().getId();
         this.writeId = PackagingVars.context.getUser().getId();
@@ -71,6 +84,14 @@ public class WireStockLoc extends DAO implements java.io.Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
     }
 
     public String getLocation() {
@@ -97,20 +118,36 @@ public class WireStockLoc extends DAO implements java.io.Serializable {
         this.writeId = writeId;
     }
 
-    public Date getWriteTime() {
-        return writeTime;
-    }
-
     public void setWriteTime(Date writeTime) {
         this.writeTime = writeTime;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+    
+    public String getWriteTime() {
+        return new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(writeTime);
+    }
+    
+    public void setWriteTime(String writeTime) {
+        try {
+            this.writeTime = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(writeTime);
+        } catch (ParseException ex) {
+
+        }
+    }
+
+    public String getCreateTime() {
+        return new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(createTime);
+    }
+    
+    public void setCreateTime(String createTime) {
+        try {
+            this.createTime = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").parse(createTime);
+        } catch (ParseException ex) {
+            Logger.getLogger(WireConfig.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getCreateUser() {
@@ -124,10 +161,41 @@ public class WireStockLoc extends DAO implements java.io.Serializable {
     public String getWriteUser() {
         return writeUser;
     }
+    
+    public String getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(String warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    
+
+    @Override
+    public void update(Object obj) {
+        WireStockLoc aux = (WireStockLoc) obj;
+        aux.setWriteId(GlobalVars.CONNECTED_USER.getId());
+        aux.setWriteTime(new Date());
+        
+        super.update(aux); 
+    }
+
+    @Override
+    public int create(Object obj) {
+        WireStockLoc aux = (WireStockLoc) obj;
+        aux.writeId = aux.createId = GlobalVars.CONNECTED_USER.getId();
+        aux.createTime = aux.writeTime = new Date();
+        return super.create(aux);
+    }
 
     @Override
     public String toString() {
-        return "WireStockLoc{" + "id=" + id + ",\n location=" + location + ",\n createId=" + createId + ",\n writeId=" + writeId + ",\n writeTime=" + writeTime + ",\n createTime=" + createTime + ",\n createUser=" + createUser + ",\n writeUser=" + writeUser + '}';
+        return "WireStockLoc{" + "id=" + id + "\n, project=" + project + "\n, warehouse=" + warehouse + "\n, location=" + location + "\n, createId=" + createId + "\n, writeId=" + writeId + "\n, writeTime=" + writeTime + "\n, createTime=" + createTime + "\n, createUser=" + createUser + "\n, writeUser=" + writeUser + '}';
     }
+    
+    
+    
+     
 
 }

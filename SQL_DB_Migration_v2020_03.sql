@@ -1263,6 +1263,7 @@ CREATE TABLE public.wire_stock_loc
     create_id integer,
     create_time timestamp without time zone,
     create_user character varying(255) COLLATE pg_catalog."default",
+    project character varying(255) COLLATE pg_catalog."default",
     location character varying(255) COLLATE pg_catalog."default",
     warehouse character varying(255) COLLATE pg_catalog."default",
     write_id integer,

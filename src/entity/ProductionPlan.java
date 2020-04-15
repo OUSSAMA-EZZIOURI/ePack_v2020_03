@@ -113,14 +113,15 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
         this.writeId = writeId;
     }
 
-    public String getWriteTime() {
-        return new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(writeTime);
-    }
-
     public void setWriteTime(Date writeTime) {
         this.writeTime = writeTime;
     }
 
+    
+    public String getWriteTime() {
+        return new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(writeTime);
+    }
+    
     public void setWriteTime(String writeTime) {
         try {
             this.writeTime = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(writeTime);
@@ -132,17 +133,17 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
     public String getCreateTime() {
         return new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(createTime);
     }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
+    
     public void setCreateTime(String createTime) {
         try {
             this.createTime = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").parse(createTime);
         } catch (ParseException ex) {
             Logger.getLogger(WireConfig.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public String getCreateUser() {
@@ -192,7 +193,7 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
     public void update(Object obj) {
         ProductionPlan aux = (ProductionPlan) obj;
         aux.setWriteId(GlobalVars.CONNECTED_USER.getId());
-        aux.setWriteUser(GlobalVars.CONNECTED_USER.getFirstName() + " " + GlobalVars.CONNECTED_USER.getLastName());
+        aux.setWriteUser(GlobalVars.CONNECTED_USER.getFullName());
         aux.setWriteTime(new Date());
         
         super.update(aux); 

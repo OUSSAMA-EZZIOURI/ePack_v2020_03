@@ -1,3 +1,0 @@
-Background blue color for panels [36,65,86]
-Light green for text fields [153,255,153]
-Yellow for required fields [255,255,0]

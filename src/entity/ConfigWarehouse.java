@@ -1,7 +1,6 @@
 package entity;
 // Generated 6 f�vr. 2016 21:43:55 by Hibernate Tools 3.6.0
 
-import helper.ComboItem;
 import helper.HQLHelper;
 import helper.Helper;
 import hibernate.DAO;
@@ -14,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.swing.JComboBox;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -26,6 +26,21 @@ import ui.error.ErrorMsg;
 @Entity
 @Table(name = "config_warehouse")
 public class ConfigWarehouse extends DAO implements java.io.Serializable {
+
+    @Transient
+    public static String FINISHED_GOODS = "FINISHED_GOODS";
+    @Transient
+    public static String PACKAGING = "PACKAGING";
+    @Transient
+    public static String INVENTORY = "INVENTORY";
+    @Transient
+    public static String SCRAP = "SCRAP";
+    @Transient
+    public static String TRANSIT = "TRANSIT";
+    @Transient
+    public static String WIRES = "WIRES";
+    @Transient
+    public static String RAW_MATERIAL = "RAW_MATERIAL";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "config_warehouse_id_seq")
@@ -116,7 +131,7 @@ public class ConfigWarehouse extends DAO implements java.io.Serializable {
         return query.list();
     }
 
-    public List selectWarehouse(String warehouse) {
+    public static List selectWarehouse(String warehouse) {
         Helper.startSession();
 
         Query query = Helper.sess.createQuery(HQLHelper.GET_WAREHOUSE);
@@ -160,11 +175,12 @@ public class ConfigWarehouse extends DAO implements java.io.Serializable {
      * @param parentUI
      * @param jbox
      * @param project
-     * @param warehouse_type 0 : PACKAGING, 1 : FINSHED_GOODS
+     * @param warehouse_type
      * @param displayAll
      * @return
      */
-    public static JComboBox initWarehouseJBox(Object parentUI, JComboBox jbox, String project, int warehouse_type, boolean displayAll) {
+    public static JComboBox initWarehouseJBox(Object parentUI, JComboBox jbox, 
+            String project, String warehouse_type, boolean displayAll) {
         List result;
         jbox.removeAllItems();
         if (displayAll) {
@@ -172,25 +188,24 @@ public class ConfigWarehouse extends DAO implements java.io.Serializable {
             jbox.addItem("ALL");
         }
         if (project != null && !project.isEmpty() && !"null".equals(project)) {
-            switch (warehouse_type){
-                case 0: //Packaging
-                        result = new ConfigWarehouse().selectByProjectAndType(project, "PACKAGING");                    
-                    break;
-                case 1: //Finished Goods
-                        result = new ConfigWarehouse().selectByProjectAndType(project, "FINISHED_GOODS");                    
-                    break;
-                default:
-                        result = null;
-                    break;
-            }
-
+//            switch (warehouse_type){
+//                case 0: //Packaging
+//                        result = new ConfigWarehouse().selectByProjectAndType(project, "PACKAGING");                    
+//                    break;
+//                case 1: //Finished Goods
+//                        result = new ConfigWarehouse().selectByProjectAndType(project, "FINISHED_GOODS");                    
+//                    break;
+//                default:
+//                        result = null;
+//                    break;
+//            }
+            result = new ConfigWarehouse().selectByProjectAndType(project, warehouse_type);
             if (result.isEmpty()) {
                 UILog.severeDialog((Component) parentUI, ErrorMsg.APP_ERR0042);
                 UILog.severe(ErrorMsg.APP_ERR0042[1]);
             } else { //Map project data in the list
                 for (Object o : result) {
                     ConfigWarehouse cp = (ConfigWarehouse) o;
-                    //jbox.addItem(new ComboItem(cp.getWarehouse(), cp.getWarehouse()));
                     jbox.addItem(cp.getWarehouse());
                 }
             }
@@ -208,6 +223,18 @@ public class ConfigWarehouse extends DAO implements java.io.Serializable {
             }
         }
         return jbox;
+    }
+
+    public static JComboBox getWarehouseTypeCombobox(JComboBox j) {
+
+        j.addItem(FINISHED_GOODS);
+        j.addItem(PACKAGING);
+        j.addItem(INVENTORY);
+        j.addItem(SCRAP);
+        j.addItem(TRANSIT);
+        j.addItem(WIRES);
+        j.addItem(RAW_MATERIAL);
+        return j;
     }
 
 }

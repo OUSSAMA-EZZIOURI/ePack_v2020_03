@@ -163,9 +163,9 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                             break;
                         }
                     }
-                    for (int i = 0; i < warehouse_filter.getItemCount(); i++) {
-                        if (warehouse_filter.getItemAt(i).toString().equals(aux.getWarehouse())) {
-                            warehouse_filter.setSelectedIndex(i);
+                    for (int i = 0; i < fg_warehouse_filter.getItemCount(); i++) {
+                        if (fg_warehouse_filter.getItemAt(i).toString().equals(aux.getWarehouse())) {
+                            fg_warehouse_filter.setSelectedIndex(i);
                             break;
                         }
                     }
@@ -406,7 +406,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
         project_filter = new javax.swing.JComboBox();
         login_lbl3 = new javax.swing.JLabel();
         login_lbl5 = new javax.swing.JLabel();
-        warehouse_filter = new javax.swing.JComboBox();
+        fg_warehouse_filter = new javax.swing.JComboBox();
         login_lbl = new javax.swing.JLabel();
         segment_filter = new javax.swing.JComboBox();
         pwd_lbl = new javax.swing.JLabel();
@@ -733,18 +733,18 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
         login_lbl5.setForeground(new java.awt.Color(255, 255, 255));
         login_lbl5.setText("Magasin F.G");
 
-        warehouse_filter.setBackground(new java.awt.Color(204, 204, 255));
-        warehouse_filter.setMaximumSize(null);
-        warehouse_filter.setMinimumSize(new java.awt.Dimension(37, 26));
-        warehouse_filter.setPreferredSize(new java.awt.Dimension(37, 26));
-        warehouse_filter.addItemListener(new java.awt.event.ItemListener() {
+        fg_warehouse_filter.setBackground(new java.awt.Color(204, 204, 255));
+        fg_warehouse_filter.setMaximumSize(null);
+        fg_warehouse_filter.setMinimumSize(new java.awt.Dimension(37, 26));
+        fg_warehouse_filter.setPreferredSize(new java.awt.Dimension(37, 26));
+        fg_warehouse_filter.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                warehouse_filterItemStateChanged(evt);
+                fg_warehouse_filterItemStateChanged(evt);
             }
         });
-        warehouse_filter.addActionListener(new java.awt.event.ActionListener() {
+        fg_warehouse_filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                warehouse_filterActionPerformed(evt);
+                fg_warehouse_filterActionPerformed(evt);
             }
         });
 
@@ -898,7 +898,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(packaging_wh_filter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(create_time_txt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(warehouse_filter, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fg_warehouse_filter, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(project_filter, javax.swing.GroupLayout.Alignment.LEADING, 0, 176, Short.MAX_VALUE)
                     .addComponent(assy_txtbox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
                 .addGap(35, 35, 35)
@@ -948,7 +948,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                             .addComponent(login_lbl3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(warehouse_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fg_warehouse_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(login_lbl5)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1496,7 +1496,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
         barcodes_nbre_txtbox.setText(aux.getAdditionalBarcode() + "");
         nbreOfBoxes_txtbox.setText(aux.getLifes() + "");
         aux.setProject(project_filter.getSelectedItem().toString());
-        aux.setWarehouse(warehouse_filter.getSelectedItem().toString());
+        aux.setWarehouse(fg_warehouse_filter.getSelectedItem().toString());
         aux.setPackaging_warehouse(packaging_wh_filter.getSelectedItem().toString());
         aux.setArticleDesc(articleDesc_textArea.getText());
         aux.setEngChange(engChange_textArea.getText());
@@ -1800,7 +1800,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
             mu.setWriteTime(new Date());
             mu.setActive(Integer.valueOf(active_combobox.getSelectedItem().toString()));
             mu.setProject(project_filter.getSelectedItem().toString());
-            mu.setWarehouse(warehouse_filter.getSelectedItem().toString());
+            mu.setWarehouse(fg_warehouse_filter.getSelectedItem().toString());
             mu.setPackaging_warehouse(packaging_wh_filter.getSelectedItem().toString());
 
             mu.setDestination(destination_filter.getSelectedItem().toString());
@@ -2151,7 +2151,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
             aux.setWriteTime(new Date());
             aux.setActive(Integer.valueOf(active_combobox.getSelectedItem().toString()));
             aux.setProject(project_filter.getSelectedItem().toString());
-            aux.setWarehouse(warehouse_filter.getSelectedItem().toString());
+            aux.setWarehouse(fg_warehouse_filter.getSelectedItem().toString());
             aux.setPackaging_warehouse(packaging_wh_filter.getSelectedItem().toString());
             aux.setDestination(destination_filter.getSelectedItem().toString());
             aux.setClosingSheetFormat(Integer.valueOf(closing_sheet_format.getSelectedItem().toString()));
@@ -2206,31 +2206,27 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
 
     }//GEN-LAST:event_segment_filterItemStateChanged
 
-    private void warehouse_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_warehouse_filterActionPerformed
+    private void fg_warehouse_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fg_warehouse_filterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_warehouse_filterActionPerformed
+    }//GEN-LAST:event_fg_warehouse_filterActionPerformed
 
-    private void warehouse_filterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_warehouse_filterItemStateChanged
+    private void fg_warehouse_filterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_fg_warehouse_filterItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_warehouse_filterItemStateChanged
+    }//GEN-LAST:event_fg_warehouse_filterItemStateChanged
 
     private void project_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_project_filterActionPerformed
-//////        System.out.println("Selected Project " + String.valueOf(project_filter.getSelectedItem()));
         if ("ALL".equals(String.valueOf(segment_filter.getSelectedItem()).trim())) {
             this.segment_filter.setSelectedIndex(0);
             this.segment_filter.setEnabled(false);
         } else {
-            warehouse_filter = ConfigWarehouse.initWarehouseJBox(this, warehouse_filter, String.valueOf(project_filter.getSelectedItem()), 1, false);
-            packaging_wh_filter = ConfigWarehouse.initWarehouseJBox(this, packaging_wh_filter, String.valueOf(project_filter.getSelectedItem()), 0, false);
+            fg_warehouse_filter = ConfigWarehouse.initWarehouseJBox(this, fg_warehouse_filter, String.valueOf(project_filter.getSelectedItem()), ConfigWarehouse.FINISHED_GOODS, false);
+            packaging_wh_filter = ConfigWarehouse.initWarehouseJBox(this, packaging_wh_filter, String.valueOf(project_filter.getSelectedItem()), ConfigWarehouse.PACKAGING, false);
             LoadPlanDestination.setDestinationByProject(this, destination_filter, String.valueOf(project_filter.getSelectedItem()) );
             if (ConfigSegment.setSegmentByProject(this, segment_filter, String.valueOf(project_filter.getSelectedItem()), false)) {
                 workplace_filter = ConfigWorkplace.initWorkplaceJBox(this, workplace_filter, String.valueOf(segment_filter.getSelectedItem()), false);  
                 family_filter = ConfigFamily.initFamilyByProject(this, family_filter, String.valueOf(project_filter.getSelectedItem()));
             }
         }
-
-////        System.out.println("Set the packaging warehouse " + String.valueOf(project_filter.getSelectedItem()));
-
     }//GEN-LAST:event_project_filterActionPerformed
 
 
@@ -2288,6 +2284,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
     private org.jdesktop.swingx.JXDatePicker engChangeDatePicker;
     private javax.swing.JTextArea engChange_textArea;
     private javax.swing.JComboBox family_filter;
+    private javax.swing.JComboBox fg_warehouse_filter;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
@@ -2368,7 +2365,6 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
     private javax.swing.JTable ucs_table;
     private javax.swing.JScrollPane user_table_scroll;
     private javax.swing.JTextField volume_txtbox;
-    private javax.swing.JComboBox warehouse_filter;
     private javax.swing.JComboBox workplace_filter;
     private javax.swing.JTextField write_time_txt;
     // End of variables declaration//GEN-END:variables
