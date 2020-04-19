@@ -12,7 +12,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.WindowConstants;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -26,6 +31,8 @@ import ui.UILog;
 
 
 public class XLSXExportHelper {
+    
+    JDialog dialog;
     /**
      * 
      * @param defaultName
@@ -33,6 +40,7 @@ public class XLSXExportHelper {
      */
     public void exportToXSSFWorkbook(Component parent, String defaultName, List<?> objectsList){
         try {
+            
             JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home") + "/Desktop");
             fileChooser.setSelectedFile(new File(defaultName));
             UIHelper.centerJFileChooser(fileChooser);
@@ -42,7 +50,9 @@ public class XLSXExportHelper {
             }
             String filePath = fileChooser.getSelectedFile().getAbsolutePath();
             XSSFWorkbook workbook = new XSSFWorkbook();
-
+            
+            //inProcessDialog(true);
+            
             XSSFSheet sheet = workbook.createSheet(defaultName);
 
             int rowCount = 0;
@@ -78,6 +88,7 @@ public class XLSXExportHelper {
 
             try (FileOutputStream outputStream = new FileOutputStream(filePath + ".xlsx")) {
                 workbook.write(outputStream);
+                //inProcessDialog(false);
                 UILog.infoDialog("Export terminé !");
             } catch (FileNotFoundException ex) {
                 UILog.errorDialog(ex.getMessage());
@@ -89,6 +100,26 @@ public class XLSXExportHelper {
             Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Show or hide an in process dialog during excel exportation
+     * @param visible 
+     */
+    private void inProcessDialog(boolean visible) {
+        if(visible){
+            this.dialog = new JDialog(new JFrame(), "Export en cours...", true);
+            this.dialog.setSize(100, 30);
+            this.dialog.setLocationRelativeTo(null);
+            this.dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+            JPanel panel = new JPanel();
+            JProgressBar progress = new JProgressBar(JProgressBar.HORIZONTAL);            
+            panel.add(progress);
+            this.dialog.add(progress);            
+            this.dialog.setVisible(true);
+        }else{
+            this.dialog.dispose();
         }
     }
 }

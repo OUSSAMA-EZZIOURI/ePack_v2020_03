@@ -289,8 +289,7 @@ public class HQLHelper {
     public final static String GET_PLANNING_LINE_BY_CPN_OR_LPN_WITH_DIFF_ID = "FROM ProductionPlan pp "
             + "WHERE (pp.harnessPart = :harnessPart OR pp.internalPart = :internalPart) AND pp.id != :id";
     public final static String GET_PLANNING_LINE_LPN_WITH_DIFFERENT_ID = "FROM ProductionPlan pp "
-            + "WHERE pp.internalPart = :internalPart AND pp.id != :id";
-    
+            + "WHERE pp.internalPart = :internalPart AND pp.id != :id";    
     
     //WireConfig
     public final static String GET_WIRE_CONFIG_BY_ID = "FROM WireConfig wc WHERE wc.id = :id";
@@ -301,6 +300,12 @@ public class HQLHelper {
             + "AND str(wc.wireNo) LIKE :wireNo "
             + "AND str(wc.cardNumber) LIKE :cardNumber "
             + "AND wc.project IN (:project) ";
+    
+    public final static String GET_EXISTING_PN = "FROM WireConfig wc "
+            + "WHERE wc.harnessPart IN (:harnessPartList) ";
+    
+    public final static String GET_EXISTING_INTERNAL_PN = "FROM WireConfig wc "
+            + "WHERE wc.internalPart IN (:internalPartList) ";
     
     //WireStockLoc
     public final static String GET_WIRE_LOCATION_LIKE_WH_AND_LOC = "FROM WireStockLoc t "

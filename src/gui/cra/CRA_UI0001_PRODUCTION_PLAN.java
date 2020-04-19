@@ -14,6 +14,7 @@ import helper.JDialogExcelFileChooser;
 import helper.UIHelper;
 import helper.XLSXExportHelper;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -42,6 +43,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.type.StandardBasicTypes;
 import ui.UILog;
 
 /**
@@ -242,6 +245,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         });
 
         msg_lbl.setBackground(new java.awt.Color(255, 255, 255));
+        msg_lbl.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         msg_lbl.setForeground(new java.awt.Color(255, 255, 255));
         msg_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         msg_lbl.setNextFocusableComponent(txt_id);
@@ -569,12 +573,6 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                     //Cleat the message field
                     msg_lbl.setText("");
 
-//                    Helper.startSession();
-//                    Query query = Helper.sess.createQuery(HQLHelper.GET_PLANNING_LINE_BY_ID);
-//                    query.setParameter("id", planning_jtable.getValueAt(planning_jtable.getSelectedRow(), 0));
-//
-//                    Helper.sess.getTransaction().commit();
-//                    aux = (ProductionPlan) query.list().get(0);
                     int id = (int) planning_jtable.getValueAt(planning_jtable.getSelectedRow(), 0);
                     Helper.startSession();
                     aux = (ProductionPlan) Helper.sess.load(ProductionPlan.class, id);
@@ -596,7 +594,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             fileChooser.setFileFilter(filter);
             int status = fileChooser.showOpenDialog(null);
 
-            if (status == JFileChooser.APPROVE_OPTION && deletePlanning()) {
+            if (status == JFileChooser.APPROVE_OPTION) {
 
                 File selectedFile = fileChooser.getSelectedFile();
                 //Past the workbook to the file chooser
@@ -611,18 +609,57 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
                 try {
                     int i = 1;
+                    //======= Step 1 : Buil a planningLine list in orther 
+                    //to validate the content of csv file.
+                    //Vector list = new Vector();
+                    ArrayList<Object> planningLines = new ArrayList<Object>();
+                    ArrayList<String> harnessPartList = new ArrayList<String>();
+                    ArrayList<String> internalPartList = new ArrayList<String>();
+                    aux = new ProductionPlan();
                     for (CSVRecord record : csvParser) {
                         try {
-                            createNewPlanningLine(record);
+
+                            aux = createPlanningObjectFromCSV(record);
+
+                            harnessPartList.add(aux.getHarnessPart());
+
+                            internalPartList.add(aux.getInternalPart());
+
+                            planningLines.add(aux);
+
                         } catch (Exception e) {
-                            System.out.println("Erreur dans la ligne " + i);
+                            String errorMsg = "Erreur dans la ligne " + i + ".\n"
+                                    + "Merci de vérifier les données du fichier CSV.";
+                            System.out.println(errorMsg);
+                            UILog.errorDialog(errorMsg);
+
+                            return;
                         }
                         i++;
                     }
-                    UILog.info("Importation terminée !");
+
+                    //====== Step 2 : check if CPN and LPN exists in wire_config
+                    if (checkIfAllCustomerPartsExists(harnessPartList)
+                            && checkifAllInternalPartsExists(internalPartList)) {
+                        
+                        //====== Step 3 : Cleaning the table and import the new data
+                        if (deletePlanning()) {
+                            int lineNo = new ProductionPlan().createList(planningLines);
+                            if (lineNo == 0) {
+                                UILog.infoDialog("Importation terminée avec succès !");
+                            } else {
+                                UILog.errorDialog("Une erreur est survenue dans la ligne " + lineNo);
+                                return;
+                            }
+                        }
+                        
+                    }
+
+                    
 
                     // In the end of the import, refresh the list
                     refreshPlanningTable();
+
                 } catch (Exception ex) {
                     Logger.getLogger(WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL.class.getName()).log(Level.SEVERE, null, ex);
                     UILog.severeDialog(this, ex.getMessage(), "Exception");
@@ -635,6 +672,60 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             UILog.severeDialog(this, ex.getMessage(), "IOException");
         }
     }//GEN-LAST:event_btn_import_csvActionPerformed
+
+    private boolean checkIfAllCustomerPartsExists(ArrayList<String> harnessPartList) {
+        Helper.startSession();
+        SQLQuery query;
+        String query_str = "SELECT * FROM ( VALUES ('')";
+        for (String cpn : harnessPartList){
+            query_str += ",('"+cpn+"')";
+        }
+        query_str += " ) AS T(hp) WHERE hp <> '' AND hp NOT IN (SELECT harness_part FROM wire_config);";
+        query = Helper.sess.createSQLQuery(query_str);
+        query.addScalar("hp", StandardBasicTypes.STRING);
+        List<String> result = query.list();        
+        Helper.sess.getTransaction().commit();
+        if (result.isEmpty()) {
+            return true;
+        }else{
+            ImportError dialog = new ImportError(
+                    new Frame(), 
+                    true,"Erreur d'import", 
+                    "Les code articles suivants ne sont pas paramétrés :",
+                    result);
+            dialog.setVisible(true);
+            UILog.errorDialog("Import annulé !");
+            return false;
+        }
+    }
+
+    private boolean checkifAllInternalPartsExists(ArrayList<String> internalPartList) {
+
+        Helper.startSession();
+        SQLQuery query;
+        String query_str = "SELECT * FROM ( VALUES ('')";
+        for (String ipn : internalPartList){
+            query_str += ",('"+ipn+"')";
+        }
+        query_str += " ) AS T(ipn) WHERE ipn <> '' AND ipn NOT IN (SELECT internal_part FROM wire_config);";
+        query = Helper.sess.createSQLQuery(query_str);
+        query.addScalar("ipn", StandardBasicTypes.STRING);
+        List<String> result = query.list();        
+        Helper.sess.getTransaction().commit();
+        if (result.isEmpty()) {
+            return true;
+        }else{
+            ImportError dialog = new ImportError(
+                    new Frame(), 
+                    true,"Erreur d'import", 
+                    "Les code modules internes suivants ne sont pas paramétrés :",
+                    result);
+            dialog.setVisible(true);
+            UILog.errorDialog("Import annulé !");
+            return false;
+        }
+    }
+
 
     private void btn_delete_planningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete_planningActionPerformed
 
@@ -666,14 +757,46 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         return new FormValidator().validatePatterns(fieldsList, false);
 
     }
-    
+
     /**
      * Validate value in the database.
-     * 
-     * @return 
+     *
+     * @return
      */
     private boolean validateValues() {
-        return true;
+        int lineId = 0;
+        if (!isHarnessPartExist(txt_harnessPart.getText())) { //IF PN exists in Configuration Standard Part
+            msg_lbl.setForeground(Color.red);
+            msg_lbl.setText(String.format("L'article %s n'est pas paramétré ou n'existe pas. Vérifier le menu 'Configuration / Article Master Data'", txt_harnessPart.getText()));
+            txt_harnessPart.requestFocus();
+            txt_harnessPart.selectAll();
+            return false;
+        } else if (!isSupplierPartExist(txt_internalPart.getText())) { //IF internal module exists in Configuration Standard Part
+            msg_lbl.setForeground(Color.red);
+            msg_lbl.setText(String.format("Le module interne %s n'est pas paramétré ou n'existe pas. Vérifier le menu 'Configuration / Article Master Data'", txt_internalPart.getText()));
+            txt_harnessPart.setBackground(Color.yellow);
+            txt_internalPart.requestFocus();
+            txt_internalPart.selectAll();
+            return false;
+        } else if (is_CPN_OR_LPN_Planned(txt_harnessPart.getText(), txt_internalPart.getText(), lineId)) {
+            msg_lbl.setText(String.format("Article %s ou/et module interne %s déjà planifiés!", txt_harnessPart.getText(), txt_internalPart.getText()));
+            msg_lbl.setForeground(Color.red);
+            txt_harnessPart.requestFocus();
+            txt_harnessPart.selectAll();
+            txt_harnessPart.setBackground(Color.yellow);
+            txt_internalPart.setBackground(Color.yellow);
+            return false;
+        } //Is the internal part exist in production plan
+        else if (isInternalPartPlanned(txt_internalPart.getText(), lineId)) {
+            msg_lbl.setText("Le module interne " + txt_internalPart.getText() + " est déjà planifié!");
+            msg_lbl.setForeground(Color.red);
+            txt_internalPart.requestFocus();
+            txt_internalPart.selectAll();
+            txt_internalPart.setBackground(Color.yellow);
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
@@ -683,48 +806,21 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         if (!txt_id.getText().equals("#")) {
             lineId = Integer.valueOf(txt_id.getText());
         }
-        if (validatePatterns()  && validateValues()) {//Inputs matches regex
-            if (!isHarnessPartExist(txt_harnessPart.getText())) { //IF PN exists in Configuration Standard Part
-                msg_lbl.setForeground(Color.red);
-                msg_lbl.setText(String.format("L'article %s n'est pas paramétré ou n'existe pas. Vérifier le menu Article Master Data", txt_harnessPart.getText()));
-                txt_harnessPart.requestFocus();
-                txt_harnessPart.selectAll();
-            } else if (!isSupplierPartExist(txt_internalPart.getText())) { //IF internal module exists in Configuration Standard Part
-                msg_lbl.setForeground(Color.red);
-                msg_lbl.setText(String.format("Le module interne %s n'est pas paramétré ou n'existe pas. Vérifier le menu Article Master Data", txt_internalPart.getText()));
-                txt_internalPart.requestFocus();
-                txt_internalPart.selectAll();
-            } else if (is_CPN_OR_LPN_Planned(txt_harnessPart.getText(), txt_internalPart.getText(), lineId)) {
-                msg_lbl.setText(String.format("Article %s ou/et module interne %s déjà planifiés!",txt_harnessPart.getText(),txt_internalPart.getText()));
-                msg_lbl.setForeground(Color.red);
-                txt_harnessPart.requestFocus();
-                txt_harnessPart.selectAll();
-                txt_harnessPart.setBackground(Color.yellow);
-                txt_internalPart.setBackground(Color.yellow);
-            } //Is the internal part exist in production plan
-            else if (isInternalPartPlanned(txt_internalPart.getText(), lineId)) {
-                msg_lbl.setText("Le module interne " + txt_internalPart.getText() + " est déjà planifié!");
-                msg_lbl.setForeground(Color.red);
-                txt_internalPart.requestFocus();
-                txt_internalPart.selectAll();
-                txt_internalPart.setBackground(Color.yellow);
-            } else { //BINGO : Everything is all right, now we"ll save the object
-                msg_lbl.setForeground(Color.green);
-                if (lineId == 0) {//It's a new item
-                    ProductionPlan p = (ProductionPlan) UIHelper.mapValuesFromJPanelToObj(craUI0001_form_panel, "entity.ProductionPlan", true);
-//                    ProductionPlan p = new ProductionPlan(
-//                            txt_harness_part.getText(), txt_internal_part.getText(), Integer.valueOf(txt_qty_planned.getText()));
-                    lineId = p.create(p);
-                    msg_lbl.setText("Nouveau élement créé #" + lineId);
-                } else {//It's a modification
-                    aux.setHarnessPart(txt_harnessPart.getText());
-                    aux.setInternalPart(txt_internalPart.getText());
-                    aux.setPlannedQty(Integer.valueOf(txt_qtyPlanned.getText()));
-                    aux.update(aux);
-                    msg_lbl.setText("Changements enregistrés!");
-                }
-                clearFields();
+        if (validatePatterns() && validateValues()) {//Inputs matches regex
+
+            msg_lbl.setForeground(Color.green);
+            if (lineId == 0) {//It's a new item
+                ProductionPlan p = (ProductionPlan) UIHelper.mapValuesFromJPanelToObj(craUI0001_form_panel, "entity.ProductionPlan", true);
+                lineId = p.create(p);
+                msg_lbl.setText("Nouveau élement créé #" + lineId);
+            } else {//It's a modification
+                aux.setHarnessPart(txt_harnessPart.getText());
+                aux.setInternalPart(txt_internalPart.getText());
+                aux.setPlannedQty(Integer.valueOf(txt_qtyPlanned.getText()));
+                aux.update(aux);
+                msg_lbl.setText("Changements enregistrés!");
             }
+            clearFields();
         }
     }//GEN-LAST:event_btn_saveActionPerformed
 
@@ -824,9 +920,9 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         planning_jtable.setModel(new DefaultTableModel(getPlanningLines(), planning_table_header));
     }
 
-    private void createNewPlanningLine(CSVRecord record) {
+    private ProductionPlan createPlanningObjectFromCSV(CSVRecord record) {
         ProductionPlan pp = new ProductionPlan(record.get("harness_part"), record.get("internal_part"), Integer.valueOf(record.get("planned_qty")));
-        pp.create(pp);
+        return pp;
     }
 
     private void clearFields() {

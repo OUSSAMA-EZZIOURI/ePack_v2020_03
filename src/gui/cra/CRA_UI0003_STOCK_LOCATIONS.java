@@ -236,6 +236,7 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
         });
 
         msg_lbl.setBackground(new java.awt.Color(255, 255, 255));
+        msg_lbl.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         msg_lbl.setForeground(new java.awt.Color(255, 255, 255));
         msg_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         msg_lbl.setNextFocusableComponent(txt_id);
@@ -793,6 +794,7 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
         Helper.startSession();
 
         Query query = Helper.sess.createQuery(HQLHelper.GET_WIRE_LOCATION_LIKE_WH_AND_LOC);
+        query.setParameter("project", "%" + combo_project_filter.getSelectedItem().toString() + "%");
         query.setParameter("warehouse", "%" + txt_warehouse_filter.getText() + "%");
         query.setParameter("location", "%" + txt_location_filter.getText() + "%");
         List<WireStockLoc> result = query.list();

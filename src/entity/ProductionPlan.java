@@ -5,7 +5,9 @@ import gui.packaging.PackagingVars;
 import hibernate.DAO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.Column;
@@ -117,11 +119,10 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
         this.writeTime = writeTime;
     }
 
-    
     public String getWriteTime() {
         return new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(writeTime);
     }
-    
+
     public void setWriteTime(String writeTime) {
         try {
             this.writeTime = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(writeTime);
@@ -133,7 +134,7 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
     public String getCreateTime() {
         return new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(createTime);
     }
-    
+
     public void setCreateTime(String createTime) {
         try {
             this.createTime = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").parse(createTime);
@@ -186,7 +187,7 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
         aux.writeUser = aux.createUser = GlobalVars.CONNECTED_USER.getFullName();
         aux.createTime = aux.writeTime = new Date();
 
-        return super.create(aux); 
+        return super.create(aux);
     }
 
     @Override
@@ -195,8 +196,10 @@ public class ProductionPlan extends DAO implements java.io.Serializable {
         aux.setWriteId(GlobalVars.CONNECTED_USER.getId());
         aux.setWriteUser(GlobalVars.CONNECTED_USER.getFullName());
         aux.setWriteTime(new Date());
-        
-        super.update(aux); 
+
+        super.update(aux);
     }
+
+    
 
 }

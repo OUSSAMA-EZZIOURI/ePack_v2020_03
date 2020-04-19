@@ -6,6 +6,7 @@
 package hibernate;
 
 import helper.Helper;
+import java.util.List;
 import javax.persistence.Table;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -41,6 +42,27 @@ public class DAO {
                 System.out.println(e.getMessage());
                 throw e;
             }
+        }
+        return 0;
+    }
+    
+    /**
+     *
+     * @param list
+     * @return 0 if creation ended with sucesss, or return the line number
+     * contains the error.
+     */
+    public int createList(List<Object> list) {
+        int l = 0;
+        for (Object item : list) {
+            DAO newItem = (DAO) item;
+            newItem.create(newItem);
+            try {
+                this.create(item);
+            } catch (Exception e) {
+                return l;
+            }
+            l++;
         }
         return 0;
     }
@@ -111,10 +133,8 @@ public class DAO {
             Class<?> c = obj.getClass();
             Table table = c.getAnnotation(Table.class);
             String tableName = table.name();
-            System.out.println("HOla "+tableName);
             Helper.sess.beginTransaction();
             String sql = String.format("TRUNCATE TABLE %s", tableName);
-            System.out.println("SQL "+sql);
             SQLQuery query = Helper.sess.createSQLQuery(sql);
             int i = query.executeUpdate();
             Helper.sess.getTransaction().commit();

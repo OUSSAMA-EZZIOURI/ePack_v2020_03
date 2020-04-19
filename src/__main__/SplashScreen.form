@@ -51,13 +51,9 @@
               <Component id="car_logo" alignment="0" max="32767" attributes="0"/>
               <Component id="scrollPane" alignment="1" pref="0" max="32767" attributes="0"/>
               <Component id="app_name" alignment="1" max="32767" attributes="0"/>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="progressBar" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
               <Component id="realised" alignment="0" pref="606" max="32767" attributes="0"/>
               <Component id="rights" alignment="1" pref="606" max="32767" attributes="0"/>
+              <Component id="progressBar" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -66,15 +62,15 @@
                   <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   <Component id="app_name" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="car_logo" pref="174" max="32767" attributes="0"/>
+                  <Component id="car_logo" pref="230" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Component id="realised" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="rights" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="progressBar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="scrollPane" min="-2" pref="102" max="-2" attributes="0"/>
+                  <Component id="scrollPane" min="-2" pref="57" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>

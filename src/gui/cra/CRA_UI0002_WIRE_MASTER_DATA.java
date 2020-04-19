@@ -99,6 +99,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         }
 
         ConfigProject.initProjectsJBox(this, combo_project_filter, true);
+                
     }
 
     private void initContainerTableDoubleClick() {
@@ -330,31 +331,31 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
                     .add(table_panelLayout.createSequentialGroup()
                         .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(table_panelLayout.createSequentialGroup()
-                                .add(btn_refresh)
-                                .add(18, 18, 18)
-                                .add(btn_export_excel))
-                            .add(table_panelLayout.createSequentialGroup()
                                 .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(jLabel6)
                                     .add(jLabel7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                                 .add(18, 18, 18)
                                 .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_internal_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_harness_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, txt_harness_part_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                            .add(table_panelLayout.createSequentialGroup()
+                                .add(btn_refresh)
                                 .add(18, 18, 18)
-                                .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                    .add(table_panelLayout.createSequentialGroup()
-                                        .add(jLabel9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(combo_project_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                    .add(table_panelLayout.createSequentialGroup()
-                                        .add(jLabel27)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(txt_wireNo_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                                .add(18, 18, 18)
-                                .add(jLabel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(btn_export_excel)))
+                        .add(18, 18, 18)
+                        .add(table_panelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(table_panelLayout.createSequentialGroup()
+                                .add(jLabel9)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(txt_card_number_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                                .add(combo_project_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(table_panelLayout.createSequentialGroup()
+                                .add(jLabel27)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(txt_wireNo_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(18, 18, 18)
+                        .add(jLabel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 75, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(txt_card_number_filter, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -391,6 +392,8 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         form_panel.setBackground(new java.awt.Color(36, 65, 86));
         form_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        msg_lbl.setBackground(new java.awt.Color(255, 255, 255));
+        msg_lbl.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         msg_lbl.setForeground(new java.awt.Color(255, 255, 255));
         msg_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -1009,6 +1012,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         });
 
         btn_duplicate.setText("Dupliquer");
+        btn_duplicate.setEnabled(false);
         btn_duplicate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_duplicateActionPerformed(evt);
@@ -1150,6 +1154,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
 
         UIHelper.clearJTextFields(form_panel.getComponents());
         txt_id.setText("#");
+        btn_duplicate.setEnabled(false);        
     }//GEN-LAST:event_btn_newActionPerformed
 
     private void btn_hide_creation_formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hide_creation_formActionPerformed
@@ -1184,6 +1189,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
         txt_createUser.setText("");
         txt_writeTime.setText("");
         txt_writeUser.setText("");
+        btn_duplicate.setEnabled(false);
         this.aux = null;
         msg_lbl.setText("Element dupliqué !");
     }//GEN-LAST:event_btn_duplicateActionPerformed
