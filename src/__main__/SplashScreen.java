@@ -1,10 +1,8 @@
 package __main__;
 
-import helper.JTextAreaOutputStream;
 import helper.UIHelper;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.PrintStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER;
@@ -36,13 +34,13 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
     }
 
     private void initLabels() {
-        app_name.setText(GlobalVars.APP_NAME+" "+GlobalVars.APP_VERSION);
+        app_name.setText(GlobalVars.APP_NAME + " " + GlobalVars.APP_VERSION);
         rights.setText(GlobalVars.ALL_RIGHTS_RESERVED);
-        this.setTitle(GlobalVars.APP_NAME+" "+GlobalVars.APP_VERSION);
+        this.setTitle(GlobalVars.APP_NAME + " " + GlobalVars.APP_VERSION);
         realised.setText(GlobalVars.APP_AUTHOR);
     }
-    
-    private void initTextArea(){
+
+    private void initTextArea() {
 //        PrintStream printStream = new PrintStream(new JTextAreaOutputStream(taskOutput));        
 //        System.setOut(printStream);
 //        System.setErr(printStream);
@@ -56,8 +54,8 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
         taskOutput.setCaret(caret);
     }
-    
-    private void initProgressBar(){
+
+    private void initProgressBar() {
         progressBar.setValue(0);
         // Call setStringPainted now so that the progress bar height
         // stays the same whether or not the string is shown.
@@ -101,9 +99,9 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         initLabels();
 
         initTextArea();
-        
+
         initProgressBar();
-        
+
         UIHelper.centerJFrame(this);
 
         this.setVisible(true);
@@ -132,6 +130,11 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         setTitle("ePack System");
         setBackground(new java.awt.Color(0, 0, 51));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
@@ -213,6 +216,14 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel app_name;
     private javax.swing.JLabel car_logo;
@@ -238,9 +249,19 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
 
                 System.out.println("Intialize application frame...");
                 authFrame = new AuthFrame(this);
-                
-
+                //Thread.sleep(1000);
+                authFrame.setVisible(true);
+                setProgress(99);
+                Thread.sleep(500);
                 setProgress(100);
+
+                if (getProgress() == 100) {
+                    //Thread.sleep(200);
+                    //Reset output stream;
+                    GlobalMethods.resetOutputStram();
+                    dispose();
+                }
+
             } catch (InterruptedException ignore) {
 
             }
@@ -270,13 +291,15 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
             progressBar.setValue(progress);
             taskOutput.append(String.format("Completed %d%% of task.\n", progress));
 
-            if (progress == 100) {
-                //Reset output stream;
-                GlobalMethods.resetOutputStram();
-                authFrame.setVisible(true);
-                this.dispose();
-            }
         }
     }
 
+//    public void dispose() {
+//        try {
+//            
+//            super.dispose();
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 }
