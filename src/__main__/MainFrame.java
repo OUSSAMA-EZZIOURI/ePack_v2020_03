@@ -120,7 +120,7 @@ public class MainFrame extends javax.swing.JFrame {
 
                     }
                 } catch (Exception e2) {
-                    UILog.exceptionDialog(null, e2);
+                    UILog.exceptionDialog(null,"", "", e2);
                 }
 
             }
@@ -805,7 +805,7 @@ public class MainFrame extends javax.swing.JFrame {
                 this.dispose();
 
             } catch (Exception e) {
-                UILog.exceptionDialog(null, e);
+                UILog.exceptionDialog(null, "", "", e);
             }
         }
     }//GEN-LAST:event_logoutMenuItemActionPerformed

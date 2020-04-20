@@ -5,14 +5,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
-import static javax.swing.JOptionPane.WARNING_MESSAGE;
+import javax.swing.JFrame;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.postgresql.util.PSQLException;
+import ui.UILog;
 
 /**
  * @author hennebrueder This class garanties that only one single SessionFactory
@@ -35,11 +33,6 @@ public class HibernateUtil {
     }
 
     static {
-
-        // Annotation and XML
-        //sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-        // XML only
-        //    sessionFactory = new Configuration().configure().buildSessionFactory();
         try {
             //Load properties from db.properties file
             InputStream input = null;
@@ -56,8 +49,10 @@ public class HibernateUtil {
                 // config file.      
                 sessionFactory = new AnnotationConfiguration().setProperties(p).configure().buildSessionFactory();
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Database properties error !", ERROR_MESSAGE);
-                JOptionPane.showMessageDialog(null, "Properties file must be in the same as the path as the application.", "Database properties error !", WARNING_MESSAGE);
+                UILog.exceptionDialog(new JFrame(), "Database properties error !",
+                        "Le fichier 'config.properties' est introuvable dans le dossier"
+                                + " de l'application.", 
+                        ex);
                 ex.printStackTrace();
                 System.exit(0);
             } finally {

@@ -148,7 +148,7 @@ public class PACKAGING_WAREHOUSE_UI0001_TRANSACTIONS_JPANEL extends javax.swing.
                 }
             }
         } catch (Exception e) {
-            UILog.exceptionDialog(this, e);
+            UILog.exceptionDialog(this, "", "", e);
         }
     }
 

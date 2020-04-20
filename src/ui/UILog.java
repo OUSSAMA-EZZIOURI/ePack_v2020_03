@@ -362,14 +362,27 @@ public class UILog {
      * @param msg the <code>String</code> error message
      * @param title the <code>String</code> title of the dialog
      */
-    public static void exceptionDialog(Component parentComponent, Exception e) {
+    public static void exceptionDialog(Component parentComponent, String title, String msg, Exception e) {
+        String exceptionTitle;
         StringBuilder sb = new StringBuilder(e.toString());
         for (StackTraceElement ste : e.getStackTrace()) {
             sb.append("\n\tat ");
             sb.append(ste);
         }
         JOptionPane p = new JOptionPane();
-        p.showMessageDialog(parentComponent, sb.toString(), e.getClass().getCanonicalName(), JOptionPane.ERROR_MESSAGE);
+        JTextArea t = new JTextArea(20, 50);
+        //t.setAutoscrolls(true);
+        t.append(msg+"\n");
+        t.append(sb.toString());
+        JScrollPane textPane = new JScrollPane(t);
+        //p.add(t);
+        if(!title.isEmpty() && title != null){
+            exceptionTitle = title;
+        }else{
+            exceptionTitle = e.getClass().getCanonicalName();
+        }
+        p.showMessageDialog(parentComponent, textPane, 
+                exceptionTitle, JOptionPane.ERROR_MESSAGE);
 
     }
 

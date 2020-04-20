@@ -367,7 +367,7 @@ public class PrinterHelper {
             hisGalia.setGaliaState(GlobalVars.PALLET_PRINT_ERROR, hisGalia.getId());
             System.out.println(ex.getMessage());
             UILog.severe(String.format("Line 300 Set Pallet [%d] state to [%s].", hisGalia.getId(), GlobalVars.PALLET_PRINT_ERROR));
-            UILog.exceptionDialog(null, ex);
+            UILog.exceptionDialog(null, "", GlobalVars.PALLET_PRINT_ERROR, ex);
             //Logger.getLogger(PrinterHelper.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
     }

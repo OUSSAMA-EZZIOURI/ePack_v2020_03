@@ -144,7 +144,7 @@ public class AuthFrame extends javax.swing.JFrame {
             login_textfield.requestFocus(true);
 
         } catch (Exception e) {
-            UILog.exceptionDialog(this, e);
+            UILog.exceptionDialog(this, "", "", e);
             System.exit(-1);
         }
     }
@@ -205,11 +205,12 @@ public class AuthFrame extends javax.swing.JFrame {
             System.out.println("Application intialized.");
 
         } catch (Exception e) {
-            UILog.exceptionDialog(this, e);
+            UILog.exceptionDialog(this, "", "", e
+            );
             System.exit(-1);
         }
     }
-    
+
     /**
      * Instanciate the main window and close the actual one
      */
@@ -550,7 +551,5 @@ public class AuthFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField pwd_textfield;
     private javax.swing.JLabel versionLabel;
     // End of variables declaration//GEN-END:variables
-
-    
 
 }

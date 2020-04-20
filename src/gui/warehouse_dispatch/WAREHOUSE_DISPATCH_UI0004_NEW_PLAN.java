@@ -271,12 +271,6 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
             UILog.severeDialog(null, ErrorMsg.APP_ERR0026);
             this.main_tabbedPane.setSelectedIndex(1);
         } else {
-//            if (transporter_text.getText().isEmpty()) {
-//                this.main_tabbedPane.setSelectedIndex(0);
-//                transporter_text.requestFocus();
-//                UILog.severe(ErrorMsg.APP_ERR0045[0]);
-//                UILog.severeDialog(null, ErrorMsg.APP_ERR0045);
-//            } else {
                 try {
 
                     Date date = new Date();
@@ -324,10 +318,8 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
 
                 } catch (Exception e) {
                     UILog.severe(ErrorMsg.APP_ERR0028[0]);
-                    UILog.severeDialog(null, ErrorMsg.APP_ERR0028);
-                    UILog.exceptionDialog(this, e);
+                    UILog.exceptionDialog(this, "APP_ERR0028 DISPATCH", ErrorMsg.APP_ERR0028[1], e);
                 }
-//            }//
         }
     }//GEN-LAST:event_ok_btnActionPerformed
 

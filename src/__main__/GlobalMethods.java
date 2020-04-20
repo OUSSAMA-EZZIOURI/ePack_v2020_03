@@ -76,7 +76,7 @@ public class GlobalMethods {
             //currentFrame.dispose();
 
         } catch (Exception e) {
-            UILog.exceptionDialog(null, e);
+            UILog.exceptionDialog(null, "", "", e);
         }
     }
 

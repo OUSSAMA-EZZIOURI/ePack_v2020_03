@@ -16,9 +16,11 @@ import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import org.hibernate.Session;
+import ui.UILog;
 
 /**
  *
@@ -228,9 +230,9 @@ public class Helper {
      *
      */
     public static String ERR0000_DB_CONNECT_FAILED = "La communication à la base de données a échouée.\nMerci de vérifier si: "
-            + "\n\t- Le serveur est allumé et connecté au réseau"
-            + "\n\t- Cette machine est connectée au réseau"
-            + "\n\t- Le service postgresql est démarré au niveau du serveur";
+            + "\n\t- Le serveur base de données est en ligne et connecté au réseau"
+            + "\n\t- Le service 'Postgresql' est démarré au niveau du serveur"
+            + "\n\t- Votre ordinateur est connecté au réseau";
 
     
     /**
@@ -259,7 +261,7 @@ public class Helper {
             //Helper.openSession();
             Helper.sess.beginTransaction();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, Helper.ERR0000_DB_CONNECT_FAILED, "Erreur de communication", ERROR_MESSAGE);            
+            UILog.exceptionDialog(new JFrame(), "Erreur de communication", Helper.ERR0000_DB_CONNECT_FAILED, e);
             System.err.println("Initial SessionFactory creation failed." + e.getMessage());
             System.exit(-1);
         }
