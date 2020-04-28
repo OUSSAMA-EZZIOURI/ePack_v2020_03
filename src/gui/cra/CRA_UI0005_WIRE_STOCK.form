@@ -118,7 +118,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Emplacements Pagodas"/>
+        <Property name="text" type="java.lang.String" value="Stock rep&#xe8;re"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="craUI0003_form_panel">
@@ -153,12 +153,12 @@
                               <Component id="combo_project" alignment="0" max="32767" attributes="0"/>
                               <Component id="combo_warehouse" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel18" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel19" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
                               <Component id="jLabel20" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
                               <Component id="jLabel21" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
-                              <Component id="jLabel19" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -172,11 +172,7 @@
                           <Component id="btn_new" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_save" min="-2" pref="137" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btn_csv_example" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btn_import_csv" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="432" max="-2" attributes="0"/>
                           <Component id="btn_delete" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -199,10 +195,8 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="2" attributes="0">
-                              <Component id="btn_csv_example" alignment="2" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_save" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
                               <Component id="btn_new" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="btn_import_csv" alignment="2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="2" attributes="0">
@@ -252,22 +246,6 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btn_import_csv">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Importer les donn&#xe9;es via .csv ..."/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_import_csvActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btn_csv_example">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Exemple fichier .csv ..."/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_csv_exampleActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">

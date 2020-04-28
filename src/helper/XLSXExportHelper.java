@@ -1,6 +1,7 @@
 package helper;
 
 import gui.cra.CRA_UI0002_WIRE_MASTER_DATA;
+import gui.cra.CRA_UI0004_WIRE_DEMAND;
 import java.awt.Component;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +11,7 @@ import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
@@ -104,6 +106,136 @@ public class XLSXExportHelper {
     }
     
     /**
+     * 
+     * @param parent
+     * @param fileName
+     * @param colNames
+     * @param objectsList 
+     */
+    public void exportVectorToXSSFWorkbook(Component parent, String fileName, Vector<String> colNames, Vector<Vector<Object>> objectsList){
+        try {
+            
+            JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home") + "/Desktop");
+            fileChooser.setSelectedFile(new File(fileName));
+            UIHelper.centerJFileChooser(fileChooser);
+            int j = fileChooser.showSaveDialog(parent);
+            if (j != 0) {
+                return;
+            }
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            
+            //inProcessDialog(true);
+            
+            XSSFSheet sheet = workbook.createSheet(fileName);
+
+            int rowCount = 0;
+            int columnCount = 0;
+            
+            //Fill the head of the table
+            Row row = sheet.createRow(rowCount++);
+            for (String title : colNames){
+                Cell cell = row.createCell(columnCount++);
+                cell.setCellValue(title);
+            }
+            //Fill the body of the table
+            for (Vector objRow : objectsList) {
+                columnCount = 0;
+                row = sheet.createRow(rowCount++);
+                
+                for (Object value : objRow) {
+                    Cell cell = row.createCell(columnCount++);
+                    if (value instanceof String) {
+                        cell.setCellValue((String) value);
+                    } else if (value instanceof Integer) {
+                        cell.setCellValue((Integer) value);
+                    } else if (value instanceof Double) {
+                        cell.setCellValue((Double) value);
+                    } else if (value instanceof Date) {
+                        cell.setCellValue((String) new SimpleDateFormat("YYYY/MM/dd HH:mm:ss").format(value));
+                    }
+                }
+            }
+
+            try (FileOutputStream outputStream = new FileOutputStream(filePath + ".xlsx")) {
+                workbook.write(outputStream);
+                UILog.infoDialog("Export terminé !");
+            } catch (FileNotFoundException ex) {
+                UILog.errorDialog(ex.getMessage());
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * 
+     * @param colNames
+     * @param objectsList 
+     */
+    public void exportToXSSFWorkbook(Component parent, String fileName, Vector<String> colNames, List<Vector> objectsList){
+        try {
+            
+            JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home") + "/Desktop");
+            fileChooser.setSelectedFile(new File(fileName));
+            UIHelper.centerJFileChooser(fileChooser);
+            int j = fileChooser.showSaveDialog(parent);
+            if (j != 0) {
+                return;
+            }
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            
+            //inProcessDialog(true);
+            
+            XSSFSheet sheet = workbook.createSheet(fileName);
+
+            int rowCount = 0;
+            int columnCount = 0;
+            
+            //Fill the head of the table
+            Row row = sheet.createRow(rowCount++);
+            for (String title : colNames){
+                Cell cell = row.createCell(columnCount++);
+                cell.setCellValue(title);
+            }
+            //Fill the body of the table
+            for (Vector objRow : objectsList) {
+                columnCount = 0;
+                row = sheet.createRow(rowCount++);
+                
+                for (Object value : objRow) {
+                    Cell cell = row.createCell(columnCount++);
+                    if (value instanceof String) {
+                        cell.setCellValue((String) value);
+                    } else if (value instanceof Integer) {
+                        cell.setCellValue((Integer) value);
+                    } else if (value instanceof Double) {
+                        cell.setCellValue((Double) value);
+                    } else if (value instanceof Date) {
+                        cell.setCellValue((String) new SimpleDateFormat("YYYY/MM/dd HH:mm:ss").format(value));
+                    }
+                }
+            }
+
+            try (FileOutputStream outputStream = new FileOutputStream(filePath + ".xlsx")) {
+                workbook.write(outputStream);
+                UILog.infoDialog("Export terminé !");
+            } catch (FileNotFoundException ex) {
+                UILog.errorDialog(ex.getMessage());
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
      * Show or hide an in process dialog during excel exportation
      * @param visible 
      */
@@ -122,4 +254,6 @@ public class XLSXExportHelper {
             this.dialog.dispose();
         }
     }
+
+    
 }

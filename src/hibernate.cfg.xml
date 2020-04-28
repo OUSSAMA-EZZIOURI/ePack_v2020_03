@@ -42,6 +42,7 @@
     <mapping class="entity.WireStockLoc"/>
     <mapping class="entity.WireConfig"/>
     <mapping class="entity.WireBooking"/>
+    <mapping class="entity.WireStock"/>
     <!--   -->
   </session-factory>
 </hibernate-configuration>

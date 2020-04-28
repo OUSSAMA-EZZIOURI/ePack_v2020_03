@@ -374,15 +374,40 @@ public class UILog {
         //t.setAutoscrolls(true);
         t.append(msg+"\n");
         t.append(sb.toString());
+        t.setEditable(false);
         JScrollPane textPane = new JScrollPane(t);
         //p.add(t);
-        if(!title.isEmpty() && title != null){
+        if((!title.isEmpty() && title != null) || e != null){
             exceptionTitle = title;
         }else{
             exceptionTitle = e.getClass().getCanonicalName();
         }
         p.showMessageDialog(parentComponent, textPane, 
                 exceptionTitle, JOptionPane.ERROR_MESSAGE);
+
+    }
+    
+    /**
+     * Brings up a dialog that displays a message using a default icon
+     * determined by the <code>messageType</code> parameter.
+     *
+     * @param parentComponent determines the <code>Frame</code> in which the
+     * dialog is displayed; if <code>null</code>, or if the
+     * <code>parentComponent</code> has no <code>Frame</code>, a default
+     * <code>Frame</code> is used
+     * @param msg the <code>String</code> error message
+     * @param title the <code>String</code> title of the dialog
+     */
+    public static void exceptionDialog(Component parentComponent, String title, String msg) {
+        JTextArea t = new JTextArea(20, 50);
+        t.append(msg+"\n");
+        t.setEditable(false);
+        JScrollPane textPane = new JScrollPane(t);
+        if(title == null){
+            title = "";
+        }
+        JOptionPane.showMessageDialog(parentComponent, textPane, 
+                title, JOptionPane.ERROR_MESSAGE);
 
     }
 

@@ -3,6 +3,7 @@ package gui.cra;
 import helper.UIHelper;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,11 +20,12 @@ public class ImportError extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         UIHelper.centerJDialog(this);
-        this.setTitle(title);
+        this.setTitle(title);        
         txtarea.append(msg);        
-        for(String cpn : list){
-            txtarea.append("\n" + cpn);
-        }
+        list.forEach((pn) -> {
+            txtarea.append(String.format("\n[%s]", pn));
+        });
+        
     }
 
     /**

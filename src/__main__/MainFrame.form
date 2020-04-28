@@ -252,19 +252,25 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="MENU_06_WIRE_STOCK">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Stock fil"/>
+                <Property name="text" type="java.lang.String" value="Stock rep&#xe8;res"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MENU_06_WIRE_STOCKActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="MENU_06_WIRE_DEMAND">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Besoin des fils"/>
+                <Property name="text" type="java.lang.String" value="Besoin par rep&#xe8;re"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MENU_06_WIRE_DEMANDActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="MENU_06_WIRE_MASTER_DATA">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Master data fil"/>
+                <Property name="text" type="java.lang.String" value="Master data rep&#xe8;re"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MENU_06_WIRE_MASTER_DATAActionPerformed"/>

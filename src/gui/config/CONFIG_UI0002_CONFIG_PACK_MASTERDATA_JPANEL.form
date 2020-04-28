@@ -464,109 +464,105 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="master_save_btn" min="-2" pref="102" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="master_duplicate_btn" min="-2" pref="91" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="master_cancel_btn" min="-2" pref="137" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
+                                      <Component id="master_cancel_btn1" min="-2" pref="137" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
-                                              <Component id="master_save_btn" min="-2" pref="102" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="master_duplicate_btn" min="-2" pref="91" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="master_cancel_btn" min="-2" pref="137" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
-                                              <Component id="master_cancel_btn1" min="-2" pref="137" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="1" attributes="0">
                                                   <Component id="fname_lbl4" alignment="1" min="-2" max="-2" attributes="0"/>
                                                   <Component id="fname_lbl5" alignment="1" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace max="32767" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" attributes="0">
+                                                  <Component id="master_id_lbl" min="-2" pref="64" max="-2" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
                                                       <Component id="pack_master_txtbox" min="-2" pref="165" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                                                       <Component id="fname_lbl7" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                                       <Component id="master_internal_pn_txtbox" min="-2" pref="172" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Component id="master_id_lbl" min="-2" pref="64" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <Group type="102" alignment="1" attributes="0">
+                                          <Component id="fname_lbl6" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane2" alignment="0" min="-2" pref="654" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="lname_lbl2" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   <Component id="lname_lbl3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="master_dim_uom_txtbox" alignment="0" min="-2" pref="52" max="-2" attributes="0"/>
-                                                  <Component id="master_weight_uom_txtbox" alignment="0" min="-2" pref="52" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="pwd_lbl5" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="lname_lbl2" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="master_weight_uom_txtbox" min="-2" pref="52" max="-2" attributes="0"/>
+                                                          <Component id="master_dim_uom_txtbox" min="-2" pref="52" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="pwd_lbl9" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="pwd_lbl5" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
                                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="master_weight_txtbox" min="-2" pref="68" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="pwd_lbl9" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="master_width_txtbox" min="-2" pref="68" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="master_weight_txtbox" alignment="1" min="-2" pref="68" max="-2" attributes="0"/>
+                                                          <Component id="master_width_txtbox" alignment="1" min="-2" pref="68" max="-2" attributes="0"/>
+                                                      </Group>
                                                   </Group>
                                               </Group>
-                                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Group type="102" attributes="0">
+                                                  <Group type="102" alignment="0" attributes="0">
                                                       <Component id="pwd_lbl10" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                                       <Component id="master_length_txtbox" min="-2" pref="68" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                                                       <Component id="pwd_lbl11" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Group type="102" attributes="0">
+                                                  <Group type="102" alignment="0" attributes="0">
                                                       <Component id="pwd_lbl12" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="master_volume_txtbox" pref="153" max="32767" attributes="0"/>
+                                                      <Component id="master_volume_txtbox" min="-2" pref="153" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="master_height_txtbox" min="-2" pref="68" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="jScrollPane2" alignment="0" min="-2" pref="654" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="432" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="user_table_scroll1" max="32767" attributes="0"/>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="fname_lbl_search1" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="pack_master_search" min="-2" pref="120" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="lname_lbl_search1" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="master_internal_pn_txtbox_search" min="-2" pref="121" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="master_refresh_btn" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="master_clear_search_btn" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="masters_tab_msg_lbl" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="195" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="125" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="563" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="fname_lbl6" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="user_table_scroll1" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="fname_lbl_search1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="pack_master_search" min="-2" pref="120" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="lname_lbl_search1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="master_internal_pn_txtbox_search" min="-2" pref="121" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="master_refresh_btn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="master_clear_search_btn" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="masters_tab_msg_lbl" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="326" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -637,7 +633,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="user_table_scroll1" min="-2" pref="226" max="-2" attributes="0"/>
-                      <EmptySpace pref="85" max="32767" attributes="0"/>
+                      <EmptySpace pref="87" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -721,6 +717,9 @@
                 <Property name="text" type="java.lang.String" value="0.00"/>
                 <Property name="name" type="java.lang.String" value="fname_txtbox" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="master_weight_txtboxActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="pwd_lbl9">
               <Properties>

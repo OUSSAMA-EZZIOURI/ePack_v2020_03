@@ -1,11 +1,13 @@
 package gui.cra;
 
 import helper.FormField;
+import __main__.GlobalMethods;
 import __main__.GlobalVars;
 import __main__.PropertiesLoader;
 import entity.ConfigProject;
 import entity.ConfigWarehouse;
 import entity.WireStockLoc;
+import gui.warehouse_dispatch.WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL;
 import helper.FormValidator;
 import helper.HQLHelper;
 import helper.Helper;
@@ -13,8 +15,6 @@ import helper.JDialogExcelFileChooser;
 import helper.UIHelper;
 import helper.XLSXExportHelper;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -33,19 +33,10 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.csv.CSVFormat;
@@ -58,12 +49,11 @@ import ui.UILog;
  *
  * @author Oussama
  */
-public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
+public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
 
     private JTabbedPane parent;
     Vector<String> result_table_header = new Vector<String>(Arrays.asList(
             "ID",
-            "Projet",
             "Magasin",
             "Location",
             "Dernière modif.",
@@ -75,36 +65,32 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
     WireStockLoc aux;
     boolean err = false;
     int lineId = 0;
-    
-    static int importStrategy = 0;
-    
+
     public static void main(String[] args) {
 
         String feedback = PropertiesLoader.loadConfigProperties();
         //LOGGER.log(Level.INFO, feedback);
-        //GlobalMethods.createDefaultDirectories();
-        //Helper.startSession();
-        
-        CRA_UI0003_STOCK_LOCATIONS c = new CRA_UI0003_STOCK_LOCATIONS();
+        GlobalMethods.createDefaultDirectories();
+        Helper.startSession();
+
+        CRA_UI0005_WIRE_STOCK c = new CRA_UI0005_WIRE_STOCK();
         JFrame f = new JFrame();
         f.setSize(1200, 700);
         f.add(c);
         f.setVisible(true);
 
-        
-        
-        
-
     }
+    
+    
 
     /**
      * Creates new form CRA_UI0001_PRODUCTION_PLAN
      */
-    public CRA_UI0003_STOCK_LOCATIONS() {
+    public CRA_UI0005_WIRE_STOCK() {
         initComponents();
     }
 
-    public CRA_UI0003_STOCK_LOCATIONS(JTabbedPane rootTabbedPane) {
+    public CRA_UI0005_WIRE_STOCK(JTabbedPane rootTabbedPane) {
         this.parent = rootTabbedPane;
         initComponents();
         initGui();
@@ -143,8 +129,6 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
         result_jtable = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         craUI0003_form_panel = new javax.swing.JPanel();
-        btn_import_csv = new javax.swing.JButton();
-        btn_csv_example = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txt_location = new javax.swing.JTextField();
@@ -204,24 +188,10 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Emplacements Pagodas");
+        jLabel11.setText("Stock repère");
 
         craUI0003_form_panel.setBackground(new java.awt.Color(36, 65, 86));
         craUI0003_form_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        btn_import_csv.setText("Importer les données via .csv ...");
-        btn_import_csv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_import_csvActionPerformed(evt);
-            }
-        });
-
-        btn_csv_example.setText("Exemple fichier .csv ...");
-        btn_csv_example.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_csv_exampleActionPerformed(evt);
-            }
-        });
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -349,12 +319,12 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
                             .addComponent(txt_location, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(combo_project, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(combo_warehouse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(85, 85, 85)
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(55, 55, 55)
+                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txt_createTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -365,11 +335,7 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
                         .addComponent(btn_new, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_csv_example)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_import_csv)
-                        .addGap(44, 44, 44)
+                        .addGap(432, 432, 432)
                         .addComponent(btn_delete)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -386,10 +352,8 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
                             .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
                         .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(btn_csv_example)
                             .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_new, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_import_csv))
+                            .addComponent(btn_new, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -535,76 +499,7 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_csv_exampleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_csv_exampleActionPerformed
-
-        JFileChooser chooser = new javax.swing.JFileChooser();
-        chooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        chooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop/"));
-        chooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
-
-        UIHelper.centerJFileChooser(chooser);
-        int status = chooser.showSaveDialog(null);
-
-        if (status == JFileChooser.APPROVE_OPTION) {
-            //FileOutputStream target = null;
-            try {
-
-                File selectedFile = chooser.getSelectedFile();
-                File source = new File(".\\src\\csv\\warehouse_location_csv_example.csv");
-                System.out.println(" source " + source.getAbsolutePath() + ".csv");
-
-                File dest = chooser.getSelectedFile();
-
-                InputStream is = null;
-                OutputStream os = null;
-                try {
-                    is = new FileInputStream(source);
-                    os = new FileOutputStream(chooser.getSelectedFile() + ".csv");
-                    byte[] buffer = new byte[1024];
-                    int length;
-                    while ((length = is.read(buffer)) > 0) {
-                        os.write(buffer, 0, length);
-                    }
-                } finally {
-                    is.close();
-                    os.close();
-                }
-
-                JOptionPane.showMessageDialog(null,
-                        "Fichier enregistré à l'emplacement \n " + selectedFile.getAbsolutePath() + ".csv", "File saved !",
-                        JOptionPane.INFORMATION_MESSAGE);
-
-            } catch (FileNotFoundException ex) {
-                //
-                JOptionPane.showMessageDialog(null, "Le processus ne peut pas accéder au fichier car ce fichier est utilisé ou un fihier du même nom est ouvert.\n Fermer le fichier puis réessayer.", "Erreur de sauvegarde !", JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(JDialogExcelFileChooser.class.getName()).log(Level.SEVERE, null, ex);
-
-            } catch (IOException ex) {
-                Logger.getLogger(JDialogExcelFileChooser.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_btn_csv_exampleActionPerformed
-
-    private boolean trancate() {
-        int confirmed = JOptionPane.showConfirmDialog(
-                this.parent.getParent(),
-                "Le contenu actuel de la table va être écraser ?",
-                "Confirmation",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
-
-        if (confirmed == 0) {
-            aux = new WireStockLoc();
-            aux.trancate(aux);
-            JOptionPane.showMessageDialog(null, "Contenu de la table supprimé !\n");
-            result_table_data = new Vector();
-            refreshResultTable();
-            return true;
-        }
-
-        return false;
-    }
+  
 
     private void initContainerTableDoubleClick() {
         this.result_jtable.addMouseListener(new MouseAdapter() {
@@ -623,74 +518,6 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
         }
         );
     }
-
-    private int importStrategy() {
-        CRA_IMPORT_WIZARD w = new CRA_IMPORT_WIZARD(this, true);
-        w.setVisible(true);        
-        return w.getImportStrategy();
-    }
-
-
-    private void btn_import_csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_import_csvActionPerformed
-
-        try {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop/"));
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV", "csv");
-            fileChooser.setFileFilter(filter);
-            int status = fileChooser.showOpenDialog(null);
-
-            if (status == JFileChooser.APPROVE_OPTION) {
-                switch(importStrategy()){                    
-                    case 2 :
-                        this.trancate();
-                        break;
-                    case 0 :
-                        return;                        
-                }
-                        
-                        
-                File selectedFile = fileChooser.getSelectedFile();
-                //Past the workbook to the file chooser
-                String SAMPLE_CSV_FILE_PATH = selectedFile.getAbsolutePath();
-                Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
-                CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
-                        .withFirstRecordAsHeader()
-                        .withIgnoreHeaderCase()
-                        .withTrim()
-                        .withDelimiter(';')
-                );
-
-                try {
-                    int i = 1;
-                    for (CSVRecord record : csvParser) {
-                        try {
-                            createNewObjectFromCsv(record);
-                        } catch (Exception e) {
-                            UILog.errorDialog("Erreur dans la ligne " + i);
-                            UILog.warnDialog("Import échoué.");
-                            return;
-                        }
-                        i++;
-                    }
-                    UILog.infoDialog("Import terminé avec succés !");
-
-                    // In the end of the import, refresh the list
-                    refreshResultTable();
-                } catch (Exception ex) {
-                    Logger.getLogger(CRA_UI0003_STOCK_LOCATIONS.class.getName()).log(Level.SEVERE, null, ex);
-                    UILog.severeDialog(this, ex.getMessage(), "Exception");
-                }
-            } else if (status == JFileChooser.CANCEL_OPTION) {
-                System.out.println("Canceled");
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(CRA_UI0003_STOCK_LOCATIONS.class.getName()).log(Level.SEVERE, null, ex);
-            UILog.severeDialog(this, ex.getMessage(), "IOException");
-        }
-    }//GEN-LAST:event_btn_import_csvActionPerformed
-
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
         refreshResultTable();
     }//GEN-LAST:event_btn_refreshActionPerformed
@@ -700,7 +527,7 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
      * @return True if all fields match the patterns, false otherwise
      */
     private boolean validatePatterns() {
-        final List<FormField> fieldsList = Arrays.asList(
+        final List<FormField> fieldsList = Arrays.asList(                
                 new FormField(txt_location, "text",
                         "[ a-zA-Z0-9]{2,25}",
                         "Le code d'emplacement doit être "
@@ -721,9 +548,11 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
         if (!IS_WAREHOUSE_EXIST(wh)) { //IF PN exists in Configuration Standard Part
             msg_lbl.setForeground(Color.red);
             msg_lbl.setText(String.format("Le magasin %s n'est pas paramétré ou n'existe pas. Vérifier le paramétrage de base de l'application.", wh));
-            combo_warehouse.requestFocus();
+            combo_warehouse.requestFocus();            
             return false;
-        } else if (IS_WH_AND_LOCATION_EXIST(wh, txt_location.getText(), lineId)) {//If the warehouse and the location already exists
+        } else 
+            
+            if (IS_WH_AND_LOCATION_EXIST(wh, txt_location.getText(), lineId)) {//If the warehouse and the location already exists
             msg_lbl.setForeground(Color.red);
             msg_lbl.setText(String.format("Le magasin %s et l'emplacement %s existent déjà.", wh, txt_location.getText()));
             txt_location.requestFocus();
@@ -751,7 +580,7 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
     }
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-
+        
         String wh = combo_warehouse.getSelectedItem().toString().toUpperCase();
         String project = combo_project.getSelectedItem().toString().toUpperCase();
         //If it's a modification, we look for an existing line with a different id != 0
@@ -811,15 +640,15 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
 
     private void combo_projectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_projectActionPerformed
         String project = String.valueOf(combo_project.getSelectedItem()).trim();
-
+        
         ConfigWarehouse.initWarehouseJBox(
-                this,
-                combo_warehouse,
+                this, 
+                combo_warehouse, 
                 project,
-                ConfigWarehouse.WIRES,
+                ConfigWarehouse.WIRES, 
                 false);
-
-
+                
+                
     }//GEN-LAST:event_combo_projectActionPerformed
 
     private Vector getResultLines() {
@@ -827,11 +656,11 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
         Helper.startSession();
         List<String> projects = new ArrayList<>();
         Query query = Helper.sess.createQuery(HQLHelper.GET_WIRE_LOCATION_LIKE_WH_AND_LOC);
-        if (combo_project_filter.getSelectedItem().toString().equals("ALL")) {
-            for (int i = 0; i < combo_project_filter.getItemCount(); i++) {
-                projects.add(combo_project_filter.getItemAt(i));
+        if(combo_project_filter.getSelectedItem().toString().equals("ALL")){
+            for (int i =0; i<combo_project_filter.getItemCount();i++) {
+                projects.add(combo_project_filter.getItemAt(i));                
             }
-        } else {
+        }else{
             projects.add(combo_project_filter.getSelectedItem().toString());
         }
         query.setParameter("warehouse", "%" + txt_warehouse_filter.getText() + "%");
@@ -848,8 +677,7 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
             this.excelLines.add((WireStockLoc) obj);
 
             Vector<Object> oneRow = new Vector<Object>();
-            oneRow.add(String.format("%04d", obj.getId()));
-            oneRow.add(obj.getProject());
+            oneRow.add(obj.getId());
             oneRow.add(obj.getWarehouse());
             oneRow.add(obj.getLocation());
             oneRow.add(obj.getWriteTime());
@@ -868,7 +696,7 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
     private void createNewObjectFromCsv(CSVRecord record) {
         WireStockLoc x = new WireStockLoc(
                 record.get("project"),
-                record.get("warehouse"),
+                record.get("warehouse"), 
                 record.get("location"));
         x.create(x);
     }
@@ -882,10 +710,8 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_csv_example;
     private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_export_excel;
-    private javax.swing.JButton btn_import_csv;
     private javax.swing.JButton btn_new;
     private javax.swing.JButton btn_refresh;
     private javax.swing.JButton btn_save;

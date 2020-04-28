@@ -15,6 +15,8 @@ import gui.config.CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL;
 import gui.cra.CRA_UI0001_PRODUCTION_PLAN;
 import gui.cra.CRA_UI0002_WIRE_MASTER_DATA;
 import gui.cra.CRA_UI0003_STOCK_LOCATIONS;
+import gui.cra.CRA_UI0004_WIRE_DEMAND;
+import gui.cra.CRA_UI0005_WIRE_STOCK;
 import gui.logviewer.LOGVIEWER_UI0001;
 import gui.packaging.PackagingVars;
 import gui.packaging.mode3.gui.PACKAGING_UI0001_Main_Mode3;
@@ -46,9 +48,6 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javassist.bytecode.stackmap.TypeData;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -445,14 +444,24 @@ public class MainFrame extends javax.swing.JFrame {
         });
         MENU_06_CRA.add(MENU_06_PRODUCTION_PLAN);
 
-        MENU_06_WIRE_STOCK.setText("Stock fil");
+        MENU_06_WIRE_STOCK.setText("Stock repères");
+        MENU_06_WIRE_STOCK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MENU_06_WIRE_STOCKActionPerformed(evt);
+            }
+        });
         MENU_06_CRA.add(MENU_06_WIRE_STOCK);
 
-        MENU_06_WIRE_DEMAND.setText("Besoin des fils");
+        MENU_06_WIRE_DEMAND.setText("Besoin par repère");
+        MENU_06_WIRE_DEMAND.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MENU_06_WIRE_DEMANDActionPerformed(evt);
+            }
+        });
         MENU_06_CRA.add(MENU_06_WIRE_DEMAND);
         MENU_06_CRA.add(jSeparator2);
 
-        MENU_06_WIRE_MASTER_DATA.setText("Master data fil");
+        MENU_06_WIRE_MASTER_DATA.setText("Master data repère");
         MENU_06_WIRE_MASTER_DATA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MENU_06_WIRE_MASTER_DATAActionPerformed(evt);
@@ -851,6 +860,15 @@ public class MainFrame extends javax.swing.JFrame {
     private void MENU_06_PAGODAS_LOCATIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_06_PAGODAS_LOCATIONActionPerformed
         addNewTab(new CRA_UI0003_STOCK_LOCATIONS(rootTabbedPane), evt);
     }//GEN-LAST:event_MENU_06_PAGODAS_LOCATIONActionPerformed
+
+    private void MENU_06_WIRE_DEMANDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_06_WIRE_DEMANDActionPerformed
+        addNewTab(new CRA_UI0004_WIRE_DEMAND(rootTabbedPane), evt);
+    }//GEN-LAST:event_MENU_06_WIRE_DEMANDActionPerformed
+
+    private void MENU_06_WIRE_STOCKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MENU_06_WIRE_STOCKActionPerformed
+        
+        addNewTab(new CRA_UI0005_WIRE_STOCK(rootTabbedPane), evt);
+    }//GEN-LAST:event_MENU_06_WIRE_STOCKActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -346,10 +346,11 @@ public class UIHelper {
             }
         } catch (JsonProcessingException ex) {
             Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-            UILog.errorDialog(ex.getStackTrace()[0].toString());
+            //throw ex;
+            //UILog.errorDialog(ex.getStackTrace()[0].toString());
         } catch (NullPointerException ex) {
             Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
-            UILog.errorDialog(ex.getStackTrace()[0].toString());
+            //UILog.errorDialog(ex.getStackTrace()[0].toString());
         }
 
     }
@@ -417,6 +418,99 @@ public class UIHelper {
         } catch (InstantiationException ex) {
             Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
+            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (java.lang.IllegalArgumentException ex) {
+            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
+     /**
+     * Loop on components of JPanel and return an instanciated object with
+     * values
+     *
+     * IMPORTANT : For this method to work, All components property
+     * 'AccessibleName' must have the same name as the attribute from the
+     * entity.
+     *
+     * @see
+     * https://www.tutorialspoint.com/java_beanutils/standard_javabeans_basic_property_access.htm
+     * @param form_panel JPanel which contains the components (JTextfields,
+     * JTextArea, JCombobox, etc...)
+     * @param className The fully classified name of the class (eg :
+     * "java.lang.Thread" or "john.doe.User") 
+     * @param debug True debug messages will be printed
+     */
+    public static Object setValuesFromJPanelToObj(JPanel form_panel, Object obj, boolean debug) {
+        String className = obj.getClass().getCanonicalName();
+        System.out.println("Passed object "+obj.toString());
+        try {
+            if (debug) {
+                System.out.println("Target simpleClassName " + className);
+            }
+
+            // Creating the bean and allows to access getter and setter properties
+//            Class bean = Class.forName(className);
+            //Object newObject = bean.newInstance();
+
+            //Loop on all JTextFiels in form_panel
+            for (Component c : form_panel.getComponents()) {
+                String fieldValue = "";
+                boolean itsAField = false;
+                boolean isEditable = false;
+                if (c instanceof JTextField || c instanceof JTextArea) {
+                    fieldValue = ((JTextField) c).getText();
+                    itsAField = true;
+                    isEditable = ((JTextField) c).isEditable();
+                } else if (c instanceof JComboBox) {
+                    fieldValue = ((JComboBox) c).getSelectedItem().toString();
+                    itsAField = true;
+                    isEditable = ((JComboBox) c).isEnabled();
+                } else {
+                    if (debug) {
+                        System.out.println("Not supported type " + c.getClass().getSimpleName());
+                    }
+                }
+
+                if (itsAField && isEditable) {
+                    //Get the correct class name from the bean property
+                    String theType = PropertyUtils.getPropertyType(obj, c.getAccessibleContext().getAccessibleName()).getCanonicalName();
+                    System.out.println("theType " + theType);
+                    //Prepare the Class with the fully qualified name
+                    Class theClass = Class.forName(theType);
+                    System.out.println("theClass is type " + theClass.getCanonicalName());
+                    //Convert to the correct class
+                    Object value = convert(theClass, fieldValue);
+                    // Setting the properties on the myBean
+                    PropertyUtils.setSimpleProperty(obj, c.getAccessibleContext().getAccessibleName(), value);
+                }else if(itsAField && (c.getAccessibleContext().getAccessibleName().equals("id")
+                        || c.getAccessibleContext().getAccessibleName().equals("createId")
+                        || c.getAccessibleContext().getAccessibleName().equals("writeId")
+                        )){
+                    //Get the correct class name from the bean property
+                    String theType = PropertyUtils.getPropertyType(obj, c.getAccessibleContext().getAccessibleName()).getCanonicalName();
+                    System.out.println("theType " + theType);
+                    //Prepare the Class with the fully qualified name
+                    Class theClass = Class.forName(theType);
+                    System.out.println("theClass is type " + theClass.getCanonicalName());
+                    //Convert to the correct class
+                    Object value = convert(theClass, fieldValue);
+                    // Setting the properties on the myBean
+                    PropertyUtils.setSimpleProperty(obj, c.getAccessibleContext().getAccessibleName(), value);
+                }
+            }
+            return obj;
+        } 
+//        catch (InstantiationException ex) {
+//            Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
+//        } 
+        catch (IllegalAccessException ex) {
             Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CRA_UI0002_WIRE_MASTER_DATA.class.getName()).log(Level.SEVERE, null, ex);

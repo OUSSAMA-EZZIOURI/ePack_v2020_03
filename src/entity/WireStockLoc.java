@@ -35,7 +35,7 @@ public class WireStockLoc extends DAO implements java.io.Serializable {
     @Column(name = "warehouse")
     private String warehouse;
 
-    @Column(name = "location")
+    @Column(name = "location", unique = true)
     private String location;
 
     @Column(name = "create_id")
@@ -185,6 +185,7 @@ public class WireStockLoc extends DAO implements java.io.Serializable {
     public int create(Object obj) {
         WireStockLoc aux = (WireStockLoc) obj;
         aux.writeId = aux.createId = GlobalVars.CONNECTED_USER.getId();
+        aux.createUser = aux.writeUser = GlobalVars.CONNECTED_USER.getFullName();
         aux.createTime = aux.writeTime = new Date();
         return super.create(aux);
     }

@@ -5,8 +5,13 @@
  */
 package hibernate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.WireConfig;
 import helper.Helper;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Table;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -156,5 +161,19 @@ public class DAO {
         }
         return 0;
     }
-
+    
+    /**
+     * Show the object values as JSON format
+     * @return 
+     */
+    public String toJsonString(Object o) {
+        ObjectMapper jsonMapper = new ObjectMapper();
+        String auxJson = "";
+        try {
+            auxJson = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(WireConfig.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return auxJson;
+    }
 }
