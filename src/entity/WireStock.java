@@ -1,6 +1,5 @@
 package entity;
 
-import gui.packaging.PackagingVars;
 import hibernate.DAO;
 import java.util.Date;
 import javax.persistence.Column;
@@ -21,33 +20,41 @@ public class WireStock extends DAO implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wire_stock_id_seq")
-    @SequenceGenerator(name = "wire_stock_id_seq", sequenceName = "wire_stock_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "wire_stock_id_seq",  sequenceName = "wire_stock_id_seq",  allocationSize = 1)
     private Integer id; 
 
     @Column(name = "wire_no")
     private String wireNo;
     
+    @Column(name = "wire_type",  nullable = true)
+    private String wireType;
+    
     @Column(name = "warehouse")
     private String warehouse;
+    
+    @Column(name = "project")
+    private String project;
     
     @Column(name = "location")
     private String location;
     
-    @Column(name = "qty", nullable = true)
+    @Column(name = "card_number")
+    private Integer cardNumber;
+    
+    @Column(name = "qty")
     private Double qty;
+    
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Column(name = "fifo_time")
+    private Date fifoTime;
 
     @Override
     public String toString() {
-        return "WireStock{" + "id=" + id + "\n, wireNo=" + wireNo + "\n, warehouse=" + warehouse + "\n, location=" + location + "\n, qty=" + qty + '}';
+        return "WireStock{" + "id=" + id + ",\n  wireNo=" + wireNo + ",\n  wireType=" + wireType + ",\n  warehouse=" + warehouse + ",\n  project=" + project + ",\n  location=" + location + ",\n  cardNumber=" + cardNumber + ",\n  qty=" + qty + ",\n  fifoTime=" + fifoTime + '}';
     }
+
     
-    public WireStock(String wireNo, String warehouse, String location, Double qty) {
-        this.wireNo = wireNo;
-        this.warehouse = warehouse;
-        this.location = location;
-        this.qty = qty;
-    }
-    
+
     public WireStock() {
     }
 
@@ -67,6 +74,37 @@ public class WireStock extends DAO implements java.io.Serializable {
         this.wireNo = wireNo;
     }
 
+    public String getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(String warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Integer getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(Integer cardNumber) {
+        this.cardNumber = cardNumber;
+    }
 
     public Double getQty() {
         return qty;
@@ -76,20 +114,20 @@ public class WireStock extends DAO implements java.io.Serializable {
         this.qty = qty;
     }
 
-    public String getWarehouse() {
-        return warehouse;
+    public String getWireType() {
+        return wireType;
     }
 
-    public void setWarehouse(String warehouse) {
-        this.warehouse = warehouse;
+    public void setWireType(String wireType) {
+        this.wireType = wireType;
     }
 
-    public String getLocation() {
-        return location;
+    public Date getFifoTime() {
+        return fifoTime;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setFifoTime(Date fifoTime) {
+        this.fifoTime = fifoTime;
     }
     
     

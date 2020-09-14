@@ -320,4 +320,9 @@ public class HQLHelper {
             + "WHERE (t.warehouse = :warehouse "
             + "AND t.location = :location AND t.project = :project) "
             + "AND t.id != :id ORDER BY writeTime DESC";
+    
+    public final static String GET_WIRE_STOCK_WHERE = "FROM WireStock t"
+            + "WHERE t.warehouses IN (:warehouses) "
+            + "AND t.location = :location AND t.projects IN (:projects) "
+            + "AND t.cardNumber = :cardNumber OR t.wireNo = :wireNo ";
 }

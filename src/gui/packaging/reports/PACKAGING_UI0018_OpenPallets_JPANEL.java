@@ -12,7 +12,6 @@ import entity.ConfigWorkplace;
 import gui.packaging.PackagingVars;
 import helper.Helper;
 import helper.JTableHelper;
-import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -80,7 +79,7 @@ public class PACKAGING_UI0018_OpenPallets_JPANEL extends javax.swing.JPanel {
         load_table_header();
 
         //Init projects filter
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, true);
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "", true);
         this.workplace_filter.setEnabled(false);
         //Initialize double clique on table row
         this.initContainerTableDoubleClick();

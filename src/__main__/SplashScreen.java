@@ -5,7 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 import javax.swing.SwingWorker;
 import javax.swing.text.DefaultCaret;
 
@@ -41,17 +41,14 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
     }
 
     private void initTextArea() {
-//        PrintStream printStream = new PrintStream(new JTextAreaOutputStream(taskOutput));        
-//        System.setOut(printStream);
-//        System.setErr(printStream);
 
         //Intialize jtextArea properties
         taskOutput.setEditable(false);
         taskOutput.setLineWrap(true);
         taskOutput.setWrapStyleWord(true);
-        scrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_AS_NEEDED);
         DefaultCaret caret = (DefaultCaret) taskOutput.getCaret();
-        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+        //caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
         taskOutput.setCaret(caret);
     }
 
@@ -153,6 +150,11 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         taskOutput.setOpaque(false);
         taskOutput.setPreferredSize(new java.awt.Dimension(1102, 90000));
         taskOutput.setRequestFocusEnabled(false);
+        taskOutput.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                taskOutputPropertyChange(evt);
+            }
+        });
         scrollPane.setViewportView(taskOutput);
 
         realised.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
@@ -224,6 +226,12 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void taskOutputPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_taskOutputPropertyChange
+        taskOutput.setText("");
+        int len = taskOutput.getDocument().getLength();
+        taskOutput.setCaretPosition(len);
+    }//GEN-LAST:event_taskOutputPropertyChange
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel app_name;
     private javax.swing.JLabel car_logo;
@@ -294,12 +302,4 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         }
     }
 
-//    public void dispose() {
-//        try {
-//            
-//            super.dispose();
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
 }

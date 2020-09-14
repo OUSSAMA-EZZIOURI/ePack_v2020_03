@@ -13,8 +13,6 @@ import helper.JDialogExcelFileChooser;
 import helper.UIHelper;
 import helper.XLSXExportHelper;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -33,19 +31,10 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.csv.CSVFormat;
@@ -111,8 +100,8 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
     }
 
     private void initProjectCombo() {
-        combo_project = ConfigProject.initProjectsJBox(this, combo_project, false);
-        combo_project_filter = ConfigProject.initProjectsJBox(this, combo_project_filter, true);
+        combo_project = ConfigProject.initProjectsJBox(this, combo_project,"", false);
+        combo_project_filter = ConfigProject.initProjectsJBox(this, combo_project_filter, "", true);
     }
 
     private void initResultJTable() {
@@ -816,7 +805,9 @@ public class CRA_UI0003_STOCK_LOCATIONS extends javax.swing.JPanel {
                 this,
                 combo_warehouse,
                 project,
-                ConfigWarehouse.WIRES,
+                //WarehouseType.WIRES.name(),
+                String.valueOf(GlobalVars.WarehouseType.WIRES),
+                "",
                 false);
 
 

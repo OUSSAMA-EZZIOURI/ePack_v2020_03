@@ -79,7 +79,7 @@ public class PACKAGING_UI0011_ProdStatistics_JPANEL extends javax.swing.JPanel {
     public PACKAGING_UI0011_ProdStatistics_JPANEL(JTabbedPane parent) {
         initComponents();
         initTimeSpinners();
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, true);
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter,"", true);
 //        combox = ConfigProject.initProjectsJBox(this, combox, true);
 
         this.workplace_filter.setEnabled(false);

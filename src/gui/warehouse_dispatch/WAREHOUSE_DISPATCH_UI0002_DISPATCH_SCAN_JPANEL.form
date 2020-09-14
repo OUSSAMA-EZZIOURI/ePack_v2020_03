@@ -449,7 +449,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Dispatch pour :"/>
+                <Property name="text" type="java.lang.String" value="Date exp&#xe9;dition :"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="dispatch_date_label">
@@ -644,11 +644,15 @@
                         <Component class="javax.swing.JTable" name="load_plan_table">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="4" rowCount="4">
-                                <Column editable="false" title="Truck No" type="java.lang.Object"/>
-                                <Column editable="false" title="N&#xb0; Plan" type="java.lang.Object"/>
-                                <Column editable="false" title="Create date" type="java.lang.Object"/>
-                                <Column editable="false" title="Dispatch date" type="java.lang.Object"/>
+                              <Table columnCount="8" rowCount="4">
+                                <Column editable="false" title="N&#xb0; PLAN" type="java.lang.Integer"/>
+                                <Column editable="false" title="TRANSPORTEUR" type="java.lang.Object"/>
+                                <Column editable="false" title="NUM. REMORQUE" type="java.lang.Object"/>
+                                <Column editable="false" title="DATE CREATION" type="java.lang.Object"/>
+                                <Column editable="false" title="DATE EXPEDITION" type="java.lang.Object"/>
+                                <Column editable="false" title="UTILISATEUR" type="java.lang.Object"/>
+                                <Column editable="false" title="PROJET" type="java.lang.Object"/>
+                                <Column editable="false" title="STATUT" type="java.lang.Object"/>
                               </Table>
                             </Property>
                             <Property name="cellSelectionEnabled" type="boolean" value="true"/>
@@ -2050,9 +2054,6 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Nouveau plan..."/>
           </Properties>
           <Events>
@@ -2066,9 +2067,6 @@
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Editer..."/>
           </Properties>
@@ -2084,9 +2082,6 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Exporter en excel..."/>
           </Properties>
           <Events>
@@ -2101,9 +2096,6 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Stock F.G"/>
           </Properties>
           <Events>
@@ -2117,9 +2109,6 @@
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Liste des palettes"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -2138,9 +2127,6 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="D&#xe9;tails palette"/>
           </Properties>
           <Events>
@@ -2154,9 +2140,6 @@
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Contr&#xf4;le des &#xe9;tiquettes"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -2223,9 +2206,6 @@
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Fermer le plan"/>
           </Properties>

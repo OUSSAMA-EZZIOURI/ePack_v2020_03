@@ -180,7 +180,7 @@ public final class PACKAGING_UI0020_PALLET_LIST_JPANEL extends javax.swing.JPane
         //Init time spinner
         initTimeSpinners();
 
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, true);
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "", true);
 
         initStateFilters();
 

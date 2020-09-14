@@ -362,7 +362,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                                 .addComponent(btn_csv_example)))
                         .addGap(127, 127, 127)
                         .addComponent(btn_delete)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(207, Short.MAX_VALUE))))
         );
         craUI0001_form_panelLayout.setVerticalGroup(
             craUI0001_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,7 +415,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
 
         jLabel6.setText("Article faisceau");
 
-        jLabel7.setText("Code interne");
+        jLabel7.setText("Module interne");
 
         btn_export_excel.setText("Exporter en Excel");
         btn_export_excel.addActionListener(new java.awt.event.ActionListener() {
@@ -437,30 +437,33 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
-                .addGap(18, 18, 18)
-                .addComponent(txt_harness_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txt_internal_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
-                .addComponent(btn_refresh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_export_excel)
-                .addContainerGap(257, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(txt_harness_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txt_internal_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)
+                        .addComponent(btn_refresh)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_export_excel))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(9, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_harness_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
                     .addComponent(txt_internal_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_export_excel)
-                    .addComponent(btn_refresh))
+                    .addComponent(btn_refresh)
+                    .addComponent(btn_export_excel))
                 .addContainerGap())
         );
 
@@ -584,6 +587,7 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         }
         );
     }
+
     private void btn_import_csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_import_csvActionPerformed
 
         try {
@@ -608,55 +612,76 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
                 );
 
                 try {
-                    int i = 1;
+                    int row = 1;
                     //======= Step 1 : Buil a planningLine list in orther 
                     //to validate the content of csv file.
-                    //Vector list = new Vector();
-                    ArrayList<Object> planningLines = new ArrayList<Object>();
-                    ArrayList<String> harnessPartList = new ArrayList<String>();
-                    ArrayList<String> internalPartList = new ArrayList<String>();
-                    aux = new ProductionPlan();
+                    ArrayList<Object> planningLines = new ArrayList<>();
+                    ArrayList<String> harnessPartList = new ArrayList<>();
+                    ArrayList<String> internalPartList = new ArrayList<>();
+                    //aux = new ProductionPlan();
                     for (CSVRecord record : csvParser) {
                         try {
 
-                            aux = createPlanningObjectFromCSV(record);
+                            //====== Step 2 : Create an Object from a CSV Record
+                            aux = createPlanningObjectFromCSV(record, row);
 
-                            harnessPartList.add(aux.getHarnessPart());
-
-                            internalPartList.add(aux.getInternalPart());
-
-                            planningLines.add(aux);
-
+                            //====== Step 3 : Check duplicates CPN
+                            if (harnessPartList.contains(aux.getHarnessPart())) {
+                                new ImportError(new JFrame(), true,
+                                        "Element en double",
+                                        "L'article suivant figure plusieurs fois"
+                                        + " dans votre fichier.",
+                                        new ArrayList<String>() {
+                                    {
+                                        add(aux.getHarnessPart());
+                                    }
+                                }).setVisible(true);
+                                UILog.errorDialog("Import annulé !");
+                                return;
+                            } //====== Step 3 : Check duplicates Internal PN
+                            else if (internalPartList.contains(aux.getInternalPart())) {
+                                new ImportError(new JFrame(), true,
+                                        "Element en double",
+                                        "Le module interne suivant figure plusieurs fois"
+                                        + " dans votre fichier.",
+                                        new ArrayList<String>() {
+                                    {
+                                        add(aux.getInternalPart());
+                                    }
+                                }).setVisible(true);
+                                UILog.errorDialog("Import annulé !");
+                                return;
+                            } else {
+                                harnessPartList.add(aux.getHarnessPart());
+                                internalPartList.add(aux.getInternalPart());
+                                //====== Step 4 : Add the object to planning line.
+                                planningLines.add(aux);
+                                row++;
+                            }
                         } catch (Exception e) {
-                            String errorMsg = "Erreur dans la ligne " + i + ".\n"
-                                    + "Merci de vérifier les données du fichier CSV.";
-                            System.out.println(errorMsg);
-                            UILog.errorDialog(errorMsg);
-
                             return;
                         }
-                        i++;
+
                     }
 
-                    //====== Step 2 : check if CPN and LPN exists in wire_config
+                    //..........................................................
+                    //.................... DATABASE CHECKS .....................
+                    //====== Step 5 : check if CPN and LPN exists in wire_config
                     if (checkIfAllCustomerPartsExists(harnessPartList)
                             && checkifAllInternalPartsExists(internalPartList)) {
-                        
-                        //====== Step 3 : Cleaning the table and import the new data
+
+                        //====== Step 6 : Cleaning the table and import the new data
                         if (deletePlanning()) {
                             int lineNo = new ProductionPlan().createList(planningLines);
                             if (lineNo == 0) {
                                 UILog.infoDialog("Importation terminée avec succès !");
                             } else {
                                 UILog.errorDialog("Une erreur est survenue dans la ligne " + lineNo);
+                                UILog.warnDialog("Import échoué.");
                                 return;
                             }
                         }
-                        
                     }
-
-                    
-
                     // In the end of the import, refresh the list
                     refreshPlanningTable();
 
@@ -677,21 +702,21 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         Helper.startSession();
         SQLQuery query;
         String query_str = "SELECT * FROM ( VALUES ('')";
-        for (String cpn : harnessPartList){
-            query_str += ",('"+cpn+"')";
+        for (String cpn : harnessPartList) {
+            query_str += ",('" + cpn + "')";
         }
         query_str += " ) AS T(hp) WHERE hp <> '' AND hp NOT IN (SELECT harness_part FROM wire_config);";
         query = Helper.sess.createSQLQuery(query_str);
         query.addScalar("hp", StandardBasicTypes.STRING);
-        List<String> result = query.list();        
+        List<String> result = query.list();
         Helper.sess.getTransaction().commit();
         if (result.isEmpty()) {
             return true;
-        }else{
+        } else {
             ImportError dialog = new ImportError(
-                    new Frame(), 
-                    true,"Erreur d'import", 
-                    "Les code articles suivants ne sont pas paramétrés :",
+                    new Frame(),
+                    true, "Erreur d'import",
+                    "Les codes articles suivants ne sont pas paramétrés :",
                     result);
             dialog.setVisible(true);
             UILog.errorDialog("Import annulé !");
@@ -704,20 +729,20 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         Helper.startSession();
         SQLQuery query;
         String query_str = "SELECT * FROM ( VALUES ('')";
-        for (String ipn : internalPartList){
-            query_str += ",('"+ipn+"')";
+        for (String ipn : internalPartList) {
+            query_str += ",('" + ipn + "')";
         }
         query_str += " ) AS T(ipn) WHERE ipn <> '' AND ipn NOT IN (SELECT internal_part FROM wire_config);";
         query = Helper.sess.createSQLQuery(query_str);
         query.addScalar("ipn", StandardBasicTypes.STRING);
-        List<String> result = query.list();        
+        List<String> result = query.list();
         Helper.sess.getTransaction().commit();
         if (result.isEmpty()) {
             return true;
-        }else{
+        } else {
             ImportError dialog = new ImportError(
-                    new Frame(), 
-                    true,"Erreur d'import", 
+                    new Frame(),
+                    true, "Erreur d'import",
                     "Les code modules internes suivants ne sont pas paramétrés :",
                     result);
             dialog.setVisible(true);
@@ -725,7 +750,6 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             return false;
         }
     }
-
 
     private void btn_delete_planningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete_planningActionPerformed
 
@@ -764,7 +788,12 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
      * @return
      */
     private boolean validateValues() {
-        int lineId = 0;
+        int lineId;
+        try {
+            lineId = Integer.valueOf( txt_id.getText() );
+        } catch (Exception e) {
+            lineId = 0;
+        }
         if (!isHarnessPartExist(txt_harnessPart.getText())) { //IF PN exists in Configuration Standard Part
             msg_lbl.setForeground(Color.red);
             msg_lbl.setText(String.format("L'article %s n'est pas paramétré ou n'existe pas. Vérifier le menu 'Configuration / Article Master Data'", txt_harnessPart.getText()));
@@ -778,20 +807,20 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
             txt_internalPart.requestFocus();
             txt_internalPart.selectAll();
             return false;
-        } else if (is_CPN_OR_LPN_Planned(txt_harnessPart.getText(), txt_internalPart.getText(), lineId)) {
-            msg_lbl.setText(String.format("Article %s ou/et module interne %s déjà planifiés!", txt_harnessPart.getText(), txt_internalPart.getText()));
-            msg_lbl.setForeground(Color.red);
-            txt_harnessPart.requestFocus();
-            txt_harnessPart.selectAll();
-            txt_harnessPart.setBackground(Color.yellow);
-            txt_internalPart.setBackground(Color.yellow);
-            return false;
         } //Is the internal part exist in production plan
         else if (isInternalPartPlanned(txt_internalPart.getText(), lineId)) {
             msg_lbl.setText("Le module interne " + txt_internalPart.getText() + " est déjà planifié!");
             msg_lbl.setForeground(Color.red);
             txt_internalPart.requestFocus();
             txt_internalPart.selectAll();
+            txt_internalPart.setBackground(Color.yellow);
+            return false;
+        } else if (is_CPN_OR_LPN_Planned(txt_harnessPart.getText(), txt_internalPart.getText(), lineId)) {
+            msg_lbl.setText(String.format("Article %s ou/et module interne %s déjà planifiés!", txt_harnessPart.getText(), txt_internalPart.getText()));
+            msg_lbl.setForeground(Color.red);
+            txt_harnessPart.requestFocus();
+            txt_harnessPart.selectAll();
+            txt_harnessPart.setBackground(Color.yellow);
             txt_internalPart.setBackground(Color.yellow);
             return false;
         } else {
@@ -920,8 +949,50 @@ public class CRA_UI0001_PRODUCTION_PLAN extends javax.swing.JPanel {
         planning_jtable.setModel(new DefaultTableModel(getPlanningLines(), planning_table_header));
     }
 
-    private ProductionPlan createPlanningObjectFromCSV(CSVRecord record) {
-        ProductionPlan pp = new ProductionPlan(record.get("harness_part"), record.get("internal_part"), Integer.valueOf(record.get("planned_qty")));
+    /**
+     *
+     *
+     * @param record
+     * @param row The line number of this element in the excel file
+     * @return
+     */
+    private ProductionPlan createPlanningObjectFromCSV(CSVRecord record, int row) {
+        String harnessPart = null;
+        String internalPart = null;
+        Integer plannedQty = null;
+        ProductionPlan pp = null;
+
+        try {
+            System.out.println("["+row+";"+1+"]");
+            harnessPart = record.get("harness_part");
+        } catch (Exception e) {
+            UILog.exceptionDialog(this, "Erreur d'import CSV",
+                    String.format("Erreur au niveau de la ligne %d, colonne 1"
+                            + "\n-Le code article %s est invalide!", row, record.get("harness_part")));
+            return null;
+        }
+
+        try {
+            System.out.println("["+row+";"+2+"]");
+            internalPart = record.get("internal_part");
+        } catch (Exception e) {
+            UILog.exceptionDialog(this, "Erreur d'import CSV",
+                    String.format("Erreur au niveau de la ligne %d, colonne 2"
+                            + "\n-Le code module interne %s est invalide!", row, record.get("internal_part")));
+            return null;
+        }
+
+        try {
+            System.out.println("["+row+";"+3+"]");
+            plannedQty = Integer.valueOf(record.get("planned_qty"));
+        } catch (NumberFormatException e) {
+            UILog.exceptionDialog(this, "Erreur d'import CSV",
+                    String.format("Erreur au niveau de la ligne %d, colonne 3"
+                            + "\n-La quantité planifiées %s est invalide!", row, record.get("planned_qty")));
+            return null;
+        }
+
+        pp = new ProductionPlan(harnessPart, internalPart, plannedQty);
         return pp;
     }
 

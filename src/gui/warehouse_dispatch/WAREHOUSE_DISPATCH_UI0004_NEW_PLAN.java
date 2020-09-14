@@ -5,6 +5,7 @@
  */
 package gui.warehouse_dispatch;
 
+import __main__.GlobalVars;
 import entity.ConfigProject;
 import entity.ConfigTransporter;
 import entity.ConfigWarehouse;
@@ -46,8 +47,8 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
     private void initGui() {
         UIHelper.centerJDialog(this);
         this.setResizable(false);
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, false);
-        transporter_filter = ConfigTransporter.initTransporterJBox(this, transporter_filter, false);
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter,"", false);
+        transporter_filter = ConfigTransporter.initTransporterJBox(this, transporter_filter, "", false);
         this.ok_btn.setEnabled(false);
         disableEditingTable();
 
@@ -288,8 +289,6 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
 
                     String packaging_wh = new ConfigWarehouse().getPackagingWh(project_filter.getSelectedItem().toString());
                     lp.setPackagingWarehouse(packaging_wh);
-                    //System.out.println("lp.datedeliv " + dateDf.format(deliveryDatePicker.getDate()));
-                    //System.out.println("lp " + lp.toString());
                     //Save the new plan
                     int planId = lp.create(lp);
 
@@ -345,7 +344,8 @@ public final class WAREHOUSE_DISPATCH_UI0004_NEW_PLAN extends javax.swing.JDialo
 
     private void project_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_project_filterActionPerformed
         fg_warehouse_filter = ConfigWarehouse.initWarehouseJBox(this, fg_warehouse_filter, 
-                String.valueOf(project_filter.getSelectedItem()), ConfigWarehouse.FINISHED_GOODS, false);
+                String.valueOf(project_filter.getSelectedItem()), 
+                String.valueOf(GlobalVars.WarehouseType.FINISHED_GOODS), "", false);
     }//GEN-LAST:event_project_filterActionPerformed
 
     private void destinations_tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_destinations_tableMouseEntered

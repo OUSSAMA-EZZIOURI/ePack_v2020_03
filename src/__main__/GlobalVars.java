@@ -409,4 +409,16 @@ public class GlobalVars {
      *
      */
     public static Integer HARN_PART_LEN = 9;
+    
+    public enum WarehouseType {
+
+        FINISHED_GOODS,
+        PACKAGING,
+        INVENTORY,
+        SCRAP,
+        TRANSIT,
+        WIRES,
+        RAW_MATERIAL;
+
+    }
 }

@@ -366,7 +366,7 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
              * Load plan data into the UI fields
              */
             public void loadPlanDataInGui() {
-                String id = String.valueOf(load_plan_table.getValueAt(load_plan_table.getSelectedRow(), 1));
+                String id = String.valueOf(load_plan_table.getValueAt(load_plan_table.getSelectedRow(), 0));
                 Helper.startSession();
                 Query query = Helper.sess.createQuery(HQLHelper.GET_LOAD_PLAN_BY_ID);
                 query.setParameter("id", Integer.valueOf(id));
@@ -482,49 +482,6 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
     }
 
     /**
-     * Calculate the total per part number and per destination.
-     *
-     * @param planId
-     */
-    public void reloadTotalPerPNTab2(int planId) {
-        /*
-         Helper.startSession();
-         String query_str = String.format(
-         HQLHelper.GET_LOAD_PLAN_EXT_PACKAGING_AND_CONTAINER,
-         planId, planId);
-         SQLQuery query = Helper.sess.createSQLQuery(query_str);
-
-         query.addScalar("destination", StandardBasicTypes.STRING);
-         query.addScalar("pack_item", StandardBasicTypes.STRING);
-         query.addScalar("quantity", StandardBasicTypes.DOUBLE);
-
-         List<Object[]> result = query.list();
-         Helper.sess.getTransaction().commit();
-         //Reset table content
-         Vector total_packages_data = new Vector();
-         Vector<String> total_packages_header = new Vector<String>() {
-         };
-         total_packages_header.add("Destination");
-         total_packages_header.add("Pack Item");
-         total_packages_header.add("Quantity");
-         DefaultTableModel dataModel = new DefaultTableModel(total_packages_data, total_packages_header);
-         jtable_total_packages.setModel(dataModel);
-
-         //Populate jtable rows
-         for (Object[] o : result) {
-         Vector<Object> oneRow = new Vector<Object>();
-         oneRow.add(o[0]);
-         oneRow.add(o[1]);
-         System.out.println("o[2].toString() "+o[2].toString());
-         oneRow.add(String.valueOf(String.format("%1$,2f", Double.valueOf(o[2].toString()))));
-         total_packages_data.add(oneRow);
-         }
-         jtable_total_packages.setModel(new DefaultTableModel(total_packages_data, total_packages_header));
-         setTotalPackagingTableRowsStyle();
-         */
-    }
-
-    /**
      * Calculate how many packaging item is consumed by this plan for each
      * destination. It calculate the full explosion of pallets/box types to
      * single item + the external packaging items.
@@ -574,20 +531,21 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
         setTotalPackagingTableRowsStyle();
 
     }
-
+    
     /**
      * Load data in the UI from the given object
      *
      * @param p
+     * @param defaultDest
      */
     public void loadPlanDataToLabels(LoadPlan p, String defaultDest) {
-        System.out.println("HAHAHA " + defaultDest);
+        
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         plan_id_filter.setText("" + p.getId());
         this.plan_num_label.setText("" + p.getId());
         this.create_user_label.setText(p.getUser());
-        this.destination_label_help.setText("");
+        this.destination_label_help.setText("#");
         this.destination_label_help.setText(defaultDest);
         this.create_time_label.setText(sdf1.format(p.getCreateTime()));
         if (p.getDeliveryTime() != null) {
@@ -820,13 +778,14 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
      */
     public void load_plan_table_header() {
         this.reset_load_plan_table_content();
-        load_plan_table_header.add("TRUCK NO");
         load_plan_table_header.add("N° PLAN");
-        load_plan_table_header.add("CREATE DATE");
-        load_plan_table_header.add("DELIV DATE");
-        load_plan_table_header.add("USER");
-        load_plan_table_header.add("PROJECT");
-        load_plan_table_header.add("STATE");
+        load_plan_table_header.add("PROJET");
+        load_plan_table_header.add("TRANSPORTEUR");
+        load_plan_table_header.add("Num REMORQUE");
+        load_plan_table_header.add("DATE CREATION");
+        load_plan_table_header.add("DATE D'EXPEDITION");
+        load_plan_table_header.add("UTILISATEUR");
+        load_plan_table_header.add("STATUT");
 
         load_plan_table.setModel(new DefaultTableModel(load_plan_data, load_plan_table_header));
     }
@@ -934,6 +893,7 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
             } catch (Exception ex) {
                 id = 0;
             }
+            
             query.setInteger("id", id);
             query.setString("truckNo", "%" + lp_filter_val.getText() + "%");
             query.setString("user", "%" + lp_filter_val.getText() + "%");
@@ -1025,12 +985,14 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
         for (Object o : resultList) {
             LoadPlan lp = (LoadPlan) o;
             Vector<Object> oneRow = new Vector<Object>();
-            oneRow.add(lp.getTruckNo());
+            
             oneRow.add(lp.getId());
+            oneRow.add(lp.getProject());
+            oneRow.add(lp.getTransportCompany());
+            oneRow.add(lp.getTruckNo());
             oneRow.add(GlobalMethods.convertToStandardDate(lp.getCreateTime()));
             oneRow.add(GlobalMethods.convertToStandardDate(lp.getDeliveryTime()));
             oneRow.add(lp.getUser());
-            oneRow.add(lp.getProject());
             oneRow.add(lp.getPlanState());
 
             load_plan_table_data.add(oneRow);
@@ -1412,7 +1374,7 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
 
         time_label4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         time_label4.setForeground(new java.awt.Color(255, 255, 255));
-        time_label4.setText("Dispatch pour :");
+        time_label4.setText("Date expédition :");
 
         dispatch_date_label.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         dispatch_date_label.setForeground(new java.awt.Color(255, 255, 255));
@@ -1463,18 +1425,25 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
 
         load_plan_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Truck No", "N° Plan", "Create date", "Dispatch date"
+                "N° PLAN", "TRANSPORTEUR", "NUM. REMORQUE", "DATE CREATION", "DATE EXPEDITION", "UTILISATEUR", "PROJET", "STATUT"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -1938,44 +1907,41 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
         tab3_total_pnLayout.setHorizontalGroup(
             tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tab3_total_pnLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tab3_total_pnLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(tab3_total_pnLayout.createSequentialGroup()
-                                .addGroup(tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel22)
-                                    .addGroup(tab3_total_pnLayout.createSequentialGroup()
-                                        .addComponent(controlled_combobox_tab_2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(group_by_position)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel20)
-                                .addGap(18, 18, 18)
-                                .addComponent(tab2_txt_totalQty, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tab2_txt_nbreLigne, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(tab3_total_pnLayout.createSequentialGroup()
-                                .addGroup(tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel17)
-                                    .addComponent(tab2_destination, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel18)
-                                    .addComponent(tab2_cpn, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel19)
-                                    .addGroup(tab3_total_pnLayout.createSequentialGroup()
-                                        .addComponent(tab2_packtype, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(tab2_refresh)))
-                                .addGap(56, 56, 56))))
-                    .addGroup(tab3_total_pnLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 762, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(tab3_total_pnLayout.createSequentialGroup()
+                            .addGroup(tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel22)
+                                .addGroup(tab3_total_pnLayout.createSequentialGroup()
+                                    .addComponent(controlled_combobox_tab_2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(group_by_position)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel20)
+                            .addGap(18, 18, 18)
+                            .addComponent(tab2_txt_totalQty, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel21)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(tab2_txt_nbreLigne, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(tab3_total_pnLayout.createSequentialGroup()
+                            .addGroup(tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel17)
+                                .addComponent(tab2_destination, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel18)
+                                .addComponent(tab2_cpn, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(tab3_total_pnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel19)
+                                .addGroup(tab3_total_pnLayout.createSequentialGroup()
+                                    .addComponent(tab2_packtype, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(tab2_refresh)))
+                            .addGap(56, 56, 56)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 762, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(624, Short.MAX_VALUE))
         );
         tab3_total_pnLayout.setVerticalGroup(
@@ -2418,7 +2384,6 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
 
         add_new_plan_btn.setBackground(new java.awt.Color(102, 255, 255));
         add_new_plan_btn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        add_new_plan_btn.setForeground(new java.awt.Color(0, 0, 0));
         add_new_plan_btn.setText("Nouveau plan...");
         add_new_plan_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2428,7 +2393,6 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
 
         edit_plan_btn.setBackground(new java.awt.Color(102, 255, 255));
         edit_plan_btn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        edit_plan_btn.setForeground(new java.awt.Color(0, 0, 0));
         edit_plan_btn.setText("Editer...");
         edit_plan_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2438,7 +2402,6 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
 
         export_to_excel_btn.setBackground(new java.awt.Color(102, 255, 255));
         export_to_excel_btn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        export_to_excel_btn.setForeground(new java.awt.Color(0, 0, 0));
         export_to_excel_btn.setText("Exporter en excel...");
         export_to_excel_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2448,7 +2411,6 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
 
         fg_stock_btn.setBackground(new java.awt.Color(102, 255, 255));
         fg_stock_btn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fg_stock_btn.setForeground(new java.awt.Color(0, 0, 0));
         fg_stock_btn.setText("Stock F.G");
         fg_stock_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2458,7 +2420,6 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
 
         pallet_list_btn.setBackground(new java.awt.Color(102, 255, 255));
         pallet_list_btn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        pallet_list_btn.setForeground(new java.awt.Color(0, 0, 0));
         pallet_list_btn.setText("Liste des palettes");
         pallet_list_btn.setFocusable(false);
         pallet_list_btn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -2471,7 +2432,6 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
 
         details_pallet_btn.setBackground(new java.awt.Color(102, 255, 255));
         details_pallet_btn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        details_pallet_btn.setForeground(new java.awt.Color(0, 0, 0));
         details_pallet_btn.setText("Détails palette");
         details_pallet_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2481,7 +2441,6 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
 
         labels_control_btn.setBackground(new java.awt.Color(102, 255, 255));
         labels_control_btn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        labels_control_btn.setForeground(new java.awt.Color(0, 0, 0));
         labels_control_btn.setText("Contrôle des étiquettes");
         labels_control_btn.setFocusable(false);
         labels_control_btn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -2504,7 +2463,6 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
 
         close_plan_btn.setBackground(java.awt.Color.orange);
         close_plan_btn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        close_plan_btn.setForeground(new java.awt.Color(0, 0, 0));
         close_plan_btn.setText("Fermer le plan");
         close_plan_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -3553,7 +3511,7 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
         WarehouseHelper.temp_load_plan = plan;
         loadDestinationsRadioGroup(plan.getId());
 
-        loadPlanDataToLabels(plan, "");
+        loadPlanDataToLabels(plan, finalDest);
         reloadPlanLinesData(Integer.valueOf(id), finalDest);
         //loadDestinations(Integer.valueOf(id));
         //Disable delete button if the plan is CLOSED

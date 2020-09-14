@@ -1,49 +1,25 @@
 package gui.cra;
 
-import helper.FormField;
 import __main__.GlobalMethods;
 import __main__.GlobalVars;
 import __main__.PropertiesLoader;
 import entity.ConfigProject;
 import entity.ConfigWarehouse;
-import entity.WireStockLoc;
-import gui.warehouse_dispatch.WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL;
-import helper.FormValidator;
+import entity.WireStock;
 import helper.HQLHelper;
 import helper.Helper;
-import helper.JDialogExcelFileChooser;
 import helper.UIHelper;
 import helper.XLSXExportHelper;
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.hibernate.Query;
-import ui.UILog;
 
 /**
  *
@@ -53,16 +29,18 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
 
     private JTabbedPane parent;
     Vector<String> result_table_header = new Vector<String>(Arrays.asList(
-            "ID",
+            "Repère",
             "Magasin",
             "Location",
-            "Dernière modif.",
-            "Modifié par."
+            "Num.Carte",
+            "Stock",
+            "Type",
+            "FIFO Date."
     ));
 
     Vector result_table_data = new Vector();
-    List<WireStockLoc> excelLines;
-    WireStockLoc aux;
+    List<WireStock> excelLines;
+    WireStock aux;
     boolean err = false;
     int lineId = 0;
 
@@ -96,9 +74,19 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
         initGui();
     }
 
-    private void initProjectCombo() {
-        combo_project = ConfigProject.initProjectsJBox(this, combo_project, false);
-        combo_project_filter = ConfigProject.initProjectsJBox(this, combo_project_filter, true);
+    private void initProjectCombo() {        
+        combo_project_filter = ConfigProject.initProjectsJBox(this, combo_project_filter, "", true);
+    }
+    
+    private void initWarehouseCombo() {        
+        combo_warehouse_filter = ConfigWarehouse.initWarehouseJBox(
+                this, 
+                combo_warehouse_filter, 
+                "ALL", 
+                //WarehouseType.WIRES.name(), 
+                String.valueOf(GlobalVars.WarehouseType.WIRES),
+                "",
+                false);
     }
 
     private void initResultJTable() {
@@ -110,6 +98,7 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
     private void initGui() {
         initResultJTable();
         initProjectCombo();
+        initWarehouseCombo();
     }
 
     /**
@@ -129,34 +118,19 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
         result_jtable = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         craUI0003_form_panel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txt_location = new javax.swing.JTextField();
-        btn_delete = new javax.swing.JButton();
-        txt_id = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        btn_save = new javax.swing.JButton();
-        btn_new = new javax.swing.JButton();
-        jLabel18 = new javax.swing.JLabel();
-        txt_createTime = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
-        txt_createUser = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
-        txt_writeTime = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        txt_writeUser = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        combo_project = new javax.swing.JComboBox<>();
-        combo_warehouse = new javax.swing.JComboBox<>();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        txt_warehouse_filter = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        txt_location_filter = new javax.swing.JTextField();
-        btn_export_excel = new javax.swing.JButton();
-        btn_refresh = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         combo_project_filter = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        txt_wireNo_filter = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txt_location_filter = new javax.swing.JTextField();
+        btn_refresh = new javax.swing.JButton();
+        btn_export_excel = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        txt_cardNumber_filter = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        combo_warehouse_filter = new javax.swing.JComboBox<>();
+        checkbox_fifo_date = new javax.swing.JCheckBox();
         msg_lbl = new javax.swing.JLabel();
 
         jMenu1.setText("File");
@@ -188,117 +162,50 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Stock repère");
+        jLabel11.setText("Stock repères");
 
         craUI0003_form_panel.setBackground(new java.awt.Color(36, 65, 86));
         craUI0003_form_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Project");
+        jLabel8.setPreferredSize(new java.awt.Dimension(130, 24));
+
+        combo_project_filter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                combo_project_filterActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Location");
+
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Repère");
+
+        btn_refresh.setText("Actualiser");
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
+            }
+        });
+
+        btn_export_excel.setText("Exporter en Excel");
+        btn_export_excel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_export_excelActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Num. Carte");
+
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Magasin");
         jLabel2.setPreferredSize(new java.awt.Dimension(130, 24));
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Location");
-        jLabel3.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        txt_location.setPreferredSize(new java.awt.Dimension(130, 24));
-        txt_location.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_locationActionPerformed(evt);
-            }
-        });
-
-        btn_delete.setText("Supprimer");
-        btn_delete.setEnabled(false);
-        btn_delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_deleteActionPerformed(evt);
-            }
-        });
-
-        txt_id.setEditable(false);
-        txt_id.setText("#");
-        txt_id.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("ID");
-        jLabel5.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        btn_save.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        btn_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png"))); // NOI18N
-        btn_save.setText("Enregistrer");
-        btn_save.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_saveActionPerformed(evt);
-            }
-        });
-
-        btn_new.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        btn_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
-        btn_new.setText("Nouveau");
-        btn_new.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_newActionPerformed(evt);
-            }
-        });
-
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel18.setText("Créé le.");
-        jLabel18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel18.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        txt_createTime.setEditable(false);
-        txt_createTime.setBackground(new java.awt.Color(255, 255, 255));
-        txt_createTime.setToolTipText("");
-        txt_createTime.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel19.setText("Créé par.");
-        jLabel19.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jLabel19.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        txt_createUser.setEditable(false);
-        txt_createUser.setBackground(new java.awt.Color(255, 255, 255));
-        txt_createUser.setToolTipText("");
-        txt_createUser.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel20.setText("Modifié le.");
-        jLabel20.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jLabel20.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        txt_writeTime.setEditable(false);
-        txt_writeTime.setBackground(new java.awt.Color(255, 255, 255));
-        txt_writeTime.setToolTipText("");
-        txt_writeTime.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel21.setText("Modifié par.");
-        jLabel21.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jLabel21.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        txt_writeUser.setEditable(false);
-        txt_writeUser.setBackground(new java.awt.Color(255, 255, 255));
-        txt_writeUser.setToolTipText("");
-        txt_writeUser.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Project");
-        jLabel4.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        combo_project.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combo_projectActionPerformed(evt);
-            }
-        });
+        checkbox_fifo_date.setText("FIFO Date");
 
         javax.swing.GroupLayout craUI0003_form_panelLayout = new javax.swing.GroupLayout(craUI0003_form_panel);
         craUI0003_form_panel.setLayout(craUI0003_form_panelLayout);
@@ -308,163 +215,72 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_id, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                            .addComponent(txt_location, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(combo_project, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(combo_warehouse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(55, 55, 55)
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btn_refresh)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_createTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_createUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_writeTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_writeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
-                        .addComponent(btn_new, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(432, 432, 432)
-                        .addComponent(btn_delete)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btn_export_excel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, craUI0003_form_panelLayout.createSequentialGroup()
+                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
+                                .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(combo_project_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txt_wireNo_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(12, 12, 12)
+                                .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)))
+                            .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_cardNumber_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(checkbox_fifo_date, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                            .addComponent(txt_location_filter, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(combo_warehouse_filter, javax.swing.GroupLayout.Alignment.LEADING, 0, 143, Short.MAX_VALUE))
+                        .addGap(429, 429, 429))))
         );
         craUI0003_form_panelLayout.setVerticalGroup(
             craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
-                        .addComponent(btn_delete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(txt_createTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_new, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(combo_project, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(combo_warehouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(txt_location, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_createUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(txt_writeTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(txt_writeUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
-        );
-
-        txt_location.getAccessibleContext().setAccessibleName("location");
-        txt_id.getAccessibleContext().setAccessibleName("id");
-        txt_createTime.getAccessibleContext().setAccessibleName("createTime");
-        txt_createUser.getAccessibleContext().setAccessibleName("createUser");
-        txt_writeTime.getAccessibleContext().setAccessibleName("writeTime");
-        txt_writeUser.getAccessibleContext().setAccessibleName("writeUser");
-        combo_project.getAccessibleContext().setAccessibleName("project");
-        combo_warehouse.getAccessibleContext().setAccessibleName("warehouse");
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jLabel6.setText("Magasin");
-
-        jLabel7.setText("Location");
-
-        btn_export_excel.setText("Exporter en Excel");
-        btn_export_excel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_export_excelActionPerformed(evt);
-            }
-        });
-
-        btn_refresh.setText("Actualiser");
-        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_refreshActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setText("Project");
-        jLabel8.setPreferredSize(new java.awt.Dimension(130, 24));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(combo_project_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_warehouse_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_location_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(btn_refresh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_export_excel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(combo_project_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6)
-                        .addComponent(txt_warehouse_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
-                        .addComponent(txt_location_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_refresh)
-                        .addComponent(btn_export_excel)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                        .addComponent(txt_wireNo_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9))
+                    .addGroup(craUI0003_form_panelLayout.createSequentialGroup()
+                        .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(combo_project_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(combo_warehouse_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_location_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(txt_cardNumber_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkbox_fifo_date))
+                .addGap(21, 21, 21)
+                .addGroup(craUI0003_form_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_refresh)
+                    .addComponent(btn_export_excel))
+                .addContainerGap())
         );
 
         msg_lbl.setBackground(new java.awt.Color(255, 255, 255));
         msg_lbl.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         msg_lbl.setForeground(new java.awt.Color(255, 255, 255));
         msg_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        msg_lbl.setNextFocusableComponent(txt_id);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -475,7 +291,6 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(craUI0003_form_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1))
@@ -486,16 +301,14 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addComponent(craUI0003_form_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -505,14 +318,7 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
         this.result_jtable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2) {
-                    //Cleat the message field
-                    msg_lbl.setText("");
-                    int id = (int) result_jtable.getValueAt(result_jtable.getSelectedRow(), 0);
-                    Helper.startSession();
-                    aux = (WireStockLoc) Helper.sess.load(WireStockLoc.class, id);
-                    //#######################
-                    UIHelper.mapValuesInPanelFields(craUI0003_form_panel, aux, true);
-                    btn_delete.setEnabled(true);
+                    
                 }
             }
         }
@@ -522,140 +328,21 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
         refreshResultTable();
     }//GEN-LAST:event_btn_refreshActionPerformed
 
-    /**
-     *
-     * @return True if all fields match the patterns, false otherwise
-     */
-    private boolean validatePatterns() {
-        final List<FormField> fieldsList = Arrays.asList(                
-                new FormField(txt_location, "text",
-                        "[ a-zA-Z0-9]{2,25}",
-                        "Le code d'emplacement doit être "
-                        + "alpha-numérique et de longueur entre 2 et 25 caractères.", msg_lbl, GlobalVars.BG_DEFAULT_YELLOW, Color.WHITE)
-        );
-
-        return new FormValidator().validatePatterns(fieldsList, false);
-
-    }
-
-    /**
-     * Validate value in the database.
-     *
-     * @return
-     */
-    private boolean validateValues() {
-        String wh = combo_warehouse.getSelectedItem().toString().toUpperCase();
-        if (!IS_WAREHOUSE_EXIST(wh)) { //IF PN exists in Configuration Standard Part
-            msg_lbl.setForeground(Color.red);
-            msg_lbl.setText(String.format("Le magasin %s n'est pas paramétré ou n'existe pas. Vérifier le paramétrage de base de l'application.", wh));
-            combo_warehouse.requestFocus();            
-            return false;
-        } else 
-            
-            if (IS_WH_AND_LOCATION_EXIST(wh, txt_location.getText(), lineId)) {//If the warehouse and the location already exists
-            msg_lbl.setForeground(Color.red);
-            msg_lbl.setText(String.format("Le magasin %s et l'emplacement %s existent déjà.", wh, txt_location.getText()));
-            txt_location.requestFocus();
-            txt_location.selectAll();
-            return false;
-        }
-        return true;
-    }
-
-    private boolean IS_WH_AND_LOCATION_EXIST(String warehouse, String location, int id) {
-        Query query = Helper.sess.createQuery(HQLHelper.GET_WIRE_LOCATION_WHERE_PROJECT_WH_AND_LOC);
-        query.setParameter("project", combo_project.getSelectedItem().toString());
-        query.setParameter("warehouse", warehouse);
-        query.setParameter("location", location);
-        query.setParameter("id", id);
-        List<WireStockLoc> result = query.list();
-        if (result.size() > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean IS_WAREHOUSE_EXIST(String wh) {
-        return !(ConfigWarehouse.selectWarehouse(wh)).isEmpty();
-    }
-
-    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-        
-        String wh = combo_warehouse.getSelectedItem().toString().toUpperCase();
-        String project = combo_project.getSelectedItem().toString().toUpperCase();
-        //If it's a modification, we look for an existing line with a different id != 0
-        //and not this one that we want to edit.
-        if (!txt_id.getText().equals("#")) {
-            lineId = Integer.valueOf(txt_id.getText());
-        }
-        if (validatePatterns() && validateValues()) {//Inputs matches regex
-
-            //BINGO : Everything is all right, now we"ll save the object
-            msg_lbl.setForeground(Color.green);
-            if (lineId == 0) {//It's a new item
-                WireStockLoc x = (WireStockLoc) UIHelper.mapValuesFromJPanelToObj(craUI0003_form_panel, "entity.WireStockLoc", true);
-                lineId = x.create(x);
-                msg_lbl.setText("Nouveau élement créé #" + lineId);
-            } else {//It's a modification
-                aux.setProject(project);
-                aux.setWarehouse(wh);
-                aux.setLocation(txt_location.getText());
-                aux.update(aux);
-                msg_lbl.setText("Changements enregistrés!");
-            }
-            clearFields();
-
-        }
-    }//GEN-LAST:event_btn_saveActionPerformed
-
     private void btn_export_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export_excelActionPerformed
         XLSXExportHelper h = new XLSXExportHelper();
         h.exportToXSSFWorkbook(this, "STOCK_LOCATIONS", this.excelLines);
     }//GEN-LAST:event_btn_export_excelActionPerformed
 
-    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-
-        int confirmed = JOptionPane.showConfirmDialog(this,
-                String.format("Confirmez-vous la suppression de cet élément [%s] ?",
-                        this.aux.getId()),
-                "Suppression",
-                JOptionPane.WARNING_MESSAGE);
-
-        if (confirmed == 0) {
-            aux.delete(aux);
-            clearFields();
-            msg_lbl.setBackground(Color.green);
-            msg_lbl.setText("Elément supprimé !");
-            refreshResultTable();
-        }
-    }//GEN-LAST:event_btn_deleteActionPerformed
-
-    private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
-        clearFields();
-    }//GEN-LAST:event_btn_newActionPerformed
-
-    private void txt_locationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_locationActionPerformed
+    private void combo_project_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_project_filterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_locationActionPerformed
-
-    private void combo_projectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_projectActionPerformed
-        String project = String.valueOf(combo_project.getSelectedItem()).trim();
-        
-        ConfigWarehouse.initWarehouseJBox(
-                this, 
-                combo_warehouse, 
-                project,
-                ConfigWarehouse.WIRES, 
-                false);
-                
-                
-    }//GEN-LAST:event_combo_projectActionPerformed
+    }//GEN-LAST:event_combo_project_filterActionPerformed
 
     private Vector getResultLines() {
         result_table_data = new Vector();
         Helper.startSession();
         List<String> projects = new ArrayList<>();
-        Query query = Helper.sess.createQuery(HQLHelper.GET_WIRE_LOCATION_LIKE_WH_AND_LOC);
+        List<String> warehouses = new ArrayList<>();
+        Query query = Helper.sess.createQuery(HQLHelper.GET_WIRE_STOCK_WHERE);
         if(combo_project_filter.getSelectedItem().toString().equals("ALL")){
             for (int i =0; i<combo_project_filter.getItemCount();i++) {
                 projects.add(combo_project_filter.getItemAt(i));                
@@ -663,25 +350,36 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
         }else{
             projects.add(combo_project_filter.getSelectedItem().toString());
         }
-        query.setParameter("warehouse", "%" + txt_warehouse_filter.getText() + "%");
+        //combo_warehouse_filter
+        if(combo_warehouse_filter.getSelectedItem().toString().equals("ALL")){
+            for (int i =0; i<combo_warehouse_filter.getItemCount();i++) {
+                warehouses.add(combo_warehouse_filter.getItemAt(i));                
+            }
+        }else{
+            warehouses.add(combo_warehouse_filter.getSelectedItem().toString());
+        }
         query.setParameter("location", "%" + txt_location_filter.getText() + "%");
+        query.setParameter("cardNumber", "%" + txt_cardNumber_filter.getText() + "%");
+        query.setParameter("wireNo", "%" + txt_wireNo_filter.getText() + "%");
+        query.setParameterList("warehouses", warehouses);
         query.setParameterList("projects", projects);
-        List<WireStockLoc> result = query.list();
+        List<WireStock> result = query.list();
         Helper.sess.getTransaction().commit();
 
-        this.excelLines = new ArrayList<WireStockLoc>(result.size());
+        this.excelLines = new ArrayList<WireStock>(result.size());
 
         //Populate the jTable with lines
-        for (WireStockLoc obj : result) {
+        for (WireStock obj : result) {
             //Add this object to excelLines list
-            this.excelLines.add((WireStockLoc) obj);
-
+            this.excelLines.add((WireStock) obj);
+            
             Vector<Object> oneRow = new Vector<Object>();
-            oneRow.add(obj.getId());
+            oneRow.add(obj.getWireNo());
             oneRow.add(obj.getWarehouse());
             oneRow.add(obj.getLocation());
-            oneRow.add(obj.getWriteTime());
-            oneRow.add(obj.getWriteUser());
+            oneRow.add(obj.getQty());
+            oneRow.add(obj.getWireType());
+            oneRow.add(obj.getFifoTime());
 
             result_table_data.add(oneRow);
         }
@@ -693,60 +391,31 @@ public class CRA_UI0005_WIRE_STOCK extends javax.swing.JPanel {
         result_jtable.setModel(new DefaultTableModel(getResultLines(), result_table_header));
     }
 
-    private void createNewObjectFromCsv(CSVRecord record) {
-        WireStockLoc x = new WireStockLoc(
-                record.get("project"),
-                record.get("warehouse"), 
-                record.get("location"));
-        x.create(x);
-    }
-
-    private void clearFields() {
-        UIHelper.clearJTextFields(craUI0003_form_panel.getComponents());
-        txt_id.setText("#");
-        btn_delete.setEnabled(false);
-        lineId = 0;
-    }
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_export_excel;
-    private javax.swing.JButton btn_new;
     private javax.swing.JButton btn_refresh;
-    private javax.swing.JButton btn_save;
-    private javax.swing.JComboBox<String> combo_project;
+    private javax.swing.JCheckBox checkbox_fifo_date;
     private javax.swing.JComboBox<String> combo_project_filter;
-    private javax.swing.JComboBox<String> combo_warehouse;
+    private javax.swing.JComboBox<String> combo_warehouse_filter;
     private javax.swing.JPanel craUI0003_form_panel;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel msg_lbl;
     private javax.swing.JTable result_jtable;
-    private javax.swing.JTextField txt_createTime;
-    private javax.swing.JTextField txt_createUser;
-    private javax.swing.JTextField txt_id;
-    private javax.swing.JTextField txt_location;
+    private javax.swing.JTextField txt_cardNumber_filter;
     private javax.swing.JTextField txt_location_filter;
-    private javax.swing.JTextField txt_warehouse_filter;
-    private javax.swing.JTextField txt_writeTime;
-    private javax.swing.JTextField txt_writeUser;
+    private javax.swing.JTextField txt_wireNo_filter;
     // End of variables declaration//GEN-END:variables
 
 }

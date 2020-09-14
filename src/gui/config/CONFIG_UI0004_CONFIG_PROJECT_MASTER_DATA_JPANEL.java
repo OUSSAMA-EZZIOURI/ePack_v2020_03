@@ -266,22 +266,22 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
                     case 1:
                         break;
                     case 2://Family Pane
-                        familyPane_field_project = ConfigProject.initProjectsJBox(this, familyPane_field_project, false);
+                        familyPane_field_project = ConfigProject.initProjectsJBox(this, familyPane_field_project, "", false);
                         break;
                     case 3://Segment Pane
-                        segmentPane_field_project = ConfigProject.initProjectsJBox(this, segmentPane_field_project, false);
+                        segmentPane_field_project = ConfigProject.initProjectsJBox(this, segmentPane_field_project,"", false);
                         break;
                     case 4://Workplace Pane
-                        workplacePane_field_project = ConfigProject.initProjectsJBox(this, workplacePane_field_project, false);
+                        workplacePane_field_project = ConfigProject.initProjectsJBox(this, workplacePane_field_project,"", false);
                         ConfigSegment.setSegmentByProject(this, workplacePane_field_segment, workplacePane_field_project.getSelectedItem().toString(), false);
                         break;
                     case 5:
-                        warehousePane_field_project = ConfigProject.initProjectsJBox(this, warehousePane_field_project, false);
+                        warehousePane_field_project = ConfigProject.initProjectsJBox(this, warehousePane_field_project,"", false);
                         break;
                     case 6:                                                
                         break;
                     case 7:                        
-                        dispatchScanPane_field_project = ConfigProject.initProjectsJBox(this, dispatchScanPane_field_project, false);
+                        dispatchScanPane_field_project = ConfigProject.initProjectsJBox(this, dispatchScanPane_field_project, "",false);
                         break;
                     default:
                         break;

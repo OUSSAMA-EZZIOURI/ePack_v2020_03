@@ -66,7 +66,7 @@ public class PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL extends javax.swing.JP
     public PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL(JTabbedPane parent) {
         this.parent = parent;
         initComponents();
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, true);
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "", true);
         this.workplace_filter.setEnabled(false);
         this.reset_tables_content();
     }

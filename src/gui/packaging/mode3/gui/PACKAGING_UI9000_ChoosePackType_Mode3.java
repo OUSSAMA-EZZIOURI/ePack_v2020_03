@@ -51,14 +51,14 @@ public final class PACKAGING_UI9000_ChoosePackType_Mode3 extends javax.swing.JDi
             "INDEX",
             "PACK TYPE",
             "STD PACK",
-            "STD TIME",
-            "WORKSTATION",
-            "SEGMENT",
-            "WORKPLACE",
-            "UCS LIFES",
-            "COMMENT",
-            "SPECIAL ORDER",
-            "ORDER NO"
+            //"STD TIME",
+            //"WORKSTATION",
+            //"SEGMENT",
+            "WORKPLACE"
+            //"UCS LIFES",
+            //"COMMENT",
+            //"SPECIAL ORDER",
+            //"ORDER NO"
     );
 
     /**
@@ -109,14 +109,14 @@ public final class PACKAGING_UI9000_ChoosePackType_Mode3 extends javax.swing.JDi
             oneRow.add(String.valueOf(c.getHarnessIndex())); // INDEX
             oneRow.add(String.valueOf(c.getPackType())); // PACK TYPE
             oneRow.add(String.valueOf(c.getPackSize())); // STD PACK
-            oneRow.add(String.valueOf(c.getStdTime())); // STD TIME
-            oneRow.add(String.valueOf(c.getAssyWorkstationName())); // WORKSTATION
-            oneRow.add(String.valueOf(c.getSegment())); // SEGMENT                     
+            //oneRow.add(String.valueOf(c.getStdTime())); // STD TIME
+            //oneRow.add(String.valueOf(c.getAssyWorkstationName())); // WORKSTATION
+            //oneRow.add(String.valueOf(c.getSegment())); // SEGMENT                     
             oneRow.add(String.valueOf(c.getWorkplace())); // WORKPLACE    
-            oneRow.add(String.valueOf(c.getLifes())); // UCS LIFES  
-            oneRow.add(String.valueOf(c.getComment())); // COMMENT  
-            oneRow.add(String.valueOf(c.getSpecialOrder())); // SPECIAL ORDER 
-            oneRow.add(String.valueOf(c.getOrderNo())); // ORDER NO  
+            //oneRow.add(String.valueOf(c.getLifes())); // UCS LIFES  
+            //oneRow.add(String.valueOf(c.getComment())); // COMMENT  
+            //oneRow.add(String.valueOf(c.getSpecialOrder())); // SPECIAL ORDER 
+            //oneRow.add(String.valueOf(c.getOrderNo())); // ORDER NO  
 
             result_table_data.add(oneRow);
         }
@@ -287,39 +287,40 @@ public final class PACKAGING_UI9000_ChoosePackType_Mode3 extends javax.swing.JDi
 
     private void mappingValsToContext(int ucs_id) {
         //58	22216200	26C06970A	P01	2RV	120	0.377	SMALL_SB	SMALLS_MDEP	SMALL	-1	null	false	null
-        ConfigUcs u = new ConfigUcs().select(ucs_id);
+        ConfigUcs config = new ConfigUcs().select(ucs_id);
 
-        PackagingVars.mode3_context.getBaseContainerTmp().setUcsId(u.getId());
-        PackagingVars.mode3_context.getBaseContainerTmp().setHarnessPart(u.getHarnessPart());
-        PackagingVars.mode3_context.getBaseContainerTmp().setSupplierPartNumber(u.getSupplierPartNumber());
-        PackagingVars.mode3_context.getBaseContainerTmp().setHarnessIndex(u.getHarnessIndex());
-        PackagingVars.mode3_context.getBaseContainerTmp().setPackType(u.getPackType());
-        PackagingVars.mode3_context.getBaseContainerTmp().setQtyExpected(u.getPackSize());
-        PackagingVars.mode3_context.getBaseContainerTmp().setStdTime(u.getStdTime());
-        PackagingVars.mode3_context.getBaseContainerTmp().setAssyWorkstation(u.getAssyWorkstationName());
-        PackagingVars.mode3_context.getBaseContainerTmp().setSegment(u.getSegment());
-        PackagingVars.mode3_context.getBaseContainerTmp().setWorkplace(u.getWorkplace());
-        PackagingVars.mode3_context.getBaseContainerTmp().setUcsLifes(u.getLifes());
-        PackagingVars.mode3_context.getBaseContainerTmp().setComment(u.getComment());
-        PackagingVars.mode3_context.getBaseContainerTmp().setSpecial_order(u.getSpecialOrder());
-        PackagingVars.mode3_context.getBaseContainerTmp().setOrder_no(u.getOrderNo());
-        PackagingVars.mode3_context.getBaseContainerTmp().setChoosen_pack_type(u.getPackType());
-        PackagingVars.mode3_context.getBaseContainerTmp().setNetWeight(u.getNetWeight());
-        PackagingVars.mode3_context.getBaseContainerTmp().setGrossWeight(u.getGrossWeight());
-        PackagingVars.mode3_context.getBaseContainerTmp().setVolume(u.getVolume());
-        PackagingVars.mode3_context.getBaseContainerTmp().setPrice(u.getPrice());
-        PackagingVars.mode3_context.getBaseContainerTmp().setEngChange(u.getEngChange());
-        PackagingVars.mode3_context.getBaseContainerTmp().setEngChangeDate(u.getEngChangeDate());
-        PackagingVars.mode3_context.getBaseContainerTmp().setProject(u.getProject());
-        PackagingVars.mode3_context.getBaseContainerTmp().setWarehouse(u.getWarehouse());
-        PackagingVars.mode3_context.getBaseContainerTmp().setDestination(u.getDestination());
-        PackagingVars.mode3_context.getBaseContainerTmp().setArticleDesc(u.getArticleDesc());
-        PackagingVars.mode3_context.getBaseContainerTmp().setLabelPerPiece(u.isLabelPerPiece());
-        PackagingVars.mode3_context.getBaseContainerTmp().setPriority(u.getPriority());
-        PackagingVars.mode3_context.getBaseContainerTmp().setOpenSheetCopies(u.getOpenningSheetCopies());
-        PackagingVars.mode3_context.getBaseContainerTmp().setCloseSheetCopies(u.getClosingSheetCopies());
-        PackagingVars.mode3_context.getBaseContainerTmp().setClosingSheetFormat(u.getClosingSheetFormat());
-        PackagingVars.mode3_context.getBaseContainerTmp().setPrint_destination(u.getPrint_destination());
+        PackagingVars.mode3_context.getBaseContainerTmp().setUcsId(config.getId());
+        PackagingVars.mode3_context.getBaseContainerTmp().setHarnessPart(config.getHarnessPart());
+        PackagingVars.mode3_context.getBaseContainerTmp().setSupplierPartNumber(config.getSupplierPartNumber());
+        PackagingVars.mode3_context.getBaseContainerTmp().setHarnessIndex(config.getHarnessIndex());
+        PackagingVars.mode3_context.getBaseContainerTmp().setPackType(config.getPackType());
+        PackagingVars.mode3_context.getBaseContainerTmp().setQtyExpected(config.getPackSize());
+        PackagingVars.mode3_context.getBaseContainerTmp().setStdTime(config.getStdTime());
+        PackagingVars.mode3_context.getBaseContainerTmp().setCraStdTime(config.getCraStdTime());
+        PackagingVars.mode3_context.getBaseContainerTmp().setAssyWorkstation(config.getAssyWorkstationName());
+        PackagingVars.mode3_context.getBaseContainerTmp().setSegment(config.getSegment());
+        PackagingVars.mode3_context.getBaseContainerTmp().setWorkplace(config.getWorkplace());
+        PackagingVars.mode3_context.getBaseContainerTmp().setUcsLifes(config.getLifes());
+        PackagingVars.mode3_context.getBaseContainerTmp().setComment(config.getComment());
+        PackagingVars.mode3_context.getBaseContainerTmp().setSpecial_order(config.getSpecialOrder());
+        PackagingVars.mode3_context.getBaseContainerTmp().setOrder_no(config.getOrderNo());
+        PackagingVars.mode3_context.getBaseContainerTmp().setChoosen_pack_type(config.getPackType());
+        PackagingVars.mode3_context.getBaseContainerTmp().setNetWeight(config.getNetWeight());
+        PackagingVars.mode3_context.getBaseContainerTmp().setGrossWeight(config.getGrossWeight());
+        PackagingVars.mode3_context.getBaseContainerTmp().setVolume(config.getVolume());
+        PackagingVars.mode3_context.getBaseContainerTmp().setPrice(config.getPrice());
+        PackagingVars.mode3_context.getBaseContainerTmp().setEngChange(config.getEngChange());
+        PackagingVars.mode3_context.getBaseContainerTmp().setEngChangeDate(config.getEngChangeDate());
+        PackagingVars.mode3_context.getBaseContainerTmp().setProject(config.getProject());
+        PackagingVars.mode3_context.getBaseContainerTmp().setWarehouse(config.getWarehouse());
+        PackagingVars.mode3_context.getBaseContainerTmp().setDestination(config.getDestination());
+        PackagingVars.mode3_context.getBaseContainerTmp().setArticleDesc(config.getArticleDesc());
+        PackagingVars.mode3_context.getBaseContainerTmp().setLabelPerPiece(config.isLabelPerPiece());
+        PackagingVars.mode3_context.getBaseContainerTmp().setPriority(config.getPriority());
+        PackagingVars.mode3_context.getBaseContainerTmp().setOpenSheetCopies(config.getOpenningSheetCopies());
+        PackagingVars.mode3_context.getBaseContainerTmp().setCloseSheetCopies(config.getClosingSheetCopies());
+        PackagingVars.mode3_context.getBaseContainerTmp().setClosingSheetFormat(config.getClosingSheetFormat());
+        PackagingVars.mode3_context.getBaseContainerTmp().setPrint_destination(config.getPrint_destination());
         //UILog.infoDialog("Base Container Temp for Mode 2 : "+u.getClosingSheetFormat());
         System.out.println(PackagingVars.mode3_context.getBaseContainerTmp().toString());
     }

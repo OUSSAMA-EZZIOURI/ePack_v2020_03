@@ -267,6 +267,7 @@ public class Mode3_S031_PalletChoice implements Mode3_State {
         bh.setPalletNumber(barcode);
         bh.setHarnessType(context.getBaseContainerTmp().getHarnessType());
         bh.setStdTime(bc.getStdTime());
+        bh.setCraStdTime(bc.getCraStdTime());
         bh.setPackWorkstation(GlobalVars.APP_HOSTNAME);
         bh.setSegment(bc.getSegment());
         bh.setWorkplace(bc.getWorkplace());

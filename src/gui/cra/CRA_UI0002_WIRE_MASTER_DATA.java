@@ -49,8 +49,8 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             "Mag. Source",
             "Mag. Location",
             "Mag. Dest",
-            "Créé le.",
-            "Créé par.",
+            //"Créé le.",
+            //"Créé par.",
             "Dernière modif.",
             "Modifié par."
     ));
@@ -95,7 +95,7 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             ConfigProject.initProjectsJBox(this, combo_project, "");
         }
 
-        ConfigProject.initProjectsJBox(this, combo_project_filter, true);
+        ConfigProject.initProjectsJBox(this, combo_project_filter, "", true);
                 
     }
 
@@ -1081,8 +1081,8 @@ public class CRA_UI0002_WIRE_MASTER_DATA extends javax.swing.JPanel {
             row.add(c.getSourceWarehouse());
             row.add(c.getSourceLocation());
             row.add(c.getDestWarehouse());
-            row.add(c.getCreateTime());
-            row.add(c.getCreateUser());
+            //row.add(c.getCreateTime());
+            //row.add(c.getCreateUser());
             row.add(c.getWriteTime());
             row.add(c.getWriteUser());
 

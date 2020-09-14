@@ -313,13 +313,13 @@ public final class PACKAGING_UI0001_Main_Mode3 extends javax.swing.JFrame implem
 
     public void enableAdminMenus() {
         this.enableOperatorMenus();
-        this.menu03_config.setVisible(true);
+       // this.menu03_config.setVisible(true);
 
     }
 
     public void disableAdminMenus() {
         this.disableOperatorMenus();
-        this.menu03_config.setVisible(false);
+       // this.menu03_config.setVisible(false);
     }
 
     /**
@@ -354,8 +354,6 @@ public final class PACKAGING_UI0001_Main_Mode3 extends javax.swing.JFrame implem
         menu_bar = new javax.swing.JMenuBar();
         menu02_process = new javax.swing.JMenu();
         menu020_waiting = new javax.swing.JMenuItem();
-        menu03_config = new javax.swing.JMenu();
-        menu030 = new javax.swing.JMenuItem();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -580,18 +578,6 @@ public final class PACKAGING_UI0001_Main_Mode3 extends javax.swing.JFrame implem
 
         menu_bar.add(menu02_process);
 
-        menu03_config.setText("Configuration");
-
-        menu030.setText("Serial COM");
-        menu030.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu030ActionPerformed(evt);
-            }
-        });
-        menu03_config.add(menu030);
-
-        menu_bar.add(menu03_config);
-
         setJMenuBar(menu_bar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -727,10 +713,6 @@ public final class PACKAGING_UI0001_Main_Mode3 extends javax.swing.JFrame implem
         this.feedbackTextarea.setText(text);
     }
 
-    private void menu030ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu030ActionPerformed
-        new GUI(this, true).setVisible(true);
-    }//GEN-LAST:event_menu030ActionPerformed
-
     public void reloadDataTable() {
 
         Helper.startSession();
@@ -796,14 +778,7 @@ public final class PACKAGING_UI0001_Main_Mode3 extends javax.swing.JFrame implem
     }//GEN-LAST:event_harnessTypeFilterBoxItemStateChanged
 
     private void harnessTypeFilterBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_harnessTypeFilterBoxActionPerformed
-        /*
-         for (int i = 0; i < harnessTypeBox.getItemCount(); i++) {
-         if (String.valueOf(harnessTypeFilterBox.getSelectedItem()).equals(String.valueOf(harnessTypeBox.getItemAt(i)))) {
-         this.harnessTypeBox.setSelectedIndex(i);
-         break;
-         }
-         }
-         reloadDataTable();*/
+        
     }//GEN-LAST:event_harnessTypeFilterBoxActionPerformed
 
     private void harnessTypeBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_harnessTypeBoxItemStateChanged
@@ -880,8 +855,6 @@ public final class PACKAGING_UI0001_Main_Mode3 extends javax.swing.JFrame implem
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem menu020_waiting;
     private javax.swing.JMenu menu02_process;
-    private javax.swing.JMenuItem menu030;
-    private javax.swing.JMenu menu03_config;
     private javax.swing.JMenuBar menu_bar;
     private javax.swing.JPanel panel_bottom;
     private javax.swing.JPanel panel_top;

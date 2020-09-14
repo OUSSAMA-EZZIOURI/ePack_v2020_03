@@ -120,6 +120,9 @@
                 </Property>
                 <Property name="requestFocusEnabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="taskOutputPropertyChange"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

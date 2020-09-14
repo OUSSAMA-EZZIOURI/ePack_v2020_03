@@ -115,6 +115,9 @@ public class BaseContainer extends DAO implements java.io.Serializable {
 
     @Column(name = "std_time", nullable = false, columnDefinition = "float default 0.00")
     private Double stdTime;
+    
+    @Column(name = "cra_std_time", nullable = false, columnDefinition = "float default 0.00")
+    private Double craStdTime;
 
     @Column(name = "price", nullable = false, columnDefinition = "float default 0.00")
     private Double price;
@@ -260,6 +263,7 @@ public class BaseContainer extends DAO implements java.io.Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(name = "delete_time")
     private Date deleteTime;
+    
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "container", cascade = CascadeType.ALL)
     private Set<BaseHarness> harnessList = new HashSet<BaseHarness>(0);
@@ -471,6 +475,14 @@ public class BaseContainer extends DAO implements java.io.Serializable {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    public Double getCraStdTime() {
+        return craStdTime;
+    }
+
+    public void setCraStdTime(Double craStdTime) {
+        this.craStdTime = craStdTime;
     }
 
     public Date getClosedTime() {

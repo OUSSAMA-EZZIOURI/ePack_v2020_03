@@ -79,6 +79,9 @@ public class BaseHarness extends DAO implements java.io.Serializable {
 
     @Column(name = "std_time")
     private double stdTime;
+    
+    @Column(name = "cra_std_time", nullable = false, columnDefinition = "float default 0.00")
+    private double craStdTime;
 
     @Column(name = "harness_type")
     private String harnessType;
@@ -287,6 +290,16 @@ public class BaseHarness extends DAO implements java.io.Serializable {
         this.stdTime = stdTime;
     }
 
+    public double getCraStdTime() {
+        return craStdTime;
+    }
+
+    public void setCraStdTime(double craStdTime) {
+        this.craStdTime = craStdTime;
+    }
+
+    
+    
     public String getSegment() {
         return segment;
     }

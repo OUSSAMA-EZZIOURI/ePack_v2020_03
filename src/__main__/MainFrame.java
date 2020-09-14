@@ -212,6 +212,9 @@ public class MainFrame extends javax.swing.JFrame {
         MENU_06_CRA = new javax.swing.JMenu();
         MENU_06_PRODUCTION_PLAN = new javax.swing.JMenuItem();
         MENU_06_WIRE_STOCK = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         MENU_06_WIRE_DEMAND = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         MENU_06_WIRE_MASTER_DATA = new javax.swing.JMenuItem();
@@ -451,6 +454,16 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         MENU_06_CRA.add(MENU_06_WIRE_STOCK);
+
+        jMenu1.setText("Inventaire");
+
+        jMenuItem2.setText("par num. caarte Kanban");
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem4.setText("par référence repère");
+        jMenu1.add(jMenuItem4);
+
+        MENU_06_CRA.add(jMenu1);
 
         MENU_06_WIRE_DEMAND.setText("Besoin par repère");
         MENU_06_WIRE_DEMAND.addActionListener(new java.awt.event.ActionListener() {
@@ -897,8 +910,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu MENU_07_ABOUT;
     private javax.swing.JMenuItem MENU_07_ABOUT_UI0001;
     private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JMenuItem logoutMenuItem;

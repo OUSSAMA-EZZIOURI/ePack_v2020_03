@@ -5,6 +5,7 @@
  */
 package gui.config;
 
+import __main__.GlobalVars;
 import entity.ConfigFamily;
 import entity.ConfigProject;
 import entity.ConfigSegment;
@@ -85,7 +86,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
         //Load pack master data
         pack_type_filter = PackagingMaster.initPackMasterJBox(this, pack_type_filter, false);
 
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, false);
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "", false);
         
         this.initLineTableDoubleClick();
         
@@ -288,6 +289,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
         barcodes_nbre_txtbox.setText("0");
         pack_size_txtbox.setText("");
         stdTime_txtbox.setText("0,00");
+        cra_stdTime_txtbox.setText("0,00");
         price_txtbox.setText("0,00");
         order_no_txt.setText("");
         delete_btn.setEnabled(false);
@@ -435,6 +437,9 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
         fname_lbl14 = new javax.swing.JLabel();
         priority = new javax.swing.JTextField();
         login_lbl7 = new javax.swing.JLabel();
+        cra_stdTime_txtbox = new javax.swing.JTextField();
+        pwd_lbl15 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         pwd_lbl3 = new javax.swing.JLabel();
         pack_type_filter = new javax.swing.JComboBox();
@@ -649,7 +654,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                         .addComponent(filter_btn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(clear_search_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(528, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -839,7 +844,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
         login_lbl4.setText("Order No *");
 
         pwd_lbl6.setForeground(new java.awt.Color(255, 255, 255));
-        pwd_lbl6.setText("Std Time *");
+        pwd_lbl6.setText("Assemblage *");
 
         stdTime_txtbox.setBackground(new java.awt.Color(204, 204, 255));
         stdTime_txtbox.setText("0.00");
@@ -882,18 +887,34 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
         login_lbl7.setForeground(new java.awt.Color(255, 255, 255));
         login_lbl7.setText("Priorité");
 
+        cra_stdTime_txtbox.setBackground(new java.awt.Color(204, 204, 255));
+        cra_stdTime_txtbox.setText("0.00");
+        cra_stdTime_txtbox.setMaximumSize(null);
+        cra_stdTime_txtbox.setName("fname_txtbox"); // NOI18N
+        cra_stdTime_txtbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cra_stdTime_txtboxActionPerformed(evt);
+            }
+        });
+
+        pwd_lbl15.setForeground(new java.awt.Color(255, 255, 255));
+        pwd_lbl15.setText("Coupe + préparation *");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Temps de gamme");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lname_lbl1)
-                    .addComponent(login_lbl1)
-                    .addComponent(fname_lbl14)
-                    .addComponent(login_lbl5)
-                    .addComponent(login_lbl3))
+                    .addComponent(login_lbl3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(login_lbl5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fname_lbl14, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(login_lbl1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(packaging_wh_filter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -903,32 +924,30 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                     .addComponent(assy_txtbox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pwd_lbl2)
-                    .addComponent(lname_lbl2)
-                    .addComponent(pwd_lbl6)
-                    .addComponent(pwd_lbl7)
-                    .addComponent(pwd_lbl)
-                    .addComponent(login_lbl))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(stdTime_txtbox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                    .addComponent(family_filter, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(segment_filter, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(workplace_filter, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(write_time_txt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(active_combobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pwd_lbl7, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pwd_lbl2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pwd_lbl, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(login_lbl, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(login_lbl4)
-                            .addComponent(pwd_lbl1)
-                            .addComponent(lname_lbl)
-                            .addComponent(fname_lbl)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(write_time_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(segment_filter, javax.swing.GroupLayout.Alignment.LEADING, 0, 171, Short.MAX_VALUE)
+                                .addComponent(workplace_filter, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(family_filter, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
-                        .addComponent(login_lbl7)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(login_lbl7))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(active_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 36, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fname_lbl, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lname_lbl, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pwd_lbl1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(login_lbl4, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(priority)
                     .addComponent(cpn_txtbox, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
@@ -936,6 +955,27 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                     .addComponent(order_no_txt, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
                     .addComponent(index_txtbox, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
                 .addGap(446, 446, 446))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pwd_lbl15)
+                            .addComponent(pwd_lbl6))
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cra_stdTime_txtbox, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                            .addComponent(stdTime_txtbox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(351, 351, 351)
+                        .addComponent(lname_lbl2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(lname_lbl1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -972,18 +1012,15 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                     .addComponent(fname_lbl14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(pwd_lbl6)
-                        .addComponent(stdTime_txtbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(order_no_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(login_lbl4))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(pwd_lbl2, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(order_no_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(login_lbl4)
+                            .addComponent(active_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(assy_txtbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(login_lbl1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pwd_lbl2)
-                    .addComponent(active_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -994,7 +1031,17 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                         .addComponent(write_time_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(priority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(login_lbl7)))
-                .addGap(70, 70, 70))
+                .addGap(35, 35, 35)
+                .addComponent(jLabel4)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stdTime_txtbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pwd_lbl6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cra_stdTime_txtbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pwd_lbl15))
+                .addContainerGap())
         );
 
         tabbedPane_ucs_config.addTab("infos Générales", jPanel2);
@@ -1105,7 +1152,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                                 .addGroup(jPanel4Layout.createSequentialGroup()
                                     .addComponent(login_lbl6)
                                     .addGap(18, 18, 18)
-                                    .addComponent(destination_filter, 0, 159, Short.MAX_VALUE))
+                                    .addComponent(destination_filter, 0, 164, Short.MAX_VALUE))
                                 .addGroup(jPanel4Layout.createSequentialGroup()
                                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(pwd_lbl3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1387,7 +1434,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(id_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(msg_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(373, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(tabbedPane_ucs_config, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -1613,7 +1660,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
         //
         //######################################################################
         if (id_lbl.getText().isEmpty()) { // ID Label is empty, then is a new Object
-            ConfigUcs mu = new ConfigUcs();
+            ConfigUcs cu = new ConfigUcs();
             boolean err = false;
 
             if (cpn_txtbox.getText().trim().isEmpty()) {
@@ -1622,7 +1669,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 cpn_txtbox.requestFocus();
                 cpn_txtbox.setBackground(Color.red);
             } else {
-                mu.setHarnessPart(cpn_txtbox.getText().trim());
+                cu.setHarnessPart(cpn_txtbox.getText().trim());
                 cpn_txtbox.setBackground(Color.white);
             }
             if (lpn_txtbox.getText().trim().isEmpty()) {
@@ -1631,7 +1678,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 lpn_txtbox.requestFocus();
                 lpn_txtbox.setBackground(Color.red);
             } else {
-                mu.setSupplierPartNumber(lpn_txtbox.getText().trim());
+                cu.setSupplierPartNumber(lpn_txtbox.getText().trim());
                 lpn_txtbox.setBackground(Color.white);
             }
 
@@ -1641,7 +1688,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 index_txtbox.requestFocus();
                 index_txtbox.setBackground(Color.red);
             } else {
-                mu.setHarnessIndex(index_txtbox.getText().trim());
+                cu.setHarnessIndex(index_txtbox.getText().trim());
                 index_txtbox.setBackground(Color.white);
             }
 
@@ -1651,7 +1698,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 pack_type_filter.requestFocus();
                 pack_type_filter.setBackground(Color.red);
             } else {
-                mu.setPackType(pack_type_filter.getSelectedItem().toString());
+                cu.setPackType(pack_type_filter.getSelectedItem().toString());
                 pack_type_filter.setBackground(Color.white);
             }
             if (pack_size_txtbox.getText().trim().isEmpty()) {
@@ -1661,7 +1708,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 pack_size_txtbox.setBackground(Color.red);
             } else {
                 try {
-                    mu.setPackSize(Integer.valueOf(pack_size_txtbox.getText().trim()));
+                    cu.setPackSize(Integer.valueOf(pack_size_txtbox.getText().trim()));
                     pack_size_txtbox.setBackground(Color.white);
                 } catch (java.lang.NumberFormatException ex) {
                     UILog.severeDialog(this, "Number format error for pack size.", "Number format error.");
@@ -1676,7 +1723,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 segment_filter.requestFocus();
                 segment_filter.setBackground(Color.red);
             } else {
-                mu.setSegment(segment_filter.getSelectedItem().toString());
+                cu.setSegment(segment_filter.getSelectedItem().toString());
                 segment_filter.setBackground(Color.white);
             }
             if (workplace_filter.getSelectedItem().toString().isEmpty()) {
@@ -1685,7 +1732,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 workplace_filter.requestFocus();
                 workplace_filter.setBackground(Color.red);
             } else {
-                mu.setWorkplace(workplace_filter.getSelectedItem().toString());
+                cu.setWorkplace(workplace_filter.getSelectedItem().toString());
                 workplace_filter.setBackground(Color.white);
             }
             if (family_filter.getSelectedItem().toString().isEmpty()) {
@@ -1694,7 +1741,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 family_filter.requestFocus();
                 family_filter.setBackground(Color.red);
             } else {
-                mu.setHarnessType(family_filter.getSelectedItem().toString());
+                cu.setHarnessType(family_filter.getSelectedItem().toString());
                 family_filter.setBackground(Color.white);
             }
             if (nbreOfBoxes_txtbox.getText().trim().isEmpty()) {
@@ -1704,7 +1751,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 nbreOfBoxes_txtbox.setBackground(Color.red);
             } else {
                 try {
-                    mu.setLifes(Integer.valueOf(nbreOfBoxes_txtbox.getText().trim()));
+                    cu.setLifes(Integer.valueOf(nbreOfBoxes_txtbox.getText().trim()));
                     nbreOfBoxes_txtbox.setBackground(Color.white);
                 } catch (java.lang.NumberFormatException ex) {
                     UILog.severeDialog(this, "Number format error for number of packs.", "Number format error.");
@@ -1714,19 +1761,37 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 }
             }
             if (stdTime_txtbox.getText().trim().isEmpty()) {
-                UILog.severeDialog(this, "Standard time cannot be null.", "Standard time Error");
+                UILog.severeDialog(this, "Assembly standard time cannot be null.", "Standard time Error");
                 err = true;
                 stdTime_txtbox.requestFocus();
                 stdTime_txtbox.setBackground(Color.red);
-            } else {
+            } 
+            else if (cra_stdTime_txtbox.getText().trim().isEmpty()) {
+                UILog.severeDialog(this, "Cutting & Lead Preparation standard time cannot be null.", "Standard time Error");
+                err = true;
+                cra_stdTime_txtbox.requestFocus();
+                cra_stdTime_txtbox.setBackground(Color.red);
+            } 
+            else {
+                //Assembly standard time
                 try {
-                    mu.setStdTime(Double.valueOf(stdTime_txtbox.getText().trim()));
+                    cu.setStdTime(Double.valueOf(stdTime_txtbox.getText().trim()));                    
                     stdTime_txtbox.setBackground(Color.white);
                 } catch (java.lang.NumberFormatException ex) {
                     UILog.severeDialog(this, "Number format error for standard time.", "Number format error.");
                     err = true;
                     stdTime_txtbox.requestFocus();
                     stdTime_txtbox.setBackground(Color.red);
+                }
+                // Cutting & LeadPrep standard time
+                try {
+                    cu.setCraStdTime(Double.valueOf(cra_stdTime_txtbox.getText().trim()));                    
+                    cra_stdTime_txtbox.setBackground(Color.white);
+                } catch (java.lang.NumberFormatException ex) {
+                    UILog.severeDialog(this, "Number format error for standard time.", "Number format error.");
+                    err = true;
+                    cra_stdTime_txtbox.requestFocus();
+                    cra_stdTime_txtbox.setBackground(Color.red);
                 }
             }
             if (price_txtbox.getText().trim().isEmpty()) {
@@ -1736,7 +1801,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 price_txtbox.setBackground(Color.red);
             } else {
                 try {
-                    mu.setPrice(Double.valueOf(price_txtbox.getText().trim()));
+                    cu.setPrice(Double.valueOf(price_txtbox.getText().trim()));
                     price_txtbox.setBackground(Color.white);
                 } catch (java.lang.NumberFormatException ex) {
                     UILog.severeDialog(this, "Number format error for price.", "Number format error.");
@@ -1752,7 +1817,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 netWeight_txtbox.setBackground(Color.red);
             } else {
                 try {
-                    mu.setNetWeight(Double.valueOf(netWeight_txtbox.getText().trim()));
+                    cu.setNetWeight(Double.valueOf(netWeight_txtbox.getText().trim()));
                     netWeight_txtbox.setBackground(Color.white);
                 } catch (java.lang.NumberFormatException ex) {
                     UILog.severeDialog(this, "Number format error for net weight.", "Number format error.");
@@ -1768,7 +1833,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 barcodes_nbre_txtbox.setBackground(Color.red);
             } else {
                 try {
-                    mu.setAdditionalBarcode(Integer.valueOf(barcodes_nbre_txtbox.getText().trim()));
+                    cu.setAdditionalBarcode(Integer.valueOf(barcodes_nbre_txtbox.getText().trim()));
                     barcodes_nbre_txtbox.setBackground(Color.white);
                 } catch (java.lang.NumberFormatException ex) {
                     UILog.severeDialog(this, "Number format error for additional barecodes number.", "Number format error.");
@@ -1785,7 +1850,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                     engChangeDatePicker.requestFocus();
                     engChangeDatePicker.setBackground(Color.red);
                 } else {
-                    mu.setEngChangeDate(engChangeDatePicker.getDate());
+                    cu.setEngChangeDate(engChangeDatePicker.getDate());
                     engChangeDatePicker.setBackground(Color.white);
                 }
             } catch (NullPointerException | NumberFormatException ex) {
@@ -1794,53 +1859,53 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                 engChangeDatePicker.requestFocus();
                 engChangeDatePicker.setBackground(Color.red);
             }
-            mu.setCreateId(PackagingVars.context.getUser().getId());
-            mu.setWriteId(PackagingVars.context.getUser().getId());
-            mu.setCreateTime(new Date());
-            mu.setWriteTime(new Date());
-            mu.setActive(Integer.valueOf(active_combobox.getSelectedItem().toString()));
-            mu.setProject(project_filter.getSelectedItem().toString());
-            mu.setWarehouse(fg_warehouse_filter.getSelectedItem().toString());
-            mu.setPackaging_warehouse(packaging_wh_filter.getSelectedItem().toString());
+            cu.setCreateId(PackagingVars.context.getUser().getId());
+            cu.setWriteId(PackagingVars.context.getUser().getId());
+            cu.setCreateTime(new Date());
+            cu.setWriteTime(new Date());
+            cu.setActive(Integer.valueOf(active_combobox.getSelectedItem().toString()));
+            cu.setProject(project_filter.getSelectedItem().toString());
+            cu.setWarehouse(fg_warehouse_filter.getSelectedItem().toString());
+            cu.setPackaging_warehouse(packaging_wh_filter.getSelectedItem().toString());
 
-            mu.setDestination(destination_filter.getSelectedItem().toString());
-            mu.setArticleDesc((articleDesc_textArea.getText().length() > 25) ? articleDesc_textArea.getText().substring(0, 25) : articleDesc_textArea.getText());
-            mu.setEngChange((engChange_textArea.getText().length() > 25) ? engChange_textArea.getText().substring(0, 25) : engChange_textArea.getText());
-            mu.setGrossWeight(Double.valueOf(grossWeight_txtbox.getText().trim()));
-            mu.setVolume(Double.valueOf(volume_txtbox.getText().trim()));
-            mu.setPriority(Integer.valueOf(priority.getText()));
-            mu.setOpenningSheetCopies(Integer.valueOf(open_sheet_copies.getText()));
-            mu.setClosingSheetCopies(Integer.valueOf(closing_sheet_copies.getText()));
+            cu.setDestination(destination_filter.getSelectedItem().toString());
+            cu.setArticleDesc((articleDesc_textArea.getText().length() > 25) ? articleDesc_textArea.getText().substring(0, 25) : articleDesc_textArea.getText());
+            cu.setEngChange((engChange_textArea.getText().length() > 25) ? engChange_textArea.getText().substring(0, 25) : engChange_textArea.getText());
+            cu.setGrossWeight(Double.valueOf(grossWeight_txtbox.getText().trim()));
+            cu.setVolume(Double.valueOf(volume_txtbox.getText().trim()));
+            cu.setPriority(Integer.valueOf(priority.getText()));
+            cu.setOpenningSheetCopies(Integer.valueOf(open_sheet_copies.getText()));
+            cu.setClosingSheetCopies(Integer.valueOf(closing_sheet_copies.getText()));
             if (assy_txtbox.getText().isEmpty()) {
-                mu.setAssyWorkstationName("-");
+                cu.setAssyWorkstationName("-");
             } else {
-                mu.setAssyWorkstationName(assy_txtbox.getText().trim());
+                cu.setAssyWorkstationName(assy_txtbox.getText().trim());
             }
-            mu.setComment(comment_txt.getText());
+            cu.setComment(comment_txt.getText());
             if (order_no_txt.getText().isEmpty()) {
-                mu.setOrderNo("-");
+                cu.setOrderNo("-");
             } else {
-                mu.setOrderNo(order_no_txt.getText());
+                cu.setOrderNo(order_no_txt.getText());
             }
             if (special_order_check.isSelected()) {
-                mu.setSpecialOrder(1);
+                cu.setSpecialOrder(1);
             } else {
-                mu.setSpecialOrder(0);
+                cu.setSpecialOrder(0);
             }
             if (print_destination_check.isSelected()) {
-                mu.setPrint_destination(true);
+                cu.setPrint_destination(true);
             } else {
-                mu.setPrint_destination(false);
+                cu.setPrint_destination(false);
             }
             if (label_per_piece_checkbox.isSelected()) {
-                mu.setLabelPerPiece(true);
+                cu.setLabelPerPiece(true);
             } else {
-                mu.setLabelPerPiece(false);
+                cu.setLabelPerPiece(false);
             }
 ////            System.out.println("FORM validation : " + err);
 ////            System.out.println("New object " + mu.toString());
             if (!err) {
-                int newId = mu.create(mu);
+                int newId = cu.create(cu);
                 String[] msg = {"Nouveau élément " + newId + " enregistré !"};
                 clearFields();
                 msg_lbl.setText(msg[0]);
@@ -1962,14 +2027,23 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                     nbreOfBoxes_txtbox.setBackground(Color.red);
                 }
             }
+            
             if (stdTime_txtbox.getText().trim().isEmpty()) {
-                UILog.severeDialog(this, "Standard time cannot be null.", "Standard time Error");
+                UILog.severeDialog(this, "Assembly standard time cannot be null.", "Standard time Error");
                 err = true;
                 stdTime_txtbox.requestFocus();
                 stdTime_txtbox.setBackground(Color.red);
-            } else {
+            } 
+            else if (cra_stdTime_txtbox.getText().trim().isEmpty()) {
+                UILog.severeDialog(this, "Cutting & Lead Preparation standard time cannot be null.", "Standard time Error");
+                err = true;
+                cra_stdTime_txtbox.requestFocus();
+                cra_stdTime_txtbox.setBackground(Color.red);
+            } 
+            else {
+                //Assembly standard time
                 try {
-                    aux.setStdTime(Double.valueOf(stdTime_txtbox.getText().trim()));
+                    aux.setStdTime(Double.valueOf(stdTime_txtbox.getText().trim()));                    
                     stdTime_txtbox.setBackground(Color.white);
                 } catch (java.lang.NumberFormatException ex) {
                     UILog.severeDialog(this, "Number format error for standard time.", "Number format error.");
@@ -1977,7 +2051,18 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
                     stdTime_txtbox.requestFocus();
                     stdTime_txtbox.setBackground(Color.red);
                 }
+                // Cutting & LeadPrep standard time
+                try {
+                    aux.setCraStdTime(Double.valueOf(cra_stdTime_txtbox.getText().trim()));                    
+                    cra_stdTime_txtbox.setBackground(Color.white);
+                } catch (java.lang.NumberFormatException ex) {
+                    UILog.severeDialog(this, "Number format error for standard time.", "Number format error.");
+                    err = true;
+                    cra_stdTime_txtbox.requestFocus();
+                    cra_stdTime_txtbox.setBackground(Color.red);
+                }
             }
+            
             if (price_txtbox.getText().trim().isEmpty()) {
                 UILog.severeDialog(this, "Price cannot be null.", "Price Error");
                 err = true;
@@ -2219,8 +2304,8 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
             this.segment_filter.setSelectedIndex(0);
             this.segment_filter.setEnabled(false);
         } else {
-            fg_warehouse_filter = ConfigWarehouse.initWarehouseJBox(this, fg_warehouse_filter, String.valueOf(project_filter.getSelectedItem()), ConfigWarehouse.FINISHED_GOODS, false);
-            packaging_wh_filter = ConfigWarehouse.initWarehouseJBox(this, packaging_wh_filter, String.valueOf(project_filter.getSelectedItem()), ConfigWarehouse.PACKAGING, false);
+            fg_warehouse_filter = ConfigWarehouse.initWarehouseJBox(this, fg_warehouse_filter, String.valueOf(project_filter.getSelectedItem()), String.valueOf(GlobalVars.WarehouseType.FINISHED_GOODS),"", false);
+            packaging_wh_filter = ConfigWarehouse.initWarehouseJBox(this, packaging_wh_filter, String.valueOf(project_filter.getSelectedItem()), String.valueOf(GlobalVars.WarehouseType.PACKAGING),"", false);
             LoadPlanDestination.setDestinationByProject(this, destination_filter, String.valueOf(project_filter.getSelectedItem()) );
             if (ConfigSegment.setSegmentByProject(this, segment_filter, String.valueOf(project_filter.getSelectedItem()), false)) {
                 workplace_filter = ConfigWorkplace.initWorkplaceJBox(this, workplace_filter, String.valueOf(segment_filter.getSelectedItem()), false);  
@@ -2264,6 +2349,10 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_print_destination_checkStateChanged
 
+    private void cra_stdTime_txtboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cra_stdTime_txtboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cra_stdTime_txtboxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox active_combobox;
@@ -2277,6 +2366,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
     private javax.swing.JTextArea comment_txt;
     private javax.swing.JTextField cpn_txtbox;
     private javax.swing.JTextField cpn_txtbox_search;
+    private javax.swing.JTextField cra_stdTime_txtbox;
     private javax.swing.JTextField create_time_txt;
     private javax.swing.JButton delete_btn;
     private javax.swing.JComboBox destination_filter;
@@ -2299,6 +2389,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -2347,6 +2438,7 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
     private javax.swing.JLabel pwd_lbl12;
     private javax.swing.JLabel pwd_lbl13;
     private javax.swing.JLabel pwd_lbl14;
+    private javax.swing.JLabel pwd_lbl15;
     private javax.swing.JLabel pwd_lbl2;
     private javax.swing.JLabel pwd_lbl3;
     private javax.swing.JLabel pwd_lbl4;

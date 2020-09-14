@@ -1,10 +1,13 @@
 package entity;
-// Generated 6 f�vr. 2016 21:43:55 by Hibernate Tools 3.6.0
 
+import __main__.GlobalVars;
+import __main__.GlobalVars.WarehouseType;
+import hibernate.DAO;
+import java.io.Serializable;
 import helper.HQLHelper;
 import helper.Helper;
-import hibernate.DAO;
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.swing.JComboBox;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -25,22 +27,7 @@ import ui.error.ErrorMsg;
  */
 @Entity
 @Table(name = "config_warehouse")
-public class ConfigWarehouse extends DAO implements java.io.Serializable {
-
-    @Transient
-    public static String FINISHED_GOODS = "FINISHED_GOODS";
-    @Transient
-    public static String PACKAGING = "PACKAGING";
-    @Transient
-    public static String INVENTORY = "INVENTORY";
-    @Transient
-    public static String SCRAP = "SCRAP";
-    @Transient
-    public static String TRANSIT = "TRANSIT";
-    @Transient
-    public static String WIRES = "WIRES";
-    @Transient
-    public static String RAW_MATERIAL = "RAW_MATERIAL";
+public class ConfigWarehouse extends DAO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "config_warehouse_id_seq")
@@ -71,7 +58,7 @@ public class ConfigWarehouse extends DAO implements java.io.Serializable {
         this.project = project;
         this.whType = type;
     }
-
+    
     public Integer getId() {
         return id;
     }
@@ -111,7 +98,7 @@ public class ConfigWarehouse extends DAO implements java.io.Serializable {
     public void setWhType(String whType) {
         this.whType = whType;
     }
-
+    
     public List<String[]> select() {
         Helper.startSession();
 
@@ -150,7 +137,23 @@ public class ConfigWarehouse extends DAO implements java.io.Serializable {
         Helper.sess.getTransaction().commit();
         return query.list();
     }
+    
+    public static String getWarehouseType(int whType) {        
+        List<String> types = new ArrayList<String>() {
+            {
+                add("FINISHED_GOODS"); //
+                add("PACKAGING");
+                add("INVENTORY");
+                add("SCRAP");
+                add("TRANSIT");
+                add("WIRES");
+                add("RAW_MATERIAL");
+            }
+        };
 
+        return types.get(whType);
+    }
+    
     public List selectByProjectAndType(String project, String type) {
         Helper.startSession();
 
@@ -169,36 +172,26 @@ public class ConfigWarehouse extends DAO implements java.io.Serializable {
         cw = (ConfigWarehouse) result.get(0);
         return (String) cw.getWarehouse();
     }
-
+    
     /**
      *
      * @param parentUI
      * @param jbox
      * @param project
      * @param warehouse_type
-     * @param displayAll
+     * @param default_val
+     * @param displayAll : True display All string in the jbox, false otherwise.
      * @return
      */
     public static JComboBox initWarehouseJBox(Object parentUI, JComboBox jbox, 
-            String project, String warehouse_type, boolean displayAll) {
+            String project, String warehouse_type, String default_val, boolean displayAll) {
         List result;
         jbox.removeAllItems();
         if (displayAll) {
-            //jbox.addItem(new ComboItem("ALL", "ALL"));
             jbox.addItem("ALL");
         }
         if (project != null && !project.isEmpty() && !"null".equals(project)) {
-//            switch (warehouse_type){
-//                case 0: //Packaging
-//                        result = new ConfigWarehouse().selectByProjectAndType(project, "PACKAGING");                    
-//                    break;
-//                case 1: //Finished Goods
-//                        result = new ConfigWarehouse().selectByProjectAndType(project, "FINISHED_GOODS");                    
-//                    break;
-//                default:
-//                        result = null;
-//                    break;
-//            }
+
             result = new ConfigWarehouse().selectByProjectAndType(project, warehouse_type);
             if (result.isEmpty()) {
                 UILog.severeDialog((Component) parentUI, ErrorMsg.APP_ERR0042);
@@ -207,6 +200,10 @@ public class ConfigWarehouse extends DAO implements java.io.Serializable {
                 for (Object o : result) {
                     ConfigWarehouse cp = (ConfigWarehouse) o;
                     jbox.addItem(cp.getWarehouse());
+                    
+                    if(cp.getWarehouse().equals(default_val)){
+                         jbox.setSelectedItem(cp.getWarehouse());
+                    }
                 }
             }
         } else {
@@ -217,24 +214,26 @@ public class ConfigWarehouse extends DAO implements java.io.Serializable {
             } else { //Map project data in the list
                 for (Object o : result) {
                     ConfigWarehouse p = (ConfigWarehouse) o;
-                    //jbox.addItem(new ComboItem(p.getWarehouse(), p.getWarehouse()));
                     jbox.addItem(p.getWarehouse());
                 }
             }
         }
         return jbox;
     }
-
+    
+    
+    
+    
     public static JComboBox getWarehouseTypeCombobox(JComboBox j) {
 
-        j.addItem(FINISHED_GOODS);
-        j.addItem(PACKAGING);
-        j.addItem(INVENTORY);
-        j.addItem(SCRAP);
-        j.addItem(TRANSIT);
-        j.addItem(WIRES);
-        j.addItem(RAW_MATERIAL);
+        j.addItem(GlobalVars.WarehouseType.FINISHED_GOODS);
+        j.addItem(GlobalVars.WarehouseType.PACKAGING);
+        j.addItem(GlobalVars.WarehouseType.INVENTORY);
+        j.addItem(GlobalVars.WarehouseType.SCRAP);
+        j.addItem(GlobalVars.WarehouseType.TRANSIT);
+        j.addItem(GlobalVars.WarehouseType.WIRES);
+        j.addItem(GlobalVars.WarehouseType.RAW_MATERIAL);
         return j;
     }
-
+    
 }

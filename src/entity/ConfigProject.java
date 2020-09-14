@@ -97,27 +97,31 @@ public class ConfigProject extends DAO implements Serializable {
     /**
      *
      * @param parentUI
-     * @param box
+     * @param jbox
+     * @param default_val
      * @param displayAll display the "ALL" filter in shown values in the first
      * position of the list
      */
-    public static JComboBox initProjectsJBox(Object parentUI, JComboBox box, boolean displayAll) {
+    public static JComboBox initProjectsJBox(Object parentUI, JComboBox jbox, String default_val, boolean displayAll) {
 
         List result = new ConfigProject().selectDistinct();
         if (result.isEmpty()) {
             UILog.severeDialog((Component) parentUI, ErrorMsg.APP_ERR0035);
             UILog.severe(ErrorMsg.APP_ERR0035[1]);
         } else { //Map project data in the list
-            box.removeAllItems();
+            jbox.removeAllItems();
             if (displayAll) {
-                box.addItem("ALL");
+                jbox.addItem("ALL");
             }
             
-            for (Object o : result) {
-                box.addItem(o);                
-            }           
+            result.stream().map(o -> {
+                jbox.addItem(o);
+                return o;
+            }).filter(o -> (o.equals(default_val))).forEachOrdered(o -> {
+                jbox.setSelectedItem(o);
+            });           
         }
-        return box;
+        return jbox;
     }
     
     /**

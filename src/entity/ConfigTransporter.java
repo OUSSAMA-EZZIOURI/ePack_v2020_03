@@ -107,28 +107,32 @@ public class ConfigTransporter extends DAO implements Serializable {
     /**
      * 
      * @param parentUI
-     * @param transporter_filter
+     * @param jbox
+     * @param default_val
      * @param displayAll
      * @return 
      */
-    public static JComboBox initTransporterJBox(Object parentUI, JComboBox transporter_filter, boolean displayAll) {
+    public static JComboBox initTransporterJBox(Object parentUI, JComboBox jbox, String default_val, boolean displayAll) {
         List result = new ConfigTransporter().select();
         if (result.isEmpty()) {
             UILog.severeDialog((Component) parentUI, ErrorMsg.APP_ERR0049);
             UILog.severe(ErrorMsg.APP_ERR0049[1]);
         } else { //Map project data in the list
-            transporter_filter.removeAllItems();
+            jbox.removeAllItems();
             if (displayAll) {
                 //transporter_filter.addItem(new ComboItem("ALL", "ALL"));
-                transporter_filter.addItem("ALL");
+                jbox.addItem("ALL");
             }
             for (Object o : result) {
                 ConfigTransporter p = (ConfigTransporter) o;
                 //transporter_filter.addItem(new ComboItem(p.getName(), p.getName()));
-                transporter_filter.addItem(p.getName());
+                jbox.addItem(p.getName());
+                if(p.getName().equals(default_val)){
+                    jbox.setSelectedItem(p.getName());
+                }
             }
         }
-        return transporter_filter;
+        return jbox;
     }
 
 }

@@ -3,23 +3,17 @@ package gui.cra;
 import __main__.GlobalMethods;
 import __main__.PropertiesLoader;
 import entity.ConfigProject;
-import entity.ProductionPlan;
-import helper.HQLHelper;
 import helper.Helper;
 import helper.UIHelper;
 import helper.XLSXExportHelper;
-import java.awt.Frame;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.type.StandardBasicTypes;
-import ui.UILog;
 
 /**
  *
@@ -74,7 +68,7 @@ public class CRA_UI0004_WIRE_DEMAND extends javax.swing.JPanel {
 
     
     private void initProjectCombo() {
-        combo_project_filter = ConfigProject.initProjectsJBox(this, combo_project_filter, true);
+        combo_project_filter = ConfigProject.initProjectsJBox(this, combo_project_filter, "", true);
     }
     
     private void initGui() {

@@ -21,6 +21,7 @@ public class BaseContainerTmp implements java.io.Serializable {
     private String hernessCounter;
     private String harnessType;
     private Double stdTime;
+    private Double craStdTime;
     private Double price;
     private String packWorkstation;
     private String assyWorkstation;
@@ -205,6 +206,14 @@ public class BaseContainerTmp implements java.io.Serializable {
 
     public void setStdTime(Double stdTime) {
         this.stdTime = stdTime;
+    }
+    
+    public Double getCraStdTime() {
+        return craStdTime;
+    }
+
+    public void setCraStdTime(Double craStdTime) {
+        this.craStdTime = craStdTime;
     }
 
     public String getPackWorkstation() {
@@ -393,7 +402,7 @@ public class BaseContainerTmp implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "BaseContainerTmp{" + "palletNumber=" + palletNumber + ", harnessPart=" + harnessPart + ", harnessIndex=" + harnessIndex + ", supplierPartNumber=" + supplierPartNumber + ", qtyExpected=" + qtyExpected + ", qtyRead=" + qtyRead + ", state=" + state + ", packType=" + packType + ", choosen_pack_type=" + choosen_pack_type + ", hernessCounter=" + hernessCounter + ", harnessType=" + harnessType + ", stdTime=" + stdTime + ", price=" + price + ", packWorkstation=" + packWorkstation + ", assyWorkstation=" + assyWorkstation + ", assyWorkstationId=" + assyWorkstationId + ", segment=" + segment + ", workplace=" + workplace + ", order_no=" + order_no + ", special_order=" + special_order + ", ucsLifes=" + ucsLifes + ", ucsId=" + ucsId + ", comment=" + comment + ", dispatchLabelNo=" + dispatchLabelNo + ", dispatchTime=" + dispatchTime + ", consignNo=" + consignNo + ", invoiceNo=" + invoiceNo + ", netWeight=" + netWeight + ", grossWeight=" + grossWeight + ", volume=" + volume + ", engChange=" + engChange + ", articleDesc=" + articleDesc + ", project=" + project + ", warehouse=" + warehouse + ", engChangeDate=" + engChangeDate + ", destination=" + destination + ", labelPerPiece=" + labelPerPiece + '}';
+        return "BaseContainerTmp{" + "palletNumber=" + palletNumber + ", harnessPart=" + harnessPart + ", harnessIndex=" + harnessIndex + ", supplierPartNumber=" + supplierPartNumber + ", qtyExpected=" + qtyExpected + ", qtyRead=" + qtyRead + ", state=" + state + ", packType=" + packType + ", choosen_pack_type=" + choosen_pack_type + ", hernessCounter=" + hernessCounter + ", harnessType=" + harnessType + ", stdTime=" + stdTime + ", craStdTime=" + craStdTime + ", price=" + price + ", packWorkstation=" + packWorkstation + ", assyWorkstation=" + assyWorkstation + ", assyWorkstationId=" + assyWorkstationId + ", segment=" + segment + ", workplace=" + workplace + ", order_no=" + order_no + ", special_order=" + special_order + ", ucsLifes=" + ucsLifes + ", ucsId=" + ucsId + ", comment=" + comment + ", dispatchLabelNo=" + dispatchLabelNo + ", dispatchTime=" + dispatchTime + ", consignNo=" + consignNo + ", invoiceNo=" + invoiceNo + ", netWeight=" + netWeight + ", grossWeight=" + grossWeight + ", volume=" + volume + ", engChange=" + engChange + ", articleDesc=" + articleDesc + ", project=" + project + ", warehouse=" + warehouse + ", engChangeDate=" + engChangeDate + ", destination=" + destination + ", labelPerPiece=" + labelPerPiece + ", priority=" + priority + ", openSheetCopies=" + openSheetCopies + ", closeSheetCopies=" + closeSheetCopies + ", closingSheetFormat=" + closingSheetFormat + ", print_destination=" + print_destination + '}';
     }
 
 }

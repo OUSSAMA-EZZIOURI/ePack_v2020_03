@@ -90,7 +90,7 @@ public class PACKAGING_UI0022_ClosedPallets_JPANEL extends javax.swing.JPanel {
         load_table_header();
 
         //Init projects filter
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, true);
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "", true);
         this.workplace_filter.setEnabled(false);
 
         //Initialize double clique on table row

@@ -5,7 +5,9 @@
  */
 package gui.warehouse_dispatch;
 
+import __main__.GlobalVars;
 import entity.ConfigProject;
+import entity.ConfigTransporter;
 import entity.ConfigWarehouse;
 import entity.LoadPlan;
 import entity.LoadPlanDestinationRel;
@@ -14,9 +16,13 @@ import helper.HQLHelper;
 import helper.Helper;
 import helper.UIHelper;
 import java.awt.HeadlessException;
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.HibernateException;
@@ -36,7 +42,8 @@ public class WAREHOUSE_DISPATCH_UI0005_EDIT_PLAN extends javax.swing.JDialog {
     private final WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL parent;
     public String[] planDests;
     public LoadPlanDestinationRel[] loadPlanDestRel;
-
+    public SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    
     /**
      * Creates new form WAREHOUSE_OUT_UI0004_NEW_PLAN
      *
@@ -45,36 +52,27 @@ public class WAREHOUSE_DISPATCH_UI0005_EDIT_PLAN extends javax.swing.JDialog {
      * @param lp
      */
     public WAREHOUSE_DISPATCH_UI0005_EDIT_PLAN(WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL parent, LoadPlan lp) {
-//        super(parent, modal);
         this.parent = parent;
         this.lp = lp;
 
         initComponents();
-        initGui();       
+        initGui();
 
     }
 
     private void initGui() {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            
             plan_num_label.setText(this.lp.getId().toString());
             create_user_label.setText(this.lp.getUser());
             create_time_label.setText(sdf.format(this.lp.getCreateTime()));
             deliv_date_label.setText(sdf.format(this.lp.getDeliveryTime()));
             truck_no_text.setText(this.lp.getTruckNo());
-//            transporter_text.setText(this.lp.getTransportCompany());
             state_label.setText(this.lp.getPlanState());
             newDeliveryDatePicker.setDate(this.lp.getDeliveryTime());
 
-            project_filter = ConfigProject.initProjectsJBox(this, project_filter, false);
+            project_filter = ConfigProject.initProjectsJBox(this, project_filter, this.lp.getProject(), false);
 
-            //Set the project value
-            for (int i = 0; i < project_filter.getItemCount(); i++) {
-                if (project_filter.getItemAt(i).toString().equals(this.lp.getProject())) {
-                    project_filter.setSelectedIndex(i);
-                    break;
-                }
-            }
             //Set the fg warehouse value
             for (int i = 0; i < fg_warehouse_filter.getItemCount(); i++) {
                 if (fg_warehouse_filter.getItemAt(i).toString().equals(this.lp.getFgWarehouse())) {
@@ -82,6 +80,8 @@ public class WAREHOUSE_DISPATCH_UI0005_EDIT_PLAN extends javax.swing.JDialog {
                     break;
                 }
             }
+            //Load transport company
+            transporter_filter = ConfigTransporter.initTransporterJBox(this, transporter_filter, this.lp.getTransportCompany(), false);
 
             //Load plan destination
             this.initDestinationsJtable();
@@ -413,29 +413,24 @@ public class WAREHOUSE_DISPATCH_UI0005_EDIT_PLAN extends javax.swing.JDialog {
                 UILog.severeDialog(null, ErrorMsg.APP_ERR0027);
                 newDeliveryDatePicker.requestFocus();
             } else {
+                
                 this.lp.setDeliveryTime(newDeliveryDatePicker.getDate());
-//                if (transporter_text.getText().isEmpty()) {
-//                    UILog.severe(ErrorMsg.APP_ERR0045[0]);
-//                    UILog.severeDialog(null, ErrorMsg.APP_ERR0045);
-//                    transporter_text.requestFocus();
-//                } else {
+                this.lp.setTruckNo((truck_no_text.getText().isEmpty()) ? "" : truck_no_text.getText());
+                this.lp.setFgWarehouse(fg_warehouse_filter.getSelectedItem() + "");
+                this.lp.setTransportCompany(transporter_filter.getSelectedItem() + "");
+                String packaging_wh = new ConfigWarehouse().getPackagingWh(project_filter.getSelectedItem().toString());
+                this.lp.setPackagingWarehouse(packaging_wh);
+                Helper.sess.clear();
+                this.lp.update(this.lp);
+                //Load data into labels
+                WarehouseHelper.Dispatch_Gui_Jpanel.loadPlanDataToLabels(lp, this.planDests[0]);
+               // WarehouseHelper.
+                //Load plans JTable
+                WarehouseHelper.Dispatch_Gui_Jpanel.loadPlanDataInGui(lp, this.planDests[0]);
 
-                    this.lp.setTruckNo((truck_no_text.getText().isEmpty()) ? "" : truck_no_text.getText());
-                    this.lp.setFgWarehouse(fg_warehouse_filter.getSelectedItem() + "");
-                    this.lp.setTransportCompany(transporter_filter.getSelectedItem() + "");
-                    String packaging_wh = new ConfigWarehouse().getPackagingWh(project_filter.getSelectedItem().toString());
-                    lp.setPackagingWarehouse(packaging_wh);
-                    this.lp.update(this.lp);
-                    //Load data into labels
-                    WarehouseHelper.Dispatch_Gui_Jpanel.loadPlanDataToLabels(lp, this.planDests[0]);
+                WarehouseHelper.Dispatch_Gui_Jpanel.reloadPlansData();
 
-                    //Load plans JTable
-                    WarehouseHelper.Dispatch_Gui_Jpanel.loadPlanDataInGui(lp, this.planDests[0]);
-
-                    WarehouseHelper.Dispatch_Gui_Jpanel.reloadPlansData();
-
-                    this.dispose();
-                //}
+                this.dispose();
             }
 
         } catch (HibernateException | HeadlessException e) {
@@ -451,9 +446,9 @@ public class WAREHOUSE_DISPATCH_UI0005_EDIT_PLAN extends javax.swing.JDialog {
     }//GEN-LAST:event_cancel_btnActionPerformed
 
     private void project_filterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_project_filterItemStateChanged
-        fg_warehouse_filter = ConfigWarehouse.initWarehouseJBox(this, 
-                fg_warehouse_filter, String.valueOf(project_filter.getSelectedItem()), 
-                ConfigWarehouse.FINISHED_GOODS, false);
+        fg_warehouse_filter = ConfigWarehouse.initWarehouseJBox(this,
+                fg_warehouse_filter, String.valueOf(project_filter.getSelectedItem()),
+                String.valueOf(GlobalVars.WarehouseType.FINISHED_GOODS), this.lp.getFgWarehouse(), false);
     }//GEN-LAST:event_project_filterItemStateChanged
 
     private void project_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_project_filterActionPerformed

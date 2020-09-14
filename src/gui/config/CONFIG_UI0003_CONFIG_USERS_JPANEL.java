@@ -73,7 +73,7 @@ public class CONFIG_UI0003_CONFIG_USERS_JPANEL extends javax.swing.JPanel {
         //Load table header
         load_table_header();
 
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, false);
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "", false);
         initUserProfils();
 
         //Support double click on rows in container jtable to display history

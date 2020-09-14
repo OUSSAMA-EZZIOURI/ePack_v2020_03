@@ -78,7 +78,7 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
         load_table_header();
 
         //Init projects filter
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, true);
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "", true);
         //Focuse on text filter field
         harness_part_filter.requestFocus();
     }

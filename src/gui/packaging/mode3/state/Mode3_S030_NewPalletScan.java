@@ -77,6 +77,7 @@ public class Mode3_S030_NewPalletScan implements Mode3_State {
                 bc.setQtyRead(1);
                 bc.setHarnessType(context.getBaseContainerTmp().getHarnessType());
                 bc.setStdTime(context.getBaseContainerTmp().getStdTime());
+                bc.setCraStdTime(context.getBaseContainerTmp().getCraStdTime());
                 bc.setContainerState(GlobalVars.PALLET_OPEN);
                 bc.setContainerStateCode(GlobalVars.PALLET_OPEN_CODE);
                 bc.setPackWorkstation(GlobalVars.APP_HOSTNAME);
@@ -117,6 +118,7 @@ public class Mode3_S030_NewPalletScan implements Mode3_State {
                 bh.setPalletNumber(context.getBaseContainerTmp().getPalletNumber());
                 bh.setHarnessType(context.getBaseContainerTmp().getHarnessType());
                 bh.setStdTime(context.getBaseContainerTmp().getStdTime());
+                bh.setCraStdTime(context.getBaseContainerTmp().getCraStdTime());
                 bh.setPackWorkstation(GlobalVars.APP_HOSTNAME);
                 bh.setAssyWorkstation(context.getBaseContainerTmp().getAssyWorkstation());
                 bh.setSegment(context.getBaseContainerTmp().getSegment());

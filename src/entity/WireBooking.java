@@ -2,7 +2,9 @@ package entity;
 
 import gui.packaging.PackagingVars;
 import hibernate.DAO;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,10 +24,10 @@ public class WireBooking extends DAO implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wire_booking_id_seq")
     @SequenceGenerator(name = "wire_booking_id_seq", sequenceName = "wire_booking_id_seq", allocationSize = 1)
-    private Integer id; 
+    private Integer id;
 
     @Column(name = "create_id")
-    private Integer createId;  
+    private Integer createId;
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(name = "create_time")
@@ -33,36 +35,39 @@ public class WireBooking extends DAO implements java.io.Serializable {
 
     @Column(name = "create_user")
     private String createUser;
-        
-    @Column(name = "wire_no")
+
+    @Column(name = "wire_no", nullable = false)
     private String wireNo;
-    
-    @Column(name = "project")
+
+    @Column(name = "project", nullable = false) // The project of wire must be specified
     private String project;
-    
-    @Column(name = "source_wh")
+
+    @Column(name = "source_wh", nullable = true) // It can be null in case of inventory operation
     private String sourceWh;
-    
+
     /**
      * Source warehouse location
      */
-    @Column(name = "source_wh_loc")
+    @Column(name = "source_wh_loc") // It can be null in case of inventory operation
     private String sourceWhLoc;
-    
-    @Column(name = "dest_wh")
+
+    @Column(name = "dest_wh", nullable = false)
     private String destWh;
-    
+
     /**
      * Source warehouse location
      */
-    @Column(name = "dest_wh_loc")
+    @Column(name = "dest_wh_loc", nullable = true)
     private String destWhLoc;
-    
-    @Column(name = "qty", nullable = true)
+
+    @Column(name = "qty", nullable = false)
     private Double qty;
-    
-    @Column(name = "booking_type")
+
+    @Column(name = "booking_type", nullable = false) // ['TRANSFER','IN','OUT', 'INVENTORY']
     private String bookingType;
+
+    @Column(name = "wire_type", nullable = true)
+    private String wireType;
 
     public WireBooking() {
     }
@@ -81,6 +86,49 @@ public class WireBooking extends DAO implements java.io.Serializable {
         this.createTime = new Date();
     }
 
+    /**
+     * Return the booking type according to the given number
+     * ['TRANSFER','IN','OUT', 'INVENTORY']
+     *
+     * @param bookingType
+     * @return
+     */
+    public enum Bookings {
+
+        /**
+         *
+         */
+        TRANSFER(0),
+        IN(1),
+        OUT(2),
+        INVENTORY(3);
+
+        private int type;
+
+        private Bookings(int type) {
+            this.type = type;
+        }
+
+        public int getTypeCode() {
+            return this.type;
+        }
+
+    }
+
+
+    public static String getBookingByType(int bookingType) {
+        List<String> bookings = new ArrayList<String>() {
+            {
+                add("TRANSFER");
+                add("IN");
+                add("OUT");
+                add("INVENTORY");
+            }
+        };
+
+        return bookings.get(bookingType);
+    }
+
     public Integer getId() {
         return id;
     }
@@ -89,13 +137,21 @@ public class WireBooking extends DAO implements java.io.Serializable {
         this.id = id;
     }
 
+    public String getWireType() {
+        return wireType;
+    }
+
+    public void setWireType(String wireType) {
+        this.wireType = wireType;
+    }
+    
     public Integer getCreateId() {
         return createId;
     }
 
     public void setCreateId(Integer createId) {
         this.createId = createId;
-    }  
+    }
 
     public Date getCreateTime() {
         return createTime;
@@ -182,9 +238,6 @@ public class WireBooking extends DAO implements java.io.Serializable {
         return "WireBooking{" + "id=\t\t" + id + "\n- createId=\t\t" + createId + "\n- createTime=\t\t" + createTime + "\n- createUser=\t\t" + createUser + "\n- wireNo=\t\t" + wireNo + "\n- project=\t\t" + project + "\n- sourceWh=\t\t" + sourceWh + "\n- sourceWhLoc=\t\t" + sourceWhLoc + "\n- destWh=\t\t" + destWh + "\n- destWhLoc=\t\t" + destWhLoc + "\n- qty=\t\t" + qty + "\n- bookingType=\t\t" + bookingType + '}';
     }
 
-    
-        
-    
     //######################################################################
     /**
      * public List select() { Helper.startSession(); Query query =
@@ -192,6 +245,4 @@ public class WireBooking extends DAO implements java.io.Serializable {
      * Helper.sess.getTransaction().commit(); return query.list(); } *
      */
     //####################### Getters & Setters ############################
-    
-
 }

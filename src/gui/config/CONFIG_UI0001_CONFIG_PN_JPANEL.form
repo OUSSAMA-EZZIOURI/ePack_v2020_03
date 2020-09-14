@@ -77,7 +77,7 @@
                       </Group>
                       <Component id="msg_lbl" alignment="0" min="-2" pref="940" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="373" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Component id="tabbedPane_ucs_config" alignment="0" pref="0" max="32767" attributes="0"/>
           </Group>
@@ -239,7 +239,7 @@
                                       <Component id="clear_search_btn" min="-2" pref="81" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="528" max="32767" attributes="0"/>
+                              <EmptySpace pref="179" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -423,13 +423,12 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lname_lbl1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="login_lbl1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="fname_lbl14" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="login_lbl5" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="login_lbl3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="login_lbl3" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="login_lbl5" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="fname_lbl14" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="login_lbl1" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -441,38 +440,37 @@
                           </Group>
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="pwd_lbl2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lname_lbl2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="pwd_lbl6" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="pwd_lbl7" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="pwd_lbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="login_lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="pwd_lbl7" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="pwd_lbl2" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="pwd_lbl" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="login_lbl" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="stdTime_txtbox" alignment="0" pref="193" max="32767" attributes="0"/>
-                              <Component id="family_filter" alignment="0" max="32767" attributes="0"/>
-                              <Component id="segment_filter" alignment="0" max="32767" attributes="0"/>
-                              <Component id="workplace_filter" alignment="0" max="32767" attributes="0"/>
-                              <Component id="write_time_txt" max="32767" attributes="0"/>
-                              <Component id="active_combobox" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="login_lbl4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="pwd_lbl1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lname_lbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="fname_lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="write_time_txt" min="-2" pref="193" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="segment_filter" alignment="0" pref="171" max="32767" attributes="0"/>
+                                          <Component id="workplace_filter" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="family_filter" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="login_lbl7" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="active_combobox" min="-2" pref="171" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" pref="36" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="fname_lbl" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lname_lbl" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="pwd_lbl1" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="login_lbl4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
-                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="priority" max="32767" attributes="0"/>
                               <Component id="cpn_txtbox" pref="163" max="32767" attributes="0"/>
@@ -481,6 +479,35 @@
                               <Component id="index_txtbox" alignment="0" pref="163" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="446" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="pwd_lbl15" min="-2" max="-2" attributes="0"/>
+                                      <Component id="pwd_lbl6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="cra_stdTime_txtbox" pref="193" max="32767" attributes="0"/>
+                                      <Component id="stdTime_txtbox" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="351" pref="351" max="-2" attributes="0"/>
+                                  <Component id="lname_lbl2" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                                  <Component id="lname_lbl1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -527,23 +554,20 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="pwd_lbl6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="stdTime_txtbox" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="order_no_txt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="login_lbl4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                  <Component id="pwd_lbl2" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="order_no_txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="login_lbl4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="active_combobox" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                                   <Component id="assy_txtbox" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="login_lbl1" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="pwd_lbl2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="active_combobox" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="create_time_txt" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -556,7 +580,19 @@
                                   <Component id="login_lbl7" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="stdTime_txtbox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="pwd_lbl6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="cra_stdTime_txtbox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="pwd_lbl15" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -837,7 +873,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Std Time *"/>
+                    <Property name="text" type="java.lang.String" value="Assemblage *"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="stdTime_txtbox">
@@ -932,6 +968,40 @@
                     <Property name="text" type="java.lang.String" value="Priorit&#xe9;"/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JTextField" name="cra_stdTime_txtbox">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="cc" red="cc" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="0.00"/>
+                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="null"/>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="fname_txtbox" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cra_stdTime_txtboxActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="pwd_lbl15">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Coupe + pr&#xe9;paration *"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel4">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="16" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Temps de gamme"/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel4">
@@ -970,7 +1040,7 @@
                                           <Group type="102" attributes="0">
                                               <Component id="login_lbl6" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                              <Component id="destination_filter" pref="159" max="32767" attributes="0"/>
+                                              <Component id="destination_filter" pref="164" max="32767" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">

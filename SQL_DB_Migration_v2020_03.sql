@@ -162,7 +162,8 @@ BLOQUED';
 ALTER TABLE base_container
     ADD COLUMN IF NOT EXISTS priority integer NOT NULL DEFAULT 99,
     ADD COLUMN IF NOT EXISTS openning_sheet_copies integer NOT NULL DEFAULT 1,
-    ADD COLUMN IF NOT EXISTS closing_sheet_copies integer NOT NULL DEFAULT 1;
+    ADD COLUMN IF NOT EXISTS closing_sheet_copies integer NOT NULL DEFAULT 1,	
+	ADD COLUMN IF NOT EXISTS cra_std_time double precision DEFAULT 0.0;
 
 COMMENT ON COLUMN public.base_container.priority
     IS 'More the number is lower, more the priority is high, default is 99';
@@ -679,7 +680,9 @@ UPDATE public.base_container
 
 -- ----------- {{{{{{{{{{{{{{{{ [base_harness] }}}}}}}}}}}}}}}} --------------
 ALTER TABLE public.base_harness
-    ADD COLUMN deleted boolean NOT NULL DEFAULT false;
+    ADD COLUMN deleted boolean NOT NULL DEFAULT false,
+	ADD COLUMN IF NOT EXISTS cra_std_time double precision DEFAULT 0.0;
+	
 
 -- ----------- {{{{{{{{{{{{{{{{ [drop_base_container] }}}}}}}}}}}}}}}} --------------
 ALTER TABLE drop_base_container
@@ -761,7 +764,9 @@ ALTER TABLE public.load_plan ALTER COLUMN delivery_time TYPE timestamp with time
 -- ----------- {{{{{{{{{{{{{{{{ [config_ucs] }}}}}}}}}}}}}}}} --------------
 
 ALTER TABLE public.config_ucs
-    ADD COLUMN IF NOT EXISTS print_destination boolean NOT NULL DEFAULT True;
+    ADD COLUMN IF NOT EXISTS print_destination boolean NOT NULL DEFAULT True,
+	ADD COLUMN cra_std_time double precision DEFAULT 0.0;
+	
 
 COMMENT ON COLUMN public.config_ucs.print_destination
     IS 'Boolean

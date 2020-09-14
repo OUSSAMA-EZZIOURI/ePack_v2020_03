@@ -86,7 +86,7 @@ public class PACKAGING_UI0019_EfficiencyCalculation_JPANEL extends javax.swing.J
         //super(parent, modal);
         initComponents();
         initTimeSpinners();
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, true);
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "", true);
         this.workplace_filter.setEnabled(false);
         radioGroup.add(radio_scanned_harness);
         radioGroup.add(radio_closed_pack);

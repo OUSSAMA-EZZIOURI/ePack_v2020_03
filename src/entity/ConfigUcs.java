@@ -75,6 +75,9 @@ public class ConfigUcs extends DAO implements java.io.Serializable {
 
     @Column(name = "std_time")
     private double stdTime;
+    
+    @Column(name = "cra_std_time", nullable = false, columnDefinition = "float default 0.00")
+    private double craStdTime;
 
     @Column(name = "price")
     private double price;
@@ -538,6 +541,16 @@ public class ConfigUcs extends DAO implements java.io.Serializable {
     public void setPrint_destination(Boolean print_destination) {
         this.print_destination = print_destination;
     }
+
+    public double getCraStdTime() {
+        return craStdTime;
+    }
+
+    public void setCraStdTime(double craStdTime) {
+        this.craStdTime = craStdTime;
+    }
+    
+    
 
     //######################################################################
     public List select(String hp) {
