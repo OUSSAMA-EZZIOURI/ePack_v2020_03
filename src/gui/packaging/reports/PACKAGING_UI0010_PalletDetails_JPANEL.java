@@ -2082,6 +2082,7 @@ public final class PACKAGING_UI0010_PalletDetails_JPANEL extends javax.swing.JPa
             try {
                 WIZARD_PACKAGING_MODE_CHOICE wiz = new WIZARD_PACKAGING_MODE_CHOICE(null, true);
                 int format = wiz.showDialog();
+                
                 if (format != -1) {
                     System.out.println("Printing closing sheet " + this.bc.getPalletNumber());
                     PrinterHelper.saveAndPrintClosingSheet(PackagingVars.mode3_context, this.bc, false, format);
