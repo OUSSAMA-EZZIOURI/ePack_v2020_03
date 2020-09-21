@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.packaging.mode3.state;
+package gui.packaging.mode.state;
 
 import __main__.GlobalVars;
 import com.itextpdf.text.DocumentException;

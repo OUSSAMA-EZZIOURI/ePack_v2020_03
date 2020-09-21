@@ -9,13 +9,11 @@ import __main__.GlobalVars;
 import entity.ConfigProject;
 import entity.ConfigSegment;
 import entity.ConfigWorkplace;
-import helper.ComboItem;
 import helper.Helper;
 import helper.JDialogExcelFileChooser;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -24,6 +22,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
@@ -55,10 +54,10 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
             "WORKPLACE",
             "ARTICLE",
             "INDEX",
+            "INT. PART NUMBER",
             "STD TIME",
             "PACK TYPE",
             "PACK SIZE",
-            "INT. PART NUMBER",
             "ORDER NO.",
             "LIFES",
             "SPECIAL ORDER",
@@ -78,7 +77,8 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
         load_table_header();
 
         //Init projects filter
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "", true);
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "ALL", true);
+        this.workplace_filter.setEnabled(false);
         //Focuse on text filter field
         harness_part_filter.requestFocus();
     }
@@ -90,8 +90,6 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
             ucs_result_table_header.add(it.next());
         }
     }
-
-    
 
     public void reset_table_content() {
         ucs_result_table_data = new Vector();
@@ -117,10 +115,10 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
             oneRow.add(String.valueOf(obj[1])); // WORKPLACE
             oneRow.add(String.valueOf(obj[2])); // "Harness Part"
             oneRow.add(String.valueOf(obj[3])); // "Harness Index"
-            oneRow.add(String.valueOf(obj[4])); // "Std Time"
-            oneRow.add(String.valueOf(obj[5])); // "Pack Type"
-            oneRow.add(String.valueOf(obj[6])); // "Pack Size"
-            oneRow.add(String.valueOf(obj[7])); // "SPN"                     
+            oneRow.add(String.valueOf(obj[4])); // "SPN"                     
+            oneRow.add(String.valueOf(obj[5])); // "Std Time"
+            oneRow.add(String.valueOf(obj[6])); // "Pack Type"
+            oneRow.add(String.valueOf(obj[7])); // "Pack Size"
             oneRow.add(String.valueOf(obj[8])); // "ORDER NO"     
             oneRow.add(String.valueOf(obj[9])); // "LIFES"     
             oneRow.add(String.valueOf(obj[10])); // "SPECIAL ORDER"     
@@ -132,18 +130,6 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
         ucs_result_table.setFont(new Font(String.valueOf(GlobalVars.APP_PROP.getProperty("JTABLE_FONT")), Font.BOLD, 12));
         ucs_result_table.setRowHeight(Integer.valueOf(GlobalVars.APP_PROP.getProperty("JTABLE_ROW_HEIGHT")));
         //setContainerTableRowsStyle();
-    }
-
-    private void initContainerTableDoubleClick() {
-        this.ucs_result_table.addMouseListener(
-                new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 1) {
-
-                }
-            }
-        }
-        );
     }
 
     public void setContainerTableRowsStyle() {
@@ -188,7 +174,8 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
         segments.clear();
         workplaces.clear();
         projects.clear();
-
+        
+        String supplier_part_number = "%" + internal_pn_txt.getText().trim() + "%";
 
         //Populate the project Array with data
         if (String.valueOf(project_filter.getSelectedItem()).equals("ALL") || String.valueOf(project_filter.getSelectedItem()).equals("null")) {
@@ -262,16 +249,16 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
                     + " bc.workplace AS workplace, "
                     + " bc.harness_part AS harness_part, "
                     + " bc.harness_index AS harness_index, "
+                    + " bc.supplier_part_number AS spn,"
                     + " bc.std_time AS std_time, "
                     + " bc.pack_type AS pack_type, "
                     + " bc.pack_size AS pack_size, "
-                    + " bc.supplier_part_number AS spn,"
                     + " bc.order_no AS order_no, "
                     + " bc.lifes AS lifes, "
                     + " bc.special_order AS special_order, "
                     + " bc.active AS active "
                     + " FROM config_ucs bc "
-                    + " WHERE 1=1 "; //bc.segment IN (:segments) AND bc.workplace IN (:workplace)";
+                    + " WHERE 1=1 ";
 
             if (!projects.isEmpty()) {
                 query_str += " AND bc.project IN (:projects) ";
@@ -293,10 +280,10 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
 
             if (!projects.isEmpty()) {
                 query_str += " AND bc.project IN (:projects) ";
-                System.out.println("projects " + projects.size());
             }
 
             query_str += " AND bc.active = " + active + " ";
+            query_str += " AND bc.supplier_part_number like " + supplier_part_number + " ";
 
             query_str += " ORDER BY project ASC, segment ASC, workplace ASC, pack_type ASC, pack_size ASC";
             System.out.println(projects.toString());
@@ -310,6 +297,7 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
                     .addScalar("workplace", StandardBasicTypes.STRING)
                     .addScalar("harness_part", StandardBasicTypes.STRING)
                     .addScalar("harness_index", StandardBasicTypes.STRING)
+                    .addScalar("supplier_part_number", StandardBasicTypes.STRING)
                     .addScalar("std_time", StandardBasicTypes.STRING)
                     .addScalar("pack_type", StandardBasicTypes.STRING)
                     .addScalar("pack_size", StandardBasicTypes.STRING)
@@ -318,8 +306,6 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
                     .addScalar("lifes", StandardBasicTypes.INTEGER)
                     .addScalar("special_order", StandardBasicTypes.INTEGER)
                     .addScalar("active", StandardBasicTypes.INTEGER);
-            // .setParameterList("segment", segments)
-            // .setParameterList("workplace", workplaces);
 
             if (!projects.isEmpty()) {
                 query.setParameterList("projects", projects);
@@ -375,6 +361,8 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
         active_checkbox = new javax.swing.JCheckBox();
         jLabel24 = new javax.swing.JLabel();
         project_filter = new javax.swing.JComboBox();
+        internal_pn_txt = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(36, 65, 86));
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -472,6 +460,7 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
         jLabel21.setText("Workplace");
 
         workplace_filter.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        workplace_filter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ALL" }));
         workplace_filter.setToolTipText("");
         workplace_filter.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -489,7 +478,8 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
         jLabel22.setText("Article");
 
         special_combobox.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        special_combobox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Normal", "Special" }));
+        special_combobox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ALL", "Normal", "Special" }));
+        special_combobox.setToolTipText("");
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
@@ -508,6 +498,8 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setText("Projet");
 
+        project_filter.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        project_filter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ALL" }));
         project_filter.setMaximumSize(null);
         project_filter.setMinimumSize(new java.awt.Dimension(37, 26));
         project_filter.setPreferredSize(new java.awt.Dimension(37, 26));
@@ -517,47 +509,70 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
             }
         });
 
+        internal_pn_txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                internal_pn_txtActionPerformed(evt);
+            }
+        });
+        internal_pn_txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                internal_pn_txtKeyPressed(evt);
+            }
+        });
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setText("Code Article Interne");
+
         javax.swing.GroupLayout north_panelLayout = new javax.swing.GroupLayout(north_panel);
         north_panel.setLayout(north_panelLayout);
         north_panelLayout.setHorizontalGroup(
             north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(north_panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(north_panelLayout.createSequentialGroup()
                         .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel24)
-                            .addComponent(project_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(segment_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(north_panelLayout.createSequentialGroup()
-                            .addComponent(refresh_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(clear_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(export_btn))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, north_panelLayout.createSequentialGroup()
-                            .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel21)
-                                .addComponent(workplace_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(harness_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel22))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel23)
-                                .addGroup(north_panelLayout.createSequentialGroup()
-                                    .addComponent(special_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(active_checkbox, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(534, Short.MAX_VALUE))
+                            .addGroup(north_panelLayout.createSequentialGroup()
+                                .addComponent(refresh_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(clear_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(392, 392, 392)
+                                .addComponent(export_btn))
+                            .addGroup(north_panelLayout.createSequentialGroup()
+                                .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(north_panelLayout.createSequentialGroup()
+                                        .addComponent(jLabel23)
+                                        .addGap(196, 196, 196))
+                                    .addGroup(north_panelLayout.createSequentialGroup()
+                                        .addComponent(special_combobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(16, 16, 16)))
+                                .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(harness_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel22))
+                                .addGap(18, 18, 18)
+                                .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel25)
+                                    .addGroup(north_panelLayout.createSequentialGroup()
+                                        .addComponent(internal_pn_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(active_checkbox, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel6)
+                            .addGroup(north_panelLayout.createSequentialGroup()
+                                .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel24)
+                                    .addComponent(project_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(segment_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(workplace_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel21))))
+                        .addContainerGap(530, Short.MAX_VALUE))))
         );
         north_panelLayout.setVerticalGroup(
             north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -567,35 +582,33 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(jLabel24))
+                    .addComponent(jLabel24)
+                    .addComponent(jLabel21))
                 .addGap(2, 2, 2)
                 .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(segment_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(project_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(project_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(workplace_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(north_panelLayout.createSequentialGroup()
-                        .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(north_panelLayout.createSequentialGroup()
-                                .addComponent(jLabel21)
-                                .addGap(3, 3, 3)
-                                .addComponent(workplace_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(north_panelLayout.createSequentialGroup()
-                                .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel22)
-                                    .addComponent(jLabel23))
-                                .addGap(3, 3, 3)
-                                .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                    .addComponent(special_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(harness_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(active_checkbox))
-                                .addGap(1, 1, 1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(special_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(harness_part_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(internal_pn_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(north_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(refresh_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(clear_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(north_panelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(3, 3, 3)
+                        .addComponent(active_checkbox)
+                        .addGap(18, 19, Short.MAX_VALUE)
                         .addComponent(export_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -603,6 +616,8 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 9, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
+
+        internal_pn_txt.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -635,23 +650,12 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
     }//GEN-LAST:event_north_panelKeyPressed
 
     private void segment_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_segment_filterActionPerformed
-        String segment = String.valueOf(segment_filter.getSelectedItem()).trim();
-        this.workplace_filter.removeAllItems();
-        //this.workplace_filter.addItem(new ComboItem("ALL", "ALL"));
-        this.workplace_filter.addItem("ALL");
-        if ("ALL".equals(segment) || segment.equals("null")) {
-            this.workplace_filter.setSelectedIndex(0);
-            this.workplace_filter.setEnabled(false);
-        } else {
-            workplace_filter = ConfigWorkplace.initWorkplaceJBox(this, workplace_filter, segment, true);
-            this.workplace_filter.setEnabled(true);
-        }
+        
     }//GEN-LAST:event_segment_filterActionPerformed
 
     private void segment_filterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_segment_filterItemStateChanged
 
     }//GEN-LAST:event_segment_filterItemStateChanged
-
 
 
     private void refresh_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refresh_btnActionPerformed
@@ -730,7 +734,7 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
     }//GEN-LAST:event_workplace_filterItemStateChanged
 
     private void workplace_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workplace_filterActionPerformed
-        
+
     }//GEN-LAST:event_workplace_filterActionPerformed
 
     private void active_checkboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_active_checkboxActionPerformed
@@ -739,21 +743,18 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
 
 
     private void project_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_project_filterActionPerformed
-        String project = String.valueOf(project_filter.getSelectedItem()).trim();
-        System.out.println("Selected Project " + project);
-            segment_filter.addItem("ALL");
-        if ("ALL".equals(project)) {
-            segment_filter.removeAllItems();
-            //segment_filter.addItem(new ComboItem("ALL", "ALL"));
-            this.segment_filter.setSelectedIndex(0);
-            this.segment_filter.setEnabled(false);
-        } else {
-            ConfigSegment.setSegmentByProject(this, segment_filter, project, true);
-            this.segment_filter.setEnabled(true);
-        }
-
-        System.out.println("Set the packaging warehouse " + String.valueOf(project_filter.getSelectedItem()));
+       
     }//GEN-LAST:event_project_filterActionPerformed
+
+    private void internal_pn_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_internal_pn_txtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_internal_pn_txtActionPerformed
+
+    private void internal_pn_txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_internal_pn_txtKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refresh();
+        }
+    }//GEN-LAST:event_internal_pn_txtKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -761,11 +762,13 @@ public class PACKAGING_UI0017_UCS_List_JPANEL extends javax.swing.JPanel {
     private javax.swing.JButton clear_btn;
     private javax.swing.JButton export_btn;
     private javax.swing.JTextField harness_part_filter;
+    private javax.swing.JTextField internal_pn_txt;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

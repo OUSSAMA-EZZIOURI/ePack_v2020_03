@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Query;
 //import gui.packaging.mode2.state.Mode2_S040_ClosingPallet;
-import gui.packaging.mode3.state.Mode3_S040_ClosingPallet;
+import gui.packaging.mode.state.Mode3_S040_ClosingPallet;
 
 /**
  *

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.packaging.mode3.gui;
+package gui.packaging.mode.gui;
 
 import __main__.GlobalMethods;
 import __main__.GlobalVars;
 import entity.ManufactureUsers;
 import gui.packaging.PackagingVars;
-import gui.packaging.mode3.state.Mode3_S010_UserCodeScan;
-import gui.packaging.mode3.state.Mode3_S020_HarnessPartScan;
+import gui.packaging.mode.state.Mode3_S010_UserCodeScan;
+import gui.packaging.mode.state.Mode3_S020_HarnessPartScan;
 import helper.HQLHelper;
 import helper.Helper;
 import helper.UIHelper;

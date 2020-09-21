@@ -268,7 +268,7 @@ public class PrinterHelper {
             case 2 :
                 System.out.println("Format 2 Printing with format "+format);
                 saveAndPrintClosingSheetMode2(ctx, bc, reprint);
-                break;
+                break;            
         }
         
     }

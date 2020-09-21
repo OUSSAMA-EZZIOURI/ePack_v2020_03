@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.packaging.mode3.state;
+package gui.packaging.mode.state;
 
 import __main__.GlobalMethods;
 import __main__.GlobalVars;
@@ -18,7 +18,7 @@ import entity.BaseHarness;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import gui.packaging.PackagingVars;
-import gui.packaging.mode3.gui.PACKAGING_UI9000_ChoosePackType_Mode3;
+import gui.packaging.mode.gui.PACKAGING_UI9000_ChoosePackType_Mode3;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -18,7 +18,7 @@ import entity.LoadPlanLine;
 import __main__.MainFrame;
 import gui.packaging.PackagingVars;
 //import gui.packaging.mode1.state.Mode1_S050_ClosingPallet;
-import gui.packaging.mode3.state.Mode3_S040_ClosingPallet;
+import gui.packaging.mode.state.Mode3_S040_ClosingPallet;
 import helper.PrinterHelper;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
@@ -2082,8 +2082,12 @@ public final class PACKAGING_UI0010_PalletDetails_JPANEL extends javax.swing.JPa
             try {
                 WIZARD_PACKAGING_MODE_CHOICE wiz = new WIZARD_PACKAGING_MODE_CHOICE(null, true);
                 int format = wiz.showDialog();
-                System.out.println("Printing closing sheet " + this.bc.getPalletNumber());
-                PrinterHelper.saveAndPrintClosingSheet(PackagingVars.mode3_context, this.bc, false, format);
+                if (format != -1) {
+                    System.out.println("Printing closing sheet " + this.bc.getPalletNumber());
+                    PrinterHelper.saveAndPrintClosingSheet(PackagingVars.mode3_context, this.bc, false, format);
+                }else{
+                    System.out.println("Print aborted");
+                }
             } catch (IOException | DocumentException ex) {
                 UILog.severe(ex.toString());
             } catch (Exception ex) {

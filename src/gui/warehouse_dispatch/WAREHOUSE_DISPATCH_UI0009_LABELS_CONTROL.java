@@ -30,7 +30,20 @@ public class WAREHOUSE_DISPATCH_UI0009_LABELS_CONTROL extends javax.swing.JFrame
 
     private String frameTitle = "Contrôle des étiquettes export";
     public ControlState state = null;//WarehouseHelper.warehouse_control_context.getState();
+    
+    
+    private void initGui() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        plan_num_label.setText(WarehouseHelper.temp_load_plan.getId().toString());
+        create_user_label.setText(WarehouseHelper.temp_load_plan.getUser());
+        create_time_label.setText(sdf.format(WarehouseHelper.temp_load_plan.getCreateTime()));
+        deliv_date_label.setText(sdf.format(WarehouseHelper.temp_load_plan.getDeliveryTime()));
+        truck_no_text.setText(WarehouseHelper.temp_load_plan.getTruckNo());
+        transporter_text.setText(WarehouseHelper.temp_load_plan.getTransportCompany());
+        state_label.setText(WarehouseHelper.temp_load_plan.getPlanState());
 
+    }
+    
     /**
      * Creates new form WAREHOUSE_DISPATCH_UI0009_LABELS_CONTROL
      */
@@ -634,15 +647,4 @@ public class WAREHOUSE_DISPATCH_UI0009_LABELS_CONTROL extends javax.swing.JFrame
     private javax.swing.JTextField txt_productSerialNo;
     // End of variables declaration//GEN-END:variables
 
-    private void initGui() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        plan_num_label.setText(WarehouseHelper.temp_load_plan.getId().toString());
-        create_user_label.setText(WarehouseHelper.temp_load_plan.getUser());
-        create_time_label.setText(sdf.format(WarehouseHelper.temp_load_plan.getCreateTime()));
-        deliv_date_label.setText(sdf.format(WarehouseHelper.temp_load_plan.getDeliveryTime()));
-        truck_no_text.setText(WarehouseHelper.temp_load_plan.getTruckNo());
-        //transporter_text.setText(WarehouseHelper.temp_load_plan.getTransporter());
-        state_label.setText(WarehouseHelper.temp_load_plan.getPlanState());
-
-    }
 }

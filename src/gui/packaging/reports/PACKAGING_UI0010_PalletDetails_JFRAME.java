@@ -15,7 +15,7 @@ import entity.HisOpenPalPrint;
 import entity.LoadPlan;
 import entity.LoadPlanLine;
 import gui.packaging.PackagingVars;
-import gui.packaging.mode3.state.Mode3_S040_ClosingPallet;
+import gui.packaging.mode.state.Mode3_S040_ClosingPallet;
 import helper.PrinterHelper;
 import helper.UIHelper;
 import java.awt.event.KeyEvent;

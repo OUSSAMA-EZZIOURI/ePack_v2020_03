@@ -7,7 +7,7 @@ package __main__;
  */
 import entity.ManufactureUsers;
 import gui.packaging.PackagingVars;
-import gui.packaging.mode3.state.Mode3_S010_UserCodeScan;
+import gui.packaging.mode.state.Mode3_S010_UserCodeScan;
 import helper.Helper;
 import java.net.ServerSocket;
 import javax.swing.JFrame;

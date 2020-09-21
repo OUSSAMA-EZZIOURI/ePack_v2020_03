@@ -489,7 +489,6 @@ public final class WAREHOUSE_DISPATCH_UI0002_DISPATCH_SCAN_JPANEL extends javax.
      * @param planId
      */
     public void reloadPackagingContainerTab3(int planId) {
-        System.out.println("reloadPackagingContainerTab3 ");
 
         Helper.startSession();
         String query_str = String.format(

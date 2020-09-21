@@ -467,7 +467,6 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
 
         companyPane_field_id.setEditable(false);
         companyPane_field_id.setBackground(new java.awt.Color(255, 255, 255));
-        companyPane_field_id.setForeground(new java.awt.Color(0, 0, 0));
         companyPane_field_id.setPreferredSize(new java.awt.Dimension(20, 24));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -729,7 +728,6 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
 
         projectPane_field_id.setEditable(false);
         projectPane_field_id.setBackground(new java.awt.Color(255, 255, 255));
-        projectPane_field_id.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setText("Abréviation");
@@ -906,10 +904,8 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
 
         familyPane_field_id.setEditable(false);
         familyPane_field_id.setBackground(new java.awt.Color(255, 255, 255));
-        familyPane_field_id.setForeground(new java.awt.Color(0, 0, 0));
 
         familyPane_field_project.setBackground(new java.awt.Color(204, 204, 255));
-        familyPane_field_project.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Projet");
@@ -1072,7 +1068,6 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
 
         segmentPane_field_id.setEditable(false);
         segmentPane_field_id.setBackground(new java.awt.Color(255, 255, 255));
-        segmentPane_field_id.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Ségment");
@@ -1080,7 +1075,6 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
         segmentPane_field_segment.setBackground(new java.awt.Color(204, 204, 255));
 
         segmentPane_field_project.setBackground(new java.awt.Color(204, 204, 255));
-        segmentPane_field_project.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Projet");
@@ -1117,7 +1111,7 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
                 .addGroup(segment_fieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(segmentPane_field_project, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         actions_pane_3.setBackground(new java.awt.Color(36, 65, 86));
@@ -1239,7 +1233,6 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
 
         workplacePane_field_id.setEditable(false);
         workplacePane_field_id.setBackground(new java.awt.Color(255, 255, 255));
-        workplacePane_field_id.setForeground(new java.awt.Color(0, 0, 0));
         workplacePane_field_id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 workplacePane_field_idActionPerformed(evt);
@@ -1247,7 +1240,6 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
         });
 
         workplacePane_field_project.setBackground(new java.awt.Color(204, 204, 255));
-        workplacePane_field_project.setForeground(new java.awt.Color(0, 0, 0));
         workplacePane_field_project.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 workplacePane_field_projectActionPerformed(evt);
@@ -1263,7 +1255,6 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
         workplacePane_field_workplace.setBackground(new java.awt.Color(204, 204, 255));
 
         workplacePane_field_segment.setBackground(new java.awt.Color(204, 204, 255));
-        workplacePane_field_segment.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setText("Ségment");
@@ -1290,7 +1281,7 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
         workplace_fieldsLayout.setVerticalGroup(
             workplace_fieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, workplace_fieldsLayout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(workplace_fieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(workplacePane_field_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1416,7 +1407,7 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
                 .addContainerGap())
         );
 
-        main_tab.addTab("Wokrplaces", workplace_pane);
+        main_tab.addTab("Workplaces", workplace_pane);
 
         magasin_pane.setBackground(new java.awt.Color(36, 65, 86));
         magasin_pane.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -1432,10 +1423,8 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
 
         warehousePane_field_id.setEditable(false);
         warehousePane_field_id.setBackground(new java.awt.Color(255, 255, 255));
-        warehousePane_field_id.setForeground(new java.awt.Color(0, 0, 0));
 
         warehousePane_field_project.setBackground(new java.awt.Color(204, 204, 255));
-        warehousePane_field_project.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Projet");
@@ -1449,7 +1438,6 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
         jLabel22.setText("Description");
 
         warehousePane_field_WhType.setBackground(new java.awt.Color(204, 204, 255));
-        warehousePane_field_WhType.setForeground(new java.awt.Color(0, 0, 0));
         warehousePane_field_WhType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FINISHED_GOODS", "PACKAGING", "INVENTORY", "SCRAP", "TRANSIT", "WIRES", "RAW_MATERIAL" }));
 
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
@@ -1634,7 +1622,6 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
 
         transporterPane_field_id.setEditable(false);
         transporterPane_field_id.setBackground(new java.awt.Color(255, 255, 255));
-        transporterPane_field_id.setForeground(new java.awt.Color(0, 0, 0));
 
         transporterPane_field_name.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -1785,7 +1772,6 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
 
         dispatchScanPane_field_id.setEditable(false);
         dispatchScanPane_field_id.setBackground(new java.awt.Color(255, 255, 255));
-        dispatchScanPane_field_id.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel32.setForeground(new java.awt.Color(255, 255, 255));
         jLabel32.setText("Comparer le code article client à partir du caractère numéro...");
@@ -1793,7 +1779,6 @@ public class CONFIG_UI0004_CONFIG_PROJECT_MASTER_DATA_JPANEL extends javax.swing
         dispatchScanPane_field_odette_pn_begin.setBackground(new java.awt.Color(204, 204, 255));
 
         dispatchScanPane_field_project.setBackground(new java.awt.Color(204, 204, 255));
-        dispatchScanPane_field_project.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Projet");

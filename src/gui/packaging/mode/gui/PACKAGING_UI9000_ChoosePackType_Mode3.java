@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.packaging.mode3.gui;
+package gui.packaging.mode.gui;
 
 import __main__.GlobalVars;
 import entity.BaseContainer;
@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Query;
-import gui.packaging.mode3.state.Mode3_S020_HarnessPartScan;
-import gui.packaging.mode3.state.Mode3_S030_NewPalletScan;
+import gui.packaging.mode.state.Mode3_S020_HarnessPartScan;
+import gui.packaging.mode.state.Mode3_S030_NewPalletScan;
 import helper.JTableHelper;
 import helper.UIHelper;
 import java.awt.Color;
@@ -43,7 +43,7 @@ public final class PACKAGING_UI9000_ChoosePackType_Mode3 extends javax.swing.JDi
     Vector result_table_data = new Vector();
     Vector<String> ucs_result_table_header = new Vector<String>();
     private List<Object[]> resultList;
-    int SPECIAL_COMMANDE_INDEX = 12;
+    int SPECIAL_COMMANDE_INDEX = 7;
     List<String> table_header = Arrays.asList(
             "ID",
             "CPN",
@@ -54,10 +54,10 @@ public final class PACKAGING_UI9000_ChoosePackType_Mode3 extends javax.swing.JDi
             //"STD TIME",
             //"WORKSTATION",
             //"SEGMENT",
-            "WORKPLACE"
+            "WORKPLACE",
             //"UCS LIFES",
             //"COMMENT",
-            //"SPECIAL ORDER",
+            "SPECIAL ORDER"
             //"ORDER NO"
     );
 
@@ -115,7 +115,7 @@ public final class PACKAGING_UI9000_ChoosePackType_Mode3 extends javax.swing.JDi
             oneRow.add(String.valueOf(c.getWorkplace())); // WORKPLACE    
             //oneRow.add(String.valueOf(c.getLifes())); // UCS LIFES  
             //oneRow.add(String.valueOf(c.getComment())); // COMMENT  
-            //oneRow.add(String.valueOf(c.getSpecialOrder())); // SPECIAL ORDER 
+            oneRow.add(String.valueOf(c.getSpecialOrder())); // SPECIAL ORDER 
             //oneRow.add(String.valueOf(c.getOrderNo())); // ORDER NO  
 
             result_table_data.add(oneRow);

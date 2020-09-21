@@ -1,7 +1,6 @@
 package entity;
 
 import __main__.GlobalVars;
-import __main__.GlobalVars.WarehouseType;
 import hibernate.DAO;
 import java.io.Serializable;
 import helper.HQLHelper;

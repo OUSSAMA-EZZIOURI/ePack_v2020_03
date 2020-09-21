@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.packaging.mode3.state;
+package gui.packaging.mode.state;
 
 import __main__.GlobalVars;
 import entity.BaseContainerTmp;
@@ -12,7 +12,7 @@ import helper.HQLHelper;
 import entity.ManufactureUsers;
 import gui.packaging.Mode3_Context;
 import gui.packaging.PackagingVars;
-import gui.packaging.mode3.gui.PACKAGING_UI0002_PasswordRequest_Mode3;
+import gui.packaging.mode.gui.PACKAGING_UI0002_PasswordRequest_Mode3;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;

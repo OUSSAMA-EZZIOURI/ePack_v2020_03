@@ -78,7 +78,8 @@ public class ConfigSegment extends DAO implements Serializable {
         return query.list();
     }
 
-    public List selectBySegment(String project) {
+    public List selectSegmentByProject(String project) {
+        
         Helper.startSession();
 
         Query query = Helper.sess.createQuery(HQLHelper.GET_SEGMENTS_BY_PROJECT);
@@ -95,7 +96,7 @@ public class ConfigSegment extends DAO implements Serializable {
      * @param displayAll
      * @return 
      */
-    public static boolean setSegmentByProject(Object parentUI, JComboBox segment_jbox, String project, boolean displayAll) {
+    public static JComboBox setSegmentByProject(Object parentUI, JComboBox segment_jbox, String project, boolean displayAll) {
         segment_jbox.removeAllItems();
         if (displayAll) {
             segment_jbox.addItem("ALL");
@@ -103,21 +104,22 @@ public class ConfigSegment extends DAO implements Serializable {
         if ("ALL".equals(project)) {
             segment_jbox.setSelectedIndex(0);
             segment_jbox.setEnabled(false);
-            return true;
+            return segment_jbox;
         } else {
-            List result = new ConfigSegment().selectBySegment(project);
+            List result = new ConfigSegment().selectSegmentByProject(project);
             if (result.isEmpty()) {
                 UILog.severeDialog((Component) parentUI, ErrorMsg.APP_ERR0037);
                 UILog.severe(ErrorMsg.APP_ERR0037[1]);
-                return false;
+                return segment_jbox;
             } else { //Map project data in the list
                 for (Object o : result) {
                     ConfigSegment cp = (ConfigSegment) o;
+                    //segment_jbox.addItem(cp.getSegment());
                     segment_jbox.addItem(cp.getSegment());
                 }
                 segment_jbox.setSelectedIndex(0);
                 segment_jbox.setEnabled(true);
-                return true;
+                return segment_jbox;
             }
         }
     }

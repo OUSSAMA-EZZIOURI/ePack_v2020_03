@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.packaging.mode3.gui;
+package gui.packaging.mode.gui;
 
 import __main__.GlobalMethods;
 import __main__.GlobalVars;
@@ -49,8 +49,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Query;
 import scanner.GUI;
-import gui.packaging.mode3.state.Mode3_State;
-import gui.packaging.mode3.state.Mode3_S010_UserCodeScan;
+import gui.packaging.mode.state.Mode3_State;
+import gui.packaging.mode.state.Mode3_S010_UserCodeScan;
 import gui.packaging.reports.PACKAGING_UI0010_PalletDetails_JFRAME;
 import gui.packaging.reports.PACKAGING_UI0013_PalletWaiting;
 import java.awt.event.KeyListener;

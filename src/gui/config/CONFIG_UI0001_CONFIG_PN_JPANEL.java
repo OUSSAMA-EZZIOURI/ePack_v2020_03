@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -2307,7 +2308,8 @@ public class CONFIG_UI0001_CONFIG_PN_JPANEL extends javax.swing.JPanel {
             fg_warehouse_filter = ConfigWarehouse.initWarehouseJBox(this, fg_warehouse_filter, String.valueOf(project_filter.getSelectedItem()), String.valueOf(GlobalVars.WarehouseType.FINISHED_GOODS),"", false);
             packaging_wh_filter = ConfigWarehouse.initWarehouseJBox(this, packaging_wh_filter, String.valueOf(project_filter.getSelectedItem()), String.valueOf(GlobalVars.WarehouseType.PACKAGING),"", false);
             LoadPlanDestination.setDestinationByProject(this, destination_filter, String.valueOf(project_filter.getSelectedItem()) );
-            if (ConfigSegment.setSegmentByProject(this, segment_filter, String.valueOf(project_filter.getSelectedItem()), false)) {
+            JComboBox box = ConfigSegment.setSegmentByProject(this, segment_filter, String.valueOf(project_filter.getSelectedItem()), false);
+            if (box.getItemCount()>0) {
                 workplace_filter = ConfigWorkplace.initWorkplaceJBox(this, workplace_filter, String.valueOf(segment_filter.getSelectedItem()), false);  
                 family_filter = ConfigFamily.initFamilyByProject(this, family_filter, String.valueOf(project_filter.getSelectedItem()));
             }

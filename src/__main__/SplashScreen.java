@@ -5,7 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER;
 import javax.swing.SwingWorker;
 import javax.swing.text.DefaultCaret;
 
@@ -46,7 +46,7 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         taskOutput.setEditable(false);
         taskOutput.setLineWrap(true);
         taskOutput.setWrapStyleWord(true);
-        scrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
         DefaultCaret caret = (DefaultCaret) taskOutput.getCaret();
         //caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
         taskOutput.setCaret(caret);
@@ -140,6 +140,7 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
         taskOutput.setEditable(false);
         taskOutput.setBackground(new java.awt.Color(0, 0, 51));
         taskOutput.setColumns(100);
+        taskOutput.setFont(new java.awt.Font("Courier New", 0, 16)); // NOI18N
         taskOutput.setForeground(new java.awt.Color(255, 255, 255));
         taskOutput.setRows(1);
         taskOutput.setTabSize(0);
@@ -297,7 +298,7 @@ public class SplashScreen extends javax.swing.JFrame implements PropertyChangeLi
             int progress = (Integer) evt.getNewValue();
             progressBar.setIndeterminate(false);
             progressBar.setValue(progress);
-            taskOutput.append(String.format("Completed %d%% of task.\n", progress));
+            taskOutput.setText(String.format("Démarrage %d%%...\n", progress));
 
         }
     }

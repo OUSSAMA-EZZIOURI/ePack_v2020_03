@@ -8,7 +8,7 @@ package gui.packaging;
 import entity.ConfigFamily;
 ////import gui.packaging.mode1.gui.PACKAGING_UI0001_Main_Mode1;;
 //import gui.packaging.mode2.gui.PACKAGING_UI0001_Main_Mode2;
-import gui.packaging.mode3.gui.PACKAGING_UI0001_Main_Mode3;
+import gui.packaging.mode.gui.PACKAGING_UI0001_Main_Mode3;
 
 /**
  * Global variables to be used in packaging package classes

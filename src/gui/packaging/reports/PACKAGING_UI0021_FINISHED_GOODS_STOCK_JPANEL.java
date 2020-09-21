@@ -9,15 +9,16 @@ import __main__.GlobalVars;
 import entity.ConfigProject;
 import entity.ConfigSegment;
 import entity.ConfigWorkplace;
-import helper.ComboItem;
 import helper.Helper;
 import helper.JDialogExcelFileChooser;
+import java.awt.ComponentOrientation;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import javax.swing.JTabbedPane;
@@ -66,7 +67,8 @@ public class PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL extends javax.swing.JP
     public PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL(JTabbedPane parent) {
         this.parent = parent;
         initComponents();
-        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "", true);
+        
+        project_filter = ConfigProject.initProjectsJBox(this, project_filter, "ALL", true);
         this.workplace_filter.setEnabled(false);
         this.reset_tables_content();
     }
@@ -331,6 +333,7 @@ public class PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL extends javax.swing.JP
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("Projet");
 
+        project_filter.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         project_filter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ALL" }));
         project_filter.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -347,7 +350,7 @@ public class PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL extends javax.swing.JP
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("Ségment");
 
-        segment_filter.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        segment_filter.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         segment_filter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ALL" }));
         segment_filter.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -364,7 +367,7 @@ public class PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL extends javax.swing.JP
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
         jLabel22.setText("Workplace");
 
-        workplace_filter.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        workplace_filter.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         workplace_filter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ALL" }));
         workplace_filter.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -441,31 +444,36 @@ public class PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL extends javax.swing.JP
                     .addComponent(project_filter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(special_combobox, 0, 187, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel20)
-                    .addComponent(jLabel24)
-                    .addComponent(segment_filter, 0, 221, Short.MAX_VALUE)
-                    .addComponent(internal_pn_txt))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22)
+                    .addComponent(cpn_txt)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(workplace_filter, 0, 223, Short.MAX_VALUE)
-                            .addComponent(cpn_txt))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addComponent(refresh_btn)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(export_btn)
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20)
+                            .addComponent(segment_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(workplace_filter, 0, 223, Short.MAX_VALUE)
+                    .addComponent(jLabel22)
+                    .addComponent(internal_pn_txt)
+                    .addComponent(jLabel24))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(refresh_btn)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(266, 266, 266)
+                        .addComponent(export_btn)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel20)
                             .addComponent(jLabel21))
@@ -473,26 +481,27 @@ public class PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL extends javax.swing.JP
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(segment_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(project_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel22)
                         .addGap(31, 31, 31))
-                    .addComponent(workplace_filter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel24)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(workplace_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(refresh_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(export_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel25)
+                        .addGap(3, 3, 3)
+                        .addComponent(special_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addGap(1, 1, 1)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(cpn_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(refresh_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(export_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel25)
-                            .addGap(2, 2, 2)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(special_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(internal_pn_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jLabel24))
+                        .addGap(1, 1, 1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cpn_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(internal_pn_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(4, 4, 4))
         );
 
@@ -614,7 +623,6 @@ public class PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL extends javax.swing.JP
     }//GEN-LAST:event_workplace_filterItemStateChanged
 
     private void workplace_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workplace_filterActionPerformed
-//        refresh();
     }//GEN-LAST:event_workplace_filterActionPerformed
 
     private void segment_filterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_segment_filterItemStateChanged
@@ -622,15 +630,20 @@ public class PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL extends javax.swing.JP
 
     private void segment_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_segment_filterActionPerformed
         String segment = String.valueOf(segment_filter.getSelectedItem()).trim();
-        this.workplace_filter.removeAllItems();
-        //this.workplace_filter.addItem(new ComboItem("ALL", "ALL"));
-        this.workplace_filter.addItem("ALL");
-        if ("ALL".equals(segment) || segment.equals("null")) {
+        System.out.println("Segment "+segment);
+        System.out.println(segment.getClass());
+        System.out.println("ALL == "+segment+"ALL".equals(segment));
+        if ("ALL".equals(segment)|| segment == null || "null".equals(segment) || segment.isEmpty()) {
+            System.out.println("IF condition validate "+segment);
+            this.workplace_filter.removeAllItems();
+            this.workplace_filter.addItem("ALL");
             this.workplace_filter.setSelectedIndex(0);
             this.workplace_filter.setEnabled(false);
         } else {
-            workplace_filter = ConfigWorkplace.initWorkplaceJBox(this, workplace_filter, segment, true);
+            System.out.println("ELSE condition validate "+segment);
+            this.workplace_filter.removeAllItems();
             this.workplace_filter.setEnabled(true);
+            this.workplace_filter = ConfigWorkplace.initWorkplaceJBox(this, workplace_filter, segment, true);
         }
 
 
@@ -646,19 +659,29 @@ public class PACKAGING_UI0021_FINISHED_GOODS_STOCK_JPANEL extends javax.swing.JP
     }//GEN-LAST:event_project_filterItemStateChanged
 
     private void project_filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_project_filterActionPerformed
-        String project = String.valueOf(project_filter.getSelectedItem()).trim();
-        System.out.println("Selected Project " + project);
-        segment_filter.addItem("ALL");
-        if ("ALL".equals(project) || project.equals("null")) {
-            segment_filter.removeAllItems();
-            //segment_filter.addItem(new ComboItem("ALL", "ALL"));
-            this.segment_filter.setSelectedIndex(0);
-            this.segment_filter.setEnabled(false);
-        } else {
-            ConfigSegment.setSegmentByProject(this, segment_filter, project, true);
-            this.segment_filter.setEnabled(true);
-        }
+            String project = String.valueOf(project_filter.getSelectedItem()).trim();
+            
+            if ("ALL".equals(project) || "null".equals(project) || project.isEmpty()) {
+                this.segment_filter.removeAllItems();
+                this.segment_filter.addItem("ALL");
+                this.segment_filter.setSelectedIndex(0);
+                this.segment_filter.setEnabled(false);
+                
+                this.workplace_filter.removeAllItems();
+                this.workplace_filter.addItem("ALL");
+                this.workplace_filter.setSelectedIndex(0);
+                this.workplace_filter.setEnabled(false);
+            } else {
+                
+                JComboBox box = ConfigSegment.setSegmentByProject(this, segment_filter, project, false);
+                if (box.getItemCount() > 0) {                    
+                    this.workplace_filter = ConfigWorkplace.initWorkplaceJBox(this, workplace_filter, String.valueOf(segment_filter.getSelectedItem()), true);
+                }
+                this.segment_filter.addItem("ALL");
+                this.segment_filter.setSelectedItem("ALL");
+                this.segment_filter.setEnabled(true);
 
+            }
     }//GEN-LAST:event_project_filterActionPerformed
 
     private void cpn_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpn_txtActionPerformed

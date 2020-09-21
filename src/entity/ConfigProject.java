@@ -26,7 +26,7 @@ import ui.error.ErrorMsg;
 @Entity
 @Table(name = "config_project")
 public class ConfigProject extends DAO implements Serializable {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "config_project_id_seq")
     @SequenceGenerator(name = "config_project_id_seq", sequenceName = "config_project_id_seq", allocationSize = 1)
@@ -35,44 +35,42 @@ public class ConfigProject extends DAO implements Serializable {
     
     @Column(name = "project")
     private String project;
-
+    
     @Column(name = "description")
     private String description;
-
+    
     public String getDescription() {
         return description;
     }
-
+    
     public void setDescription(String description) {
         this.description = description;
     }
-
+    
     public ConfigProject() {
     }
-
+    
     public ConfigProject(String project) {
         this.project = project;
     }
-
+    
     public ConfigProject(String project, String description) {
         this.project = project;
         this.description = description;
     }
     
-    
-
     public Integer getId() {
         return id;
     }
-
+    
     public void setId(Integer id) {
         this.id = id;
     }
-
+    
     public String getProject() {
         return project;
     }
-
+    
     public void setProject(String project) {
         this.project = project;
     }
@@ -102,8 +100,9 @@ public class ConfigProject extends DAO implements Serializable {
      * @param displayAll display the "ALL" filter in shown values in the first
      * position of the list
      */
-    public static JComboBox initProjectsJBox(Object parentUI, JComboBox jbox, String default_val, boolean displayAll) {
-
+    public static JComboBox initProjectsJBox(Object parentUI, JComboBox jbox, 
+            String default_val, boolean displayAll) {
+        
         List result = new ConfigProject().selectDistinct();
         if (result.isEmpty()) {
             UILog.severeDialog((Component) parentUI, ErrorMsg.APP_ERR0035);
@@ -114,25 +113,21 @@ public class ConfigProject extends DAO implements Serializable {
                 jbox.addItem("ALL");
             }
             
-            result.stream().map(o -> {
-                jbox.addItem(o);
-                return o;
-            }).filter(o -> (o.equals(default_val))).forEachOrdered(o -> {
-                jbox.setSelectedItem(o);
-            });           
+            for (Object o : result) jbox.addItem((String) o);
+            
         }
         return jbox;
     }
-    
+
     /**
      *
      * @param parentUI
      * @param box
-     * @param defaultValue A string value to be displayed in the first place (eg : 'ALL', or '')
-     * position of the list
+     * @param defaultValue A string value to be displayed in the first place (eg
+     * : 'ALL', or '') position of the list
      */
     public static JComboBox initProjectsJBox(Object parentUI, JComboBox box, String defaultValue) {
-
+        
         List result = new ConfigProject().selectDistinct();
         if (result.isEmpty()) {
             UILog.severeDialog((Component) parentUI, ErrorMsg.APP_ERR0035);
@@ -142,9 +137,9 @@ public class ConfigProject extends DAO implements Serializable {
             box.addItem(defaultValue);
             for (Object o : result) {
                 box.addItem(o);                
-            }           
+            }            
         }
         return box;
     }
-
+    
 }

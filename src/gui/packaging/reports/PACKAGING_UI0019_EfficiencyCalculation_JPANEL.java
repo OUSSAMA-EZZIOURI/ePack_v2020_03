@@ -521,6 +521,7 @@ public class PACKAGING_UI0019_EfficiencyCalculation_JPANEL extends javax.swing.J
         jPanel1.setBackground(new java.awt.Color(36, 65, 86));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
+        radio_scanned_harness.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         radio_scanned_harness.setForeground(new java.awt.Color(255, 255, 255));
         radio_scanned_harness.setSelected(true);
         radio_scanned_harness.setText("Total par pièces scannées");
@@ -531,6 +532,7 @@ public class PACKAGING_UI0019_EfficiencyCalculation_JPANEL extends javax.swing.J
             }
         });
 
+        radio_stored_pack.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         radio_stored_pack.setForeground(new java.awt.Color(255, 255, 255));
         radio_stored_pack.setText("Palettes stockées (STORED)");
         radio_stored_pack.addItemListener(new java.awt.event.ItemListener() {
@@ -539,7 +541,7 @@ public class PACKAGING_UI0019_EfficiencyCalculation_JPANEL extends javax.swing.J
             }
         });
 
-        radio_closed_pack.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        radio_closed_pack.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         radio_closed_pack.setForeground(new java.awt.Color(255, 255, 255));
         radio_closed_pack.setText("Palettes fermées (CLOSED)");
         radio_closed_pack.setToolTipText("Calcul la quantité des palettes avec UCS Complet.");

@@ -27,7 +27,7 @@ public class GlobalVars {
     /**
      *
      */
-    public static String APP_VERSION = "v2.3";
+    public static String APP_VERSION = "v2020.9";
 
     /**
      *

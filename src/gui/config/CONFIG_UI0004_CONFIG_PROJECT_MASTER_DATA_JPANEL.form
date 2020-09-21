@@ -1305,8 +1305,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Wokrplaces">
-                <Property name="tabTitle" type="java.lang.String" value="Wokrplaces"/>
+              <JTabbedPaneConstraints tabName="Workplaces">
+                <Property name="tabTitle" type="java.lang.String" value="Workplaces"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>

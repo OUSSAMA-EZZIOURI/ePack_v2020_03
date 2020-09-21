@@ -5,7 +5,7 @@
  */
 package gui.packaging;
 
-import gui.packaging.mode3.state.Mode3_State;
+import gui.packaging.mode.state.Mode3_State;
 
 /**
  *
